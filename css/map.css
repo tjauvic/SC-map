@@ -1,0 +1,331 @@
+:root {
+    --ink: #14293b;
+    --muted: #5b6b76;
+    --accent: #1f7a8c;
+    --panel-bg: rgba(255, 255, 255, 0.97);
+    --panel-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+    --radius: 5px;
+    --topbar-height: 56px;
+}
+
+html,
+body {
+margin: 0;
+padding: 0;
+width: 100%;
+height: 100%;
+font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+color: var(--ink);
+}
+#map {
+width: 100%;
+height: calc(100% - var(--topbar-height));
+}
+
+/* =========================================================
+TOP BAR
+========================================================= */
+
+#topbar {
+    height: var(--topbar-height);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background: var(--ink);
+    border-bottom: 3px solid var(--accent);
+}
+
+.topbar-title h1 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.01em;
+}
+
+.topbar-title span {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#help-button {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+#help-button:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+#help-panel {
+    display: none;
+    position: absolute;
+    top: calc(var(--topbar-height) + 8px);
+    right: 16px;
+    width: 280px;
+    z-index: 2000;
+    background: var(--panel-bg);
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    box-shadow: var(--panel-shadow);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+#help-panel.open {
+    display: block;
+}
+
+#help-panel strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--ink);
+}
+
+#help-panel p {
+    margin: 0 0 8px 0;
+    color: var(--muted);
+}
+
+#help-panel ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+#help-panel li {
+    margin-bottom: 4px;
+}
+
+/* =========================================================
+OPACITY CONTROL
+========================================================= */
+
+.opacity-control {
+background: var(--panel-bg);
+padding: 10px 12px;
+border-radius: var(--radius);
+box-shadow: var(--panel-shadow);
+min-width: 180px;
+}
+
+.opacity-control label {
+display: block;
+font-size: 13px;
+font-weight: 600;
+margin-bottom: 6px;
+color: var(--ink);
+}
+
+.opacity-control input {
+width: 100%;
+accent-color: var(--accent);
+}
+
+.opacity-value {
+text-align: center;
+font-size: 12px;
+color: var(--muted);
+margin-top: 3px;
+}
+
+/* =========================================================
+LEGEND
+========================================================= */
+
+.bathymetry-legend {
+background: var(--panel-bg);
+padding: 10px;
+border-radius: var(--radius);
+box-shadow: var(--panel-shadow);
+}
+
+.bathymetry-legend h4 {
+margin: 0 0 8px 0;
+font-size: 13px;
+font-weight: 600;
+color: var(--ink);
+}
+
+.gradient {
+width: 220px;
+height: 14px;
+
+background: linear-gradient(
+    to right,
+    #9c75fe,
+    #9dd3fe,
+    #98fef1,
+    #e1feb3,
+    #fdeb74,
+    #ffab75,
+    #fe8975
+);
+
+border: 1px solid rgba(20, 41, 59, 0.25);
+
+}
+.legend-labels {
+width: 220px;
+display: flex;
+justify-content: space-between;
+font-size: 11px;
+color: var(--muted);
+margin-top: 4px;
+}
+
+/* =========================================================
+BASEMAP LABELS
+========================================================= */
+
+.basemap-style-label {
+background: none !important;
+border: none !important;
+box-shadow: none !important;
+
+font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+font-size: 12px;
+font-weight: 500;
+color: #4e80b3;
+
+text-shadow:
+    -1px -1px 0 #e4f1f5,
+     1px -1px 0 #e4f1f5,
+    -1px  1px 0 #e4f1f5,
+     1px  1px 0 #e4f1f5;
+
+white-space: nowrap;
+
+}
+/* =========================================================
+BOREHOLE POPUP
+========================================================= */
+
+.leaflet-popup-content-wrapper {
+    border-radius: var(--radius);
+}
+
+.borehole-popup {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink);
+}
+
+.popup-data-heading {
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.popup-data-links {
+    display: flex;
+    flex-direction: column;
+    max-height: 150px;
+    overflow-y: auto;
+    border-top: 1px solid #e4eaec;
+}
+
+.popup-data-links a {
+    display: block;
+    padding: 6px 2px;
+    color: var(--accent);
+    font-size: 12px;
+    text-decoration: none;
+    border-bottom: 1px solid #e4eaec;
+}
+
+.popup-data-links a:hover {
+    background: #eef4f5;
+}
+
+.popup-data-unlinked {
+    display: block;
+    padding: 6px 2px;
+    color: var(--muted);
+    font-size: 12px;
+    font-style: italic;
+    border-bottom: 1px solid #e4eaec;
+    cursor: help;
+}
+
+/* =========================================================
+FILTER MENU
+========================================================= */
+
+.leaflet-filter-control {
+background: var(--panel-bg);
+padding: 12px;
+border-radius: var(--radius);
+box-shadow: var(--panel-shadow);
+font-size: 13px;
+width: 260px;
+}
+
+.leaflet-filter-control strong {
+display: block;
+font-weight: 600;
+color: var(--ink);
+margin-bottom: 8px;
+border-bottom: 1px solid #eee;
+padding-bottom: 6px;
+}
+
+.filter-scroll-container {
+max-height: 300px;
+overflow-y: auto;
+overflow-x: hidden;
+padding-right: 5px;
+}
+
+.filter-scroll-container label {
+display: block;
+margin-bottom: 6px;
+cursor: pointer;
+white-space: normal;
+line-height: 1.3;
+}
+
+.filter-scroll-container label:hover {
+background-color: #f0f5f6;
+color: var(--accent);
+}
+
+.filter-scroll-container input {
+margin-right: 6px;
+cursor: pointer;
+accent-color: var(--accent);
+}
+
+/* Scrollbar styling */
+
+.filter-scroll-container::-webkit-scrollbar {
+width: 8px;
+}
+
+.filter-scroll-container::-webkit-scrollbar-track {
+background: #f1f1f1;
+border-radius: 4px;
+}
+
+.filter-scroll-container::-webkit-scrollbar-thumb {
+background: #bbb;
+border-radius: 4px;
+}
+
+.filter-scroll-container::-webkit-scrollbar-thumb:hover {
+background: #999;
+}

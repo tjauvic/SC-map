@@ -1,0 +1,83 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" />
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+/>
+
+<!-- Browser Icon -->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/android-chrome-512x512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/android-chrome-192x192.png">
+
+<title>Solid Carbon Data Finder</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Leaflet CSS -->
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+/>
+
+<!-- Application CSS -->
+<link rel="stylesheet" href="css/map.css">
+
+</head> <body>
+<header id="topbar">
+    <div class="topbar-title">
+        <h1>Solid Carbon Data Finder</h1>
+        <span>Data compiled by Ocean Networks Canada from a variety of sources.</span>
+    </div>
+
+    <button id="help-button" aria-label="How to use this map" title="How to use this map">?</button>
+</header>
+
+<div id="help-panel">
+    <strong>About this map</strong>
+    <p>Explore places of interest to the Solid Carbon project across the Cascadia Basin and access variety of data compiled from ocean network databases for easy retrieval.</p>
+    <ul>
+        <li><strong>Markers</strong> &mdash; click a borehole for details and data links.</li>
+        <li><strong>Filter Data Types</strong> &mdash; narrow markers to boreholes with a chosen data type.</li>
+        <li><strong>Bathymetry opacity</strong> &mdash; fade the depth layer to see the basemap underneath.</li>
+        <li><strong>Layers</strong> (top right of map) &mdash; toggle the basemap and bathymetry overlay.</li>
+    </ul>
+</div>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+></script>
+
+<!-- Application data/configuration -->
+<script src="js/config.js"></script>
+<script src="js/boreholes.js"></script>
+<script src="js/datalinks.js"></script>
+<script src="js/cables.js"></script>
+
+<!-- Application components -->
+<script src="js/controls.js"></script>
+<script src="js/labels.js"></script>
+
+<!-- Application entry point -->
+<script src="js/map.js"></script>
+
+<!-- Page chrome (title bar / help toggle) -->
+<script>
+document.getElementById("help-button").addEventListener("click", function () {
+    document.getElementById("help-panel").classList.toggle("open");
+});
+</script>
+
+</body> </html>
