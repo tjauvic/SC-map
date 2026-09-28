@@ -1,0 +1,1253 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 232,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.73111027,
+          47.7571141600001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 232,
+        "siteid": 1022860,
+        "sitename": "CascadiaBasin_CORK-1027C_HydrophoneArray_2023-07",
+        "latitudedd": 47.75711416,
+        "longitudedd": -127.73111027,
+        "depth": 2660,
+        "locationname": "Cascadia Basin",
+        "deviceid": 26239,
+        "devicename": "Ocean Sonics icListen HF Hydrophone 1822",
+        "devicecategoryname": "Hydrophone",
+        "devicecode": "ICLISTENHF1822",
+        "locationcode": "CBCH.H4",
+        "image_url": "https://lh3.googleusercontent.com/d/1OagsGpY-3XfzFh0mklq97M7dApsMIaSO"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 221,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.731932,
+          47.7566850000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 221,
+        "siteid": 1004579,
+        "sitename": "CascadiaBasin_Accelerometer_2018-07",
+        "latitudedd": 47.75668499999999,
+        "longitudedd": -127.731932,
+        "depth": 2661,
+        "locationname": "Cascadia Basin",
+        "deviceid": 26679,
+        "devicename": "Honeywell HMR3300 Orientation (SN 5877)",
+        "devicecategoryname": "Orientation Instrument",
+        "devicecode": "HONEYWELLHMR3300ORIENTATION5877",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1D7N3jz0an1_tnXu2kkDwE2LQVUq3Fxx4"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 244,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.7611249,
+          47.7611217
+        ]
+      },
+      "properties": {
+        "OBJECTID": 244,
+        "siteid": 1039212,
+        "sitename": "CascadiaBasin_CTD_Temporary_Site_2026-08",
+        "latitudedd": 47.76112169999999,
+        "longitudedd": -127.7611249,
+        "depth": 2663,
+        "locationname": "Cascadia Basin",
+        "deviceid": 51780,
+        "devicename": "Sea-Bird SeaCAT SBE19plus V2 8062",
+        "devicecategoryname": "Conductivity Temperature Depth",
+        "devicecode": "SBECTD19p8062",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1XuMKjzgY68x2k-rIdU00fi211dUiWncf"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 252,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.732382,
+          47.756445
+        ]
+      },
+      "properties": {
+        "OBJECTID": 252,
+        "siteid": 1038692,
+        "sitename": "CascadiaBasin_CORK-1027C_DFO_MPA_Camera_2025-08",
+        "latitudedd": 47.756445,
+        "longitudedd": -127.732382,
+        "depth": 2663,
+        "locationname": "Cascadia Basin",
+        "deviceid": 89132,
+        "devicename": "ONC Camera Interface Box 03",
+        "devicecategoryname": "Junction Box",
+        "devicecode": "ONCCIB03",
+        "locationcode": "CBC27.J1",
+        "image_url": "https://lh3.googleusercontent.com/d/1LkUPp_PlEABg6eW4lfnDzkDszFP75Gkt"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 212,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.758956667,
+          47.7621533330001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 212,
+        "siteid": 100144,
+        "sitename": "CascadiaBasin_Piezometer_2011-07",
+        "latitudedd": 47.7621533333,
+        "longitudedd": -127.7589566667,
+        "depth": 2660,
+        "locationname": "Cascadia Basin",
+        "deviceid": 22627,
+        "devicename": "Ifremer Piezometer",
+        "devicecategoryname": "Piezometer",
+        "devicecode": "IFREMERPIEZO01",
+        "locationcode": "NC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1-Y1QZW8C3Fek272KRXB37nalw2D8D8uw"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 235,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.73111027,
+          47.7571141600001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 235,
+        "siteid": 1022860,
+        "sitename": "CascadiaBasin_CORK-1027C_HydrophoneArray_2023-07",
+        "latitudedd": 47.75711416,
+        "longitudedd": -127.73111027,
+        "depth": 2660,
+        "locationname": "Cascadia Basin",
+        "deviceid": 47260,
+        "devicename": "Ocean Sonics icListen HF Hydrophone 1953",
+        "devicecategoryname": "Hydrophone",
+        "devicecode": "ICLISTENHF1953",
+        "locationcode": "CBCH.H1",
+        "image_url": "https://lh3.googleusercontent.com/d/1OagsGpY-3XfzFh0mklq97M7dApsMIaSO"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 218,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.75829,
+          47.7626090000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 218,
+        "siteid": 1000303,
+        "sitename": "OBS_AuxiliaryPlatform_2014-05",
+        "latitudedd": 47.762608999999991,
+        "longitudedd": -127.75829,
+        "depth": 2654,
+        "locationname": "Cascadia Basin",
+        "deviceid": 22791,
+        "devicename": "NRCan Bottom Pressure Recorder 52",
+        "devicecategoryname": "Bottom Pressure Recorder",
+        "devicecode": "NRCANBPR52",
+        "locationcode": "NC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1tejDKYrIpazNqhoUYJFl_GBAPZ-BdAyb"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 229,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.75892567,
+          47.7627074800001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 229,
+        "siteid": 1017040,
+        "sitename": "CascadiaBasin_CTD_2020-09",
+        "latitudedd": 47.76270748,
+        "longitudedd": -127.75892567,
+        "depth": 2657,
+        "locationname": "Cascadia Basin",
+        "deviceid": 23043,
+        "devicename": "Sea-Bird SBE 63 Dissolved Oxygen Sensor 630279",
+        "devicecategoryname": "Oxygen Sensor",
+        "devicecode": "SBE63630279",
+        "locationcode": "NC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1RlOTS4tBnMbvT9eMaDafuPZ4Zy8mmg3B"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 241,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.72969631,
+          47.7423215000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 241,
+        "siteid": 1036932,
+        "sitename": "CascadiaBasin_Mudmat_Node_2024-06",
+        "latitudedd": 47.7423215,
+        "longitudedd": -127.72969631,
+        "depth": 2664,
+        "locationname": "Cascadia Basin",
+        "deviceid": 45000,
+        "devicename": "SUBCOM ONC WMC Mud Mat DP12",
+        "devicecategoryname": "Platform",
+        "devicecode": "SUBCOMONCWMCDP12",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1KVSbGYfFJuMHULeuQT16-8m-4lSINfkh"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 213,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.731116666,
+          47.75645
+        ]
+      },
+      "properties": {
+        "OBJECTID": 213,
+        "siteid": 100277,
+        "sitename": "CascadiaBasin_CORK-1027C",
+        "latitudedd": 47.75645,
+        "longitudedd": -127.73111666599999,
+        "depth": 2656,
+        "locationname": "Cascadia Basin",
+        "deviceid": 23150,
+        "devicename": "CORK P (1027C)",
+        "devicecategoryname": "Circulation Obviation Retrofit Kit",
+        "devicecode": "CORK-1027C",
+        "locationcode": "CBC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1OnOqrGZ1r1FviOdq9gf-75dIG0tcml_k"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 236,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.758102,
+          47.7625800000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 236,
+        "siteid": 1033792,
+        "sitename": "CascadiaBasin_BBS_NC27_2023-07",
+        "latitudedd": 47.76258,
+        "longitudedd": -127.758102,
+        "depth": 2656,
+        "locationname": "Cascadia Basin",
+        "deviceid": 80732,
+        "devicename": "Guralp Orcus Broadband Seismometer SN T311164",
+        "devicecategoryname": "Broadband Seismometer",
+        "devicecode": "GURALPORCUSBBST311164",
+        "locationcode": "NC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1mGnhKeSmXGAsKF8WmTtt5I92Vp0SRrhQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 230,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.73111027,
+          47.7571141600001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 230,
+        "siteid": 1022860,
+        "sitename": "CascadiaBasin_CORK-1027C_HydrophoneArray_2023-07",
+        "latitudedd": 47.75711416,
+        "longitudedd": -127.73111027,
+        "depth": 2660,
+        "locationname": "Cascadia Basin",
+        "deviceid": 81992,
+        "devicename": "Ocean Networks Canada Orientation SN07",
+        "devicecategoryname": "Orientation Instrument",
+        "devicecode": "ONCORIENTATION07",
+        "locationcode": "CBCH",
+        "image_url": "https://lh3.googleusercontent.com/d/1D7N3jz0an1_tnXu2kkDwE2LQVUq3Fxx4"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 250,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.732382,
+          47.756445
+        ]
+      },
+      "properties": {
+        "OBJECTID": 250,
+        "siteid": 1038692,
+        "sitename": "CascadiaBasin_CORK-1027C_DFO_MPA_Camera_2025-08",
+        "latitudedd": 47.756445,
+        "longitudedd": -127.732382,
+        "depth": 2663,
+        "locationname": "Cascadia Basin",
+        "deviceid": 23076,
+        "devicename": "ROS PT-25 Ti 10296",
+        "devicecategoryname": "Pan Tilt Lights",
+        "devicecode": "ROSPT10296",
+        "locationcode": "CBC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1nzHARYTklfWbWN7mC4rJxmSOq0jvTJc2"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 239,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.759211667,
+          47.7626000000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 239,
+        "siteid": 100036,
+        "sitename": "CascadiaBasin_CORK-1026B_2007-09",
+        "latitudedd": 47.7626,
+        "longitudedd": -127.75921166670001,
+        "depth": 2661,
+        "locationname": "Cascadia Basin",
+        "deviceid": 21301,
+        "devicename": "CORK P (1026B)",
+        "devicecategoryname": "Circulation Obviation Retrofit Kit",
+        "devicecode": "CORK-1026",
+        "locationcode": "NC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1OnOqrGZ1r1FviOdq9gf-75dIG0tcml_k"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 216,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.73177,
+          47.756512
+        ]
+      },
+      "properties": {
+        "OBJECTID": 216,
+        "siteid": 1003320,
+        "sitename": "CascadiaBasin_CORK_IP_2018-06",
+        "latitudedd": 47.756512,
+        "longitudedd": -127.73177,
+        "depth": 2658,
+        "locationname": "Cascadia Basin",
+        "deviceid": 24056,
+        "devicename": "OceanWorks Junction Box JB-18",
+        "devicecategoryname": "Junction Box",
+        "devicecode": "OCEANWORKSJB18",
+        "locationcode": "CBC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1LkUPp_PlEABg6eW4lfnDzkDszFP75Gkt"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 233,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.73111027,
+          47.7571141600001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 233,
+        "siteid": 1022860,
+        "sitename": "CascadiaBasin_CORK-1027C_HydrophoneArray_2023-07",
+        "latitudedd": 47.75711416,
+        "longitudedd": -127.73111027,
+        "depth": 2660,
+        "locationname": "Cascadia Basin",
+        "deviceid": 26259,
+        "devicename": "Ocean Sonics icListen HF Hydrophone 1823",
+        "devicecategoryname": "Hydrophone",
+        "devicecode": "ICLISTENHF1823",
+        "locationcode": "CBCH.H3",
+        "image_url": "https://lh3.googleusercontent.com/d/1OagsGpY-3XfzFh0mklq97M7dApsMIaSO"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 210,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.729271667,
+          47.7423450000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 210,
+        "siteid": 1401,
+        "sitename": "CascadiaBasin_Node_2009-08",
+        "latitudedd": 47.742345,
+        "longitudedd": -127.72927166670001,
+        "depth": 2662,
+        "locationname": "Cascadia Basin",
+        "deviceid": 10401,
+        "devicename": "Cascadia Basin Node",
+        "devicecategoryname": "Node",
+        "devicecode": "NO_CASCADIABASIN",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1I7DvgpM5KCtMkpAvIMaqg1OQryERmtzn"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 253,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.762187,
+          47.7583280000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 253,
+        "siteid": 1040012,
+        "sitename": "CascadiaBasin_CORK-1362B-2010-08",
+        "latitudedd": 47.758328,
+        "longitudedd": -127.762187,
+        "depth": 2672,
+        "locationname": "Cascadia Basin",
+        "deviceid": 95306,
+        "devicename": "CORK P 5C",
+        "devicecategoryname": "Circulation Obviation Retrofit Kit",
+        "devicecode": "CORKP5C",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1OnOqrGZ1r1FviOdq9gf-75dIG0tcml_k"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 247,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.73156,
+          47.7565060000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 247,
+        "siteid": 1038612,
+        "sitename": "CascadiaBasin_SMARTCable_CBC27_2025-08",
+        "latitudedd": 47.756506,
+        "longitudedd": -127.73156,
+        "depth": 2663,
+        "locationname": "Cascadia Basin",
+        "deviceid": 89742,
+        "devicename": "Subsea Data Systems SMART Cable Sensor System 4BD77",
+        "devicecategoryname": "Broadband Seismometer",
+        "devicecode": "SDSSMARTCABLE4BD77",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1mGnhKeSmXGAsKF8WmTtt5I92Vp0SRrhQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 234,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.73111027,
+          47.7571141600001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 234,
+        "siteid": 1022860,
+        "sitename": "CascadiaBasin_CORK-1027C_HydrophoneArray_2023-07",
+        "latitudedd": 47.75711416,
+        "longitudedd": -127.73111027,
+        "depth": 2660,
+        "locationname": "Cascadia Basin",
+        "deviceid": 47241,
+        "devicename": "Ocean Sonics icListen HF Hydrophone 1952",
+        "devicecategoryname": "Hydrophone",
+        "devicecode": "ICLISTENHF1952",
+        "locationcode": "CBCH.H2",
+        "image_url": "https://lh3.googleusercontent.com/d/1OagsGpY-3XfzFh0mklq97M7dApsMIaSO"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 228,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.75892567,
+          47.7627074800001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 228,
+        "siteid": 1017040,
+        "sitename": "CascadiaBasin_CTD_2020-09",
+        "latitudedd": 47.76270748,
+        "longitudedd": -127.75892567,
+        "depth": 2657,
+        "locationname": "Cascadia Basin",
+        "deviceid": 23581,
+        "devicename": "Sea-Bird SeaCAT SBE19plus V2 7027",
+        "devicecategoryname": "Conductivity Temperature Depth",
+        "devicecode": "SBECTD19p7027",
+        "locationcode": "NC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1XuMKjzgY68x2k-rIdU00fi211dUiWncf"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 254,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.7612,
+          47.7610467000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 254,
+        "siteid": 1019900,
+        "sitename": "CascadiaBasin_CORK-1362A-2010-08",
+        "latitudedd": 47.7610467,
+        "longitudedd": -127.7612,
+        "depth": 2672,
+        "locationname": "Cascadia Basin",
+        "deviceid": 95305,
+        "devicename": "CORK P 76",
+        "devicecategoryname": "Circulation Obviation Retrofit Kit",
+        "devicecode": "CORKP76",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1OnOqrGZ1r1FviOdq9gf-75dIG0tcml_k"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 242,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.75686783,
+          47.76098166
+        ]
+      },
+      "properties": {
+        "OBJECTID": 242,
+        "siteid": 1036952,
+        "sitename": "CascadiaBasin_Mudmat_IP_2024-06",
+        "latitudedd": 47.76098166,
+        "longitudedd": -127.75686783,
+        "depth": 2661,
+        "locationname": "Cascadia Basin",
+        "deviceid": 45020,
+        "devicename": "SUBCOM ONC WMC Mud Mat DP13",
+        "devicecategoryname": "Platform",
+        "devicecode": "SUBCOMONCWMCDP13",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1KVSbGYfFJuMHULeuQT16-8m-4lSINfkh"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 248,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.732382,
+          47.756445
+        ]
+      },
+      "properties": {
+        "OBJECTID": 248,
+        "siteid": 1038692,
+        "sitename": "CascadiaBasin_CORK-1027C_DFO_MPA_Camera_2025-08",
+        "latitudedd": 47.756445,
+        "longitudedd": -127.732382,
+        "depth": 2663,
+        "locationname": "Cascadia Basin",
+        "deviceid": 67480,
+        "devicename": "Aquorea Mk3 LED Light SN20148",
+        "devicecategoryname": "Camera Lights",
+        "devicecode": "AQUOREAMK3SN20148",
+        "locationcode": "CBC27.K1",
+        "image_url": "https://lh3.googleusercontent.com/d/1vvxqCeY1ei0z5hk-mUjNU8a31iw738AM"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 231,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.73111027,
+          47.7571141600001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 231,
+        "siteid": 1022860,
+        "sitename": "CascadiaBasin_CORK-1027C_HydrophoneArray_2023-07",
+        "latitudedd": 47.75711416,
+        "longitudedd": -127.73111027,
+        "depth": 2660,
+        "locationname": "Cascadia Basin",
+        "deviceid": 46820,
+        "devicename": "Ocean Sonics icLink SN 4041",
+        "devicecategoryname": "Adapter",
+        "devicecode": "OCEANSONICSICLINK4041",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1_1PMQLdl27C0N8qAiUlLmbCfSvVn6kgG"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 222,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.731932,
+          47.7566850000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 222,
+        "siteid": 1004579,
+        "sitename": "CascadiaBasin_Accelerometer_2018-07",
+        "latitudedd": 47.75668499999999,
+        "longitudedd": -127.731932,
+        "depth": 2661,
+        "locationname": "Cascadia Basin",
+        "deviceid": 24433,
+        "devicename": "Nanometrics TitanEA (S/N 000788)",
+        "devicecategoryname": "Accelerometer",
+        "devicecode": "NANOMETRICSTITANEA000788",
+        "locationcode": "CBC27.W1",
+        "image_url": "https://lh3.googleusercontent.com/d/16niqGusw5YUdPNTBfkNhlLbC70rpichx"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 251,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.732382,
+          47.756445
+        ]
+      },
+      "properties": {
+        "OBJECTID": 251,
+        "siteid": 1038692,
+        "sitename": "CascadiaBasin_CORK-1027C_DFO_MPA_Camera_2025-08",
+        "latitudedd": 47.756445,
+        "longitudedd": -127.732382,
+        "depth": 2663,
+        "locationname": "Cascadia Basin",
+        "deviceid": 89642,
+        "devicename": "Z3 Camera 4K60 SN 50016501240910002",
+        "devicecategoryname": "Video Camera",
+        "devicecode": "Z3CAM50016501240910002",
+        "locationcode": "CBC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1vvxqCeY1ei0z5hk-mUjNU8a31iw738AM"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 245,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.731713,
+          47.756135
+        ]
+      },
+      "properties": {
+        "OBJECTID": 245,
+        "siteid": 1004479,
+        "sitename": "CascadiaBasin_Maris_CBC27_2025-08",
+        "latitudedd": 47.756135,
+        "longitudedd": -127.731713,
+        "depth": 2662,
+        "locationname": "Cascadia Basin",
+        "deviceid": 74380,
+        "devicename": "Maris Seismometer TR1371",
+        "devicecategoryname": "Broadband Seismometer",
+        "devicecode": "MARISSEISMOMETERTR1371",
+        "locationcode": "CBC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1mGnhKeSmXGAsKF8WmTtt5I92Vp0SRrhQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 223,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.75878115,
+          47.7621675300001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 223,
+        "siteid": 1016580,
+        "sitename": "CascadiaBasin_ADCP_2020-09",
+        "latitudedd": 47.76216753,
+        "longitudedd": -127.75878115,
+        "depth": 2659,
+        "locationname": "Cascadia Basin",
+        "deviceid": 23006,
+        "devicename": "RDI Workhorse Long Ranger ADCP 75 kHz (16511)",
+        "devicecategoryname": "Acoustic Doppler Current Profiler 75 kHz",
+        "devicecode": "RDIADCP75KHZWH16511",
+        "locationcode": "NC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1CdVohWbDZfq7apyUEXjnOTnuPzzLp4Qn"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 217,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.75829,
+          47.7626090000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 217,
+        "siteid": 1000303,
+        "sitename": "OBS_AuxiliaryPlatform_2014-05",
+        "latitudedd": 47.762608999999991,
+        "longitudedd": -127.75829,
+        "depth": 2654,
+        "locationname": "Cascadia Basin",
+        "deviceid": 21012,
+        "devicename": "Nortek Aquadopp Current Meter 2886",
+        "devicecategoryname": "Current Meter",
+        "devicecode": "NORTEKAQDCM2886",
+        "locationcode": "NC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1JIvCdESQJuh-OLoASSD3aeFKtm7G00v5"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 246,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.731713,
+          47.756135
+        ]
+      },
+      "properties": {
+        "OBJECTID": 246,
+        "siteid": 1004479,
+        "sitename": "CascadiaBasin_Maris_CBC27_2025-08",
+        "latitudedd": 47.756135,
+        "longitudedd": -127.731713,
+        "depth": 2662,
+        "locationname": "Cascadia Basin",
+        "deviceid": 74360,
+        "devicename": "Maris Interface Unit SN MIN-1362",
+        "devicecategoryname": "Datalogger",
+        "devicecode": "MARISINTERFACESNMIN1362",
+        "locationcode": "CBC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1ANNQMEiXNr6PCt2E21SXPF9yFFaPvBDU"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 214,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.758883333,
+          47.7626016670001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 214,
+        "siteid": 100037,
+        "sitename": "CascadiaBasin_IP_2009-09",
+        "latitudedd": 47.7626016667,
+        "longitudedd": -127.75888333329999,
+        "depth": 2661,
+        "locationname": "Cascadia Basin",
+        "deviceid": 10513,
+        "devicename": "OceanWorks Junction Box JB-13",
+        "devicecategoryname": "Junction Box",
+        "devicecode": "N_MS_SJB",
+        "locationcode": "NC27",
+        "image_url": "https://lh3.googleusercontent.com/d/1LkUPp_PlEABg6eW4lfnDzkDszFP75Gkt"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 237,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.758102,
+          47.7625800000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 237,
+        "siteid": 1033792,
+        "sitename": "CascadiaBasin_BBS_NC27_2023-07",
+        "latitudedd": 47.76258,
+        "longitudedd": -127.758102,
+        "depth": 2656,
+        "locationname": "Cascadia Basin",
+        "deviceid": 81972,
+        "devicename": "Guralp Strong Motion Accelerometer TF504",
+        "devicecategoryname": "Accelerometer",
+        "devicecode": "GURALPSMA_TF504",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/16niqGusw5YUdPNTBfkNhlLbC70rpichx"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 220,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.731602,
+          47.756717
+        ]
+      },
+      "properties": {
+        "OBJECTID": 220,
+        "siteid": 1003859,
+        "sitename": "CascadiaBasin_TiltMeter_2018-06",
+        "latitudedd": 47.756717,
+        "longitudedd": -127.731602,
+        "depth": 2656,
+        "locationname": "Cascadia Basin",
+        "deviceid": 24155,
+        "devicename": "RBRconcerto Tilt Meter ACC.BPR 63057",
+        "devicecategoryname": "Tiltmeter",
+        "devicecode": "RBRTILTMETERACCBPR63057",
+        "locationcode": "CBC27.Z1",
+        "image_url": "https://lh3.googleusercontent.com/d/1wQ3mVkRuKqiwoAPrh-mRBjOGltp3ZMX8"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 249,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.732382,
+          47.756445
+        ]
+      },
+      "properties": {
+        "OBJECTID": 249,
+        "siteid": 1038692,
+        "sitename": "CascadiaBasin_CORK-1027C_DFO_MPA_Camera_2025-08",
+        "latitudedd": 47.756445,
+        "longitudedd": -127.732382,
+        "depth": 2663,
+        "locationname": "Cascadia Basin",
+        "deviceid": 74300,
+        "devicename": "Aquorea Mk3 LED Light SN22402",
+        "devicecategoryname": "Camera Lights",
+        "devicecode": "AQUOREAMK3SN22402",
+        "locationcode": "CBC27.K2",
+        "image_url": "https://lh3.googleusercontent.com/d/1vvxqCeY1ei0z5hk-mUjNU8a31iw738AM"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 243,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -127.7611249,
+          47.7611217
+        ]
+      },
+      "properties": {
+        "OBJECTID": 243,
+        "siteid": 1039212,
+        "sitename": "CascadiaBasin_CTD_Temporary_Site_2026-08",
+        "latitudedd": 47.76112169999999,
+        "longitudedd": -127.7611249,
+        "depth": 2663,
+        "locationname": "Cascadia Basin",
+        "deviceid": 51820,
+        "devicename": "Sea-Bird SBE 63 Dissolved Oxygen Sensor 632576",
+        "devicecategoryname": "Oxygen Sensor",
+        "devicecode": "SBE63632576",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1RlOTS4tBnMbvT9eMaDafuPZ4Zy8mmg3B"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 278,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.87242489,
+          48.6992041500001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 278,
+        "siteid": 1018780,
+        "sitename": "ClayoquotSlope_ODP1364A_HydrophoneArray_2020-09",
+        "latitudedd": 48.69920415,
+        "longitudedd": -126.87242489,
+        "depth": 1314,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 50300,
+        "devicename": "Ocean Sonics icListen HF Hydrophone 6015",
+        "devicecategoryname": "Hydrophone",
+        "devicecode": "ICLISTENHF6015",
+        "locationcode": "CQSH.H2",
+        "image_url": "https://lh3.googleusercontent.com/d/1OagsGpY-3XfzFh0mklq97M7dApsMIaSO"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 275,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.87242489,
+          48.6992041500001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 275,
+        "siteid": 1018780,
+        "sitename": "ClayoquotSlope_ODP1364A_HydrophoneArray_2020-09",
+        "latitudedd": 48.69920415,
+        "longitudedd": -126.87242489,
+        "depth": 1314,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 50320,
+        "devicename": "Ocean Sonics icListen HF Hydrophone 6016",
+        "devicecategoryname": "Hydrophone",
+        "devicecode": "ICLISTENHF6016",
+        "locationcode": "CQSH.H1",
+        "image_url": "https://lh3.googleusercontent.com/d/1OagsGpY-3XfzFh0mklq97M7dApsMIaSO"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 272,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.87261781,
+          48.6997181400001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 272,
+        "siteid": 1000680,
+        "sitename": "ClayoquotSlope_CQS64_W1_Accelerometer_2018-07",
+        "latitudedd": 48.69971814,
+        "longitudedd": -126.87261781,
+        "depth": 1318,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 24432,
+        "devicename": "Nanometrics TitanEA (S/N 000787)",
+        "devicecategoryname": "Accelerometer",
+        "devicecode": "NANOMETRICSTITANEA000787",
+        "locationcode": "CQS64.W1",
+        "image_url": "https://lh3.googleusercontent.com/d/16niqGusw5YUdPNTBfkNhlLbC70rpichx"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 267,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.872025,
+          48.69953
+        ]
+      },
+      "properties": {
+        "OBJECTID": 267,
+        "siteid": 1000868,
+        "sitename": "ClayoquotSlope_MudMat_CQS64Cable_IPEnd_2017-06",
+        "latitudedd": 48.69953,
+        "longitudedd": -126.872025,
+        "depth": 1310,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 51320,
+        "devicename": "SUBCOM ONC WMC Mud Mat DP09",
+        "devicecategoryname": "Platform",
+        "devicecode": "SUBCOMONCWMCDP09",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1KVSbGYfFJuMHULeuQT16-8m-4lSINfkh"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 276,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.87242489,
+          48.6992041500001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 276,
+        "siteid": 1018780,
+        "sitename": "ClayoquotSlope_ODP1364A_HydrophoneArray_2020-09",
+        "latitudedd": 48.69920415,
+        "longitudedd": -126.87242489,
+        "depth": 1314,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 50260,
+        "devicename": "Ocean Sonics icListen HF Hydrophone 6013",
+        "devicecategoryname": "Hydrophone",
+        "devicecode": "ICLISTENHF6013",
+        "locationcode": "CQSH.H4",
+        "image_url": "https://lh3.googleusercontent.com/d/1OagsGpY-3XfzFh0mklq97M7dApsMIaSO"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 256,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.872151667,
+          48.699936667
+        ]
+      },
+      "properties": {
+        "OBJECTID": 256,
+        "siteid": 1000090,
+        "sitename": "ClayoquotSlope_CORK-1364A_2010-09",
+        "latitudedd": 48.6999366667,
+        "longitudedd": -126.8721516667,
+        "depth": 1329,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 23181,
+        "devicename": "CORK P (1364A)",
+        "devicecategoryname": "Circulation Obviation Retrofit Kit",
+        "devicecode": "CORK-1364A",
+        "locationcode": "CQS64",
+        "image_url": "https://lh3.googleusercontent.com/d/1OnOqrGZ1r1FviOdq9gf-75dIG0tcml_k"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 265,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.872302,
+          48.6998530000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 265,
+        "siteid": 1000737,
+        "sitename": "ClayoquotSlope_CORK-1364A_IP_2016-06-23",
+        "latitudedd": 48.699853,
+        "longitudedd": -126.87230199999999,
+        "depth": 1315,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 23301,
+        "devicename": "Serial Server 02",
+        "devicecategoryname": "Adapter",
+        "devicecode": "SERIALSERVER02",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1_1PMQLdl27C0N8qAiUlLmbCfSvVn6kgG"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 271,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.87261781,
+          48.6997181400001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 271,
+        "siteid": 1000680,
+        "sitename": "ClayoquotSlope_CQS64_W1_Accelerometer_2018-07",
+        "latitudedd": 48.69971814,
+        "longitudedd": -126.87261781,
+        "depth": 1318,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 23680,
+        "devicename": "Honeywell HMR3300 Orientation (SN 31932)",
+        "devicecategoryname": "Orientation Instrument",
+        "devicecode": "HONEYWELLHMR3300ORIENTATION31932",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/1D7N3jz0an1_tnXu2kkDwE2LQVUq3Fxx4"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 274,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.87242489,
+          48.6992041500001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 274,
+        "siteid": 1018780,
+        "sitename": "ClayoquotSlope_ODP1364A_HydrophoneArray_2020-09",
+        "latitudedd": 48.69920415,
+        "longitudedd": -126.87242489,
+        "depth": 1314,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 48940,
+        "devicename": "Ocean Sonics icLink SN 4042",
+        "devicecategoryname": "Adapter",
+        "devicecode": "OCEANSONICSICLINK4042",
+        "locationcode": "CQSH",
+        "image_url": "https://lh3.googleusercontent.com/d/1_1PMQLdl27C0N8qAiUlLmbCfSvVn6kgG"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 283,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.84765716,
+          48.7025976
+        ]
+      },
+      "properties": {
+        "OBJECTID": 283,
+        "siteid": 1014020,
+        "sitename": "ClayoquotSlope_NE_Transponder_3",
+        "latitudedd": 48.7025976,
+        "longitudedd": -126.84765716,
+        "depth": 1404,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 42561,
+        "devicename": "Sonardyne Fetch 8306-9912 SN 322692-005",
+        "devicecategoryname": "Acoustic Transponder",
+        "devicecode": "SONARDYNEFETCH8306SN322692005",
+        "locationcode": null,
+        "image_url": "https://lh3.googleusercontent.com/d/17S2j0Dvj_pdGu5x3hnwlehaDG2r3G-6V"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 266,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.872302,
+          48.6998530000001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 266,
+        "siteid": 1000737,
+        "sitename": "ClayoquotSlope_CORK-1364A_IP_2016-06-23",
+        "latitudedd": 48.699853,
+        "longitudedd": -126.87230199999999,
+        "depth": 1315,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 10110,
+        "devicename": "OceanWorks Junction Box JB-08",
+        "devicecategoryname": "Junction Box",
+        "devicecode": "END_RCN_SJB1",
+        "locationcode": "CQS64.J1",
+        "image_url": "https://lh3.googleusercontent.com/d/1LkUPp_PlEABg6eW4lfnDzkDszFP75Gkt"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 277,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.87242489,
+          48.6992041500001
+        ]
+      },
+      "properties": {
+        "OBJECTID": 277,
+        "siteid": 1018780,
+        "sitename": "ClayoquotSlope_ODP1364A_HydrophoneArray_2020-09",
+        "latitudedd": 48.69920415,
+        "longitudedd": -126.87242489,
+        "depth": 1314,
+        "locationname": "Clayoquot Slope",
+        "deviceid": 50280,
+        "devicename": "Ocean Sonics icListen HF Hydrophone 6014",
+        "devicecategoryname": "Hydrophone",
+        "devicecode": "ICLISTENHF6014",
+        "locationcode": "CQSH.H3",
+        "image_url": "https://lh3.googleusercontent.com/d/1OagsGpY-3XfzFh0mklq97M7dApsMIaSO"
+      }
+    }
+  ]
+}

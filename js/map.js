@@ -47,7 +47,7 @@ L.Icon.extend({
     options: {
 
         shadowUrl:
-            "assets/shadow-cork.png",
+            "assets/shadow-cork-small.png",
 
         iconSize:
             [44.4, 70.4],
@@ -68,21 +68,21 @@ L.Icon.extend({
 
 const redCork =
 new CorkIcon({
-iconUrl: "assets/red-cork.png"
+iconUrl: "assets/red-cork-small.png"
 });
 const greenCork =
 new CorkIcon({
-iconUrl: "assets/green-cork.png"
+iconUrl: "assets/green-cork-small.png"
 });
 
 const blueCork =
 new CorkIcon({
-iconUrl: "assets/blue-cork.png"
+iconUrl: "assets/blue-cork-small.png"
 });
 
 const yellowCork =
 new CorkIcon({
-iconUrl: "assets/yellow-cork.png"
+iconUrl: "assets/yellow-cork-small.png"
 });
 
 /* =========================================================
@@ -322,14 +322,19 @@ const baseMaps = {
 const overlays = {
 
 "Cascadia Basin Bathymetry":
-    bathymetry
+    bathymetry,
+
+"Borehole markers":
+    markerGroup
 
 };
+// Kept in a variable so js/instruments.js can add its overlays later.
+const layerControl =
 L.control.layers(
 baseMaps,
 overlays,
 {
-collapsed: false
+collapsed: window.matchMedia("(max-width: 600px)").matches
 }
 ).addTo(map);
 /* =========================================================
