@@ -112,31 +112,11 @@
             background-color: #fcfbfb;
         }
 
-        /* Hotspot labels */
-        .Hotspot {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--panel-bg);
-            border: none;
-            border-radius: var(--radius);
-            box-shadow: var(--panel-shadow);
-            padding: 5px 10px;
-            font: 500 12px "Inter", sans-serif;
-            color: var(--ink);
-        }
-
-        /* Hide labels when they're behind the model */
         .view-select[hidden] {
             display: none;
         }
 
-        .Hotspot:not([data-visible]) {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Invisible points used only to anchor dimension lines */
+        /* Invisible points that model-viewer keeps projected onto the screen; the overlay below draws from them */
         .DimAnchor {
             width: 0;
             height: 0;
@@ -153,6 +133,17 @@
             pointer-events: none;
             z-index: 5;
         }
+
+        /* Overlay drawing: dimension lines, borehole labels, and the layer label column */
+        .ov-dim-line { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 3; }
+        .ov-dot { fill: var(--accent); }
+        .ov-dim-text { font: 600 12px "Inter", sans-serif; fill: var(--ink); paint-order: stroke; stroke: white; stroke-width: 3px; }
+        .ov-text { font: 500 10px "Inter", sans-serif; fill: var(--ink); }
+        .ov-shadow { filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4)); }
+        .ov-pill { fill: var(--panel-bg); }
+        .ov-pill-outlined { fill: var(--panel-bg); stroke: rgba(0, 0, 0, 0.25); }
+        .ov-leader { stroke: var(--ink); stroke-width: 1; }
+        .ov-anchor-dot { stroke: white; stroke-width: 1.5; }
 
         /* Compass: tracks the horizontal (azimuth) rotation of the model */
         #compass {
@@ -185,9 +176,9 @@
     <main>
         <div class="controls">
             <div class="model-select">
-                <button onclick="loadModel('seafloor_v4.glb', 'hotspots-seafloor', this)" class="active">Seafloor</button>
-                <button onclick="loadModel('cork-draco.glb', null, this)">Cork</button>
-                <button onclick="loadModel('cork1362A-draco.glb', null, this)">Cork 1362A</button>
+                <button onclick="loadModel('seafloor_v4.glb', true, this)" class="active">Seafloor</button>
+                <button onclick="loadModel('cork-draco.glb', false, this)">Cork</button>
+                <button onclick="loadModel('cork1362A-draco.glb', false, this)">Cork 1362A</button>
             </div>
             <!-- Camera presets for the seafloor model (see cameraViews in the script) -->
             <div class="view-select" id="view-select">
@@ -229,65 +220,90 @@
         </div>
     </main>
 
-    <!-- Seafloor labels, as exported from the model-viewer editor -->
-    <template id="hotspots-seafloor">
-        <button class="Hotspot" slot="hotspot-1" data-position="-1053.2547602494767m 0m -178.7172727747188m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-            <div class="HotspotAnnotation">Borehole 1026B</div>
-        </button>
-        <button class="Hotspot" slot="hotspot-3" data-position="-1202.4134293512127m -1.4210854715202004e-14m 1.9995459612104014m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-            <div class="HotspotAnnotation">Borehole 1362A</div>
-        </button>
-        <button class="Hotspot" slot="hotspot-4" data-position="-1274.2148534180235m 0m 305.8217231597523m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-            <div class="HotspotAnnotation">Borehole 1362B</div>
-        </button>
-        <button class="Hotspot" slot="hotspot-5" data-position="-1513.61040564326m 0m 775.4433657001365m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-            <div class="HotspotAnnotation">Borehole 1301B</div>
-        </button>
-        <button class="Hotspot" slot="hotspot-6" data-position="1059.5668762121697m 0m 470.97399151243013m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-            <div class="HotspotAnnotation">Borehole 1027C</div>
-        </button>
-        <button id="hs-seafloor-top" class="Hotspot" slot="hotspot-8" data-position="1975.124209101059m 0m 1920.5047987284338m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-            <div class="HotspotAnnotation">Seafloor</div>
-        </button>
-        <!-- Invisible anchors on the west wall at each layer's mid-depth; their labels are drawn by updateLayerLabels() -->
-        <button id="layer-anchor-0" class="DimAnchor" slot="hotspot-10" data-position="-2400m -362.1m 897.8m" data-normal="-1m 0m 0m" data-visibility-attribute="visible"></button>
-        <button id="layer-anchor-1" class="DimAnchor" slot="hotspot-11" data-position="-2400m -403.6m 897.8m" data-normal="-1m 0m 0m" data-visibility-attribute="visible"></button>
-        <button id="layer-anchor-2" class="DimAnchor" slot="hotspot-12" data-position="-2400m -421.0m 897.8m" data-normal="-1m 0m 0m" data-visibility-attribute="visible"></button>
-        <button id="layer-anchor-3" class="DimAnchor" slot="hotspot-13" data-position="-2400m -473.1m 897.8m" data-normal="-1m 0m 0m" data-visibility-attribute="visible"></button>
-        <button id="layer-anchor-4" class="DimAnchor" slot="hotspot-14" data-position="-2400m -604.0m 897.8m" data-normal="-1m 0m 0m" data-visibility-attribute="visible"></button>
-
-        <!-- Invisible anchors marking the model's footprint corners (bottom of the layers at -700 m), used only to draw its dimension lines -->
-        <button id="hs-basement-cornerA" class="DimAnchor" slot="hotspot-30" data-position="-2400m -700m -1577.300048828125m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
-        <button id="hs-basement-cornerB" class="DimAnchor" slot="hotspot-31" data-position="2100m -700m -1577.300048828125m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
-        <button id="hs-basement-cornerC" class="DimAnchor" slot="hotspot-32" data-position="2100m -700m 1922.699951171875m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
-        <button id="hs-seafloor-corner" class="DimAnchor" slot="hotspot-33" data-position="2100m 0m 1922.699951171875m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
-        <button id="dim-1026B" class="DimAnchor" slot="hotspot-40" data-position="-1053.2547602494767m 0m -178.7172727747188m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
-        <button id="dim-1362A" class="DimAnchor" slot="hotspot-41" data-position="-1202.4134293512127m -1.4210854715202004e-14m 1.9995459612104014m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
-        <button id="dim-1362B" class="DimAnchor" slot="hotspot-42" data-position="-1274.2148534180235m 0m 305.8217231597523m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
-    </template>
-
     <script>
         const viewer = document.getElementById("viewer");
+        const viewerWrap = document.querySelector(".viewer-wrap");
+        const overlay = document.getElementById("dimension-overlay");
+
+        // ---- Scene anchors ------------------------------------------------------------------------------------
+        // Everything drawn over the seafloor model (borehole labels, dimension lines, the layer label column) hangs
+        // off invisible anchors that model-viewer keeps projected onto the screen. Positions are scene metres
+        // [x, y, z]; -Z is north, Y is up, and the seafloor is y = 0.
+        const WEST = -2400, EAST = 2100, NORTH = -1577.300048828125, SOUTH = 1922.699951171875, FLOOR = -700;
+
+        const boreholes = [
+            { id: "1026B", pos: [-1053.2547602494767, 0, -178.7172727747188] },
+            { id: "1362A", pos: [-1202.4134293512127, 0, 1.9995459612104014] },
+            { id: "1362B", pos: [-1274.2148534180235, 0, 305.8217231597523] },
+            { id: "1301B", pos: [-1513.61040564326, 0, 775.4433657001365] },
+            { id: "1027C", pos: [1059.5668762121697, 0, 470.97399151243013] },
+        ];
+
+        // Footprint corners: the bottom of the layers (FLOOR) and the seafloor above the back-right one
+        const corners = {
+            A: [WEST, FLOOR, NORTH],
+            B: [EAST, FLOOR, NORTH],
+            C: [EAST, FLOOR, SOUTH],
+            seafloor: [EAST, 0, NORTH],
+        };
+
+        // The label column, top to bottom. Each points at its layer's mid-depth (y) on the west wall at z = WALL_Z.
+        // Swatch colours are the layers' glTF base colours converted from linear to sRGB (what the viewer displays).
+        // Optional entries drop out of the column when their anchor is off-screen.
+        const WALL_Z = 897.8;
+        const layerLabels = [
+            { text: "Seafloor", color: "#a0d5ff", y: 0, optional: true },
+            { text: "Sediments", color: "#d9cdb8", y: -160, optional: true },    // seafloor to top of basement
+            { text: "Upper pillow basalt", color: "#898e95", y: -362.1 },
+            { text: "Hyaloclastite breccia", color: "#c4aa89", y: -403.6 },
+            { text: "Massive & sheet flows", color: "#6c737c", y: -421.0 },
+            { text: "Lower pillow basalt", color: "#9b959e", y: -473.1 },
+            { text: "Undifferentiated basalt", color: "#616169", y: -604.0 },
+        ];
+
+        const anchors = [
+            ...boreholes.map(b => ({ id: `bh-${b.id}`, pos: b.pos })),
+            ...Object.entries(corners).map(([k, pos]) => ({ id: `corner-${k}`, pos })),
+            ...layerLabels.map((l, i) => ({ id: `layer-${i}`, pos: [WEST, l.y, WALL_Z], normal: [-1, 0, 0] })),
+        ];
+        const anchorPosition = Object.fromEntries(anchors.map(a => [a.id, a.pos]));
+
+        function addAnchors() {
+            anchors.forEach(({ id, pos, normal = [0, 1, 0] }, n) => {
+                const el = document.createElement("button");
+                el.id = id;
+                el.className = "DimAnchor";
+                el.slot = `hotspot-${n}`;
+                el.dataset.position = pos.map(v => `${v}m`).join(" ");
+                el.dataset.normal = normal.map(v => `${v}m`).join(" ");
+                el.dataset.visibilityAttribute = "visible";
+                viewer.appendChild(el);
+            });
+        }
 
         // Camera presets. orbit = "azimuth polar radius" about the target; azimuth is measured from +Z (south),
-        // so -90deg looks at the west face. Positions are scene metres, as in the hotspots.
+        // so -90deg looks at the west face. Positions are scene metres.
         const cameraViews = {
             overview:   { orbit: "0deg 75deg auto", target: "auto auto auto", fov: "auto" },
-            layers:     { orbit: "-62deg 74deg 1000m", target: "-2400m -480m 900m", fov: "30deg" },   // west wall, labels in view
+            layers:     { orbit: "-62deg 74deg 1500m", target: "-2400m -300m 900m", fov: "30deg" },   // west wall, labels in view
             // Close-ups: a narrow field of view from ~40 m away fills the frame with the ~7 m cork. Moving the camera
             // in closer instead would put the cork inside model-viewer's near plane (about 10 m here) and clip it.
-            injection:  { orbit: "35deg 78deg 40m", target: "-1203.3m 3.4m 0m", fov: "12deg" },        // cork at the top of 1362A
-            monitoring: { orbit: "35deg 78deg 40m", target: "-1272.5m 3.4m 303.4m", fov: "12deg" },    // cork at the top of 1362B
+            injection:  { orbit: "63deg 78deg 40m", target: "-1203.3m 3.4m 0m", fov: "12deg" },        // cork at the top of 1362A
+            monitoring: { orbit: "77deg 78deg 40m", target: "-1272.5m 3.4m 303.4m", fov: "12deg" },    // cork at the top of 1362B
         };
         const viewSelect = document.getElementById("view-select");
+        const viewButtons = [...viewSelect.querySelectorAll("button")];
 
-        function setView(name, { jump = false } = {}) {
+        function markView(name) {
+            viewButtons.forEach(b => b.classList.toggle("active", b.dataset.view === name));
+        }
+
+        function setView(name) {
             const v = cameraViews[name];
             viewer.cameraTarget = v.target;
             viewer.cameraOrbit = v.orbit;
             viewer.fieldOfView = v.fov;
-            if (jump) viewer.jumpCameraToGoal();
-            viewSelect.querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.view === name));
+            markView(name);
         }
 
         viewSelect.addEventListener("click", e => {
@@ -297,27 +313,18 @@
 
         // Dragging or zooming by hand leaves the preset, so un-highlight it
         viewer.addEventListener("camera-change", e => {
-            if (e.detail.source === "user-interaction") {
-                viewSelect.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-            }
+            if (e.detail.source === "user-interaction") markView(null);
         });
 
-        function loadModel(src, hotspotsId, button) {
+        function loadModel(src, withAnchors, button) {
             // Highlight the selected model button
             document.querySelectorAll(".model-select button").forEach(el => el.classList.remove("active"));
             if (button) button.classList.add("active");
 
-            // Remove any labels from the previous model
-            viewer.querySelectorAll(".Hotspot, .DimAnchor").forEach(el => el.remove());
-
-            // Add this model's labels, if it has any
-            if (hotspotsId) {
-                const template = document.getElementById(hotspotsId);
-                viewer.appendChild(template.content.cloneNode(true));
-            }
-
-            // The camera presets only make sense for the seafloor model
-            viewSelect.hidden = !hotspotsId;
+            // Swap the anchors, and show the camera presets, only for the seafloor model
+            viewer.querySelectorAll(".DimAnchor").forEach(el => el.remove());
+            if (withAnchors) addAnchors();
+            viewSelect.hidden = !withAnchors;
 
             // Reset the camera so each model is framed fresh
             setView("overview");
@@ -327,166 +334,165 @@
 
         viewer.addEventListener("load", () => viewer.jumpCameraToGoal());
 
-        customElements.whenDefined("model-viewer").then(() => {
-            requestAnimationFrame(updateDimensions);
-        });
+        // ---- Overlay ------------------------------------------------------------------------------------------
+        const CHAR_W = 5.4;                                  // px per character at 10px Inter, used to size the pills
+        const escapeText = t => t.replace("&", "&amp;");
 
-        // Dimension lines: connect pairs of (invisible or labeled) hotspot
-        // anchors with a line, labeled with the real-world distance between
-        // them, computed from their data-position attributes.
-        const dimensionPairs = [
-            ["dim-1026B", "dim-1362A"],
-            ["dim-1362A", "dim-1362B"],
-            ["hs-basement-cornerC", "hs-seafloor-corner"],
-            ["hs-basement-cornerA", "hs-basement-cornerB"],
-            ["hs-basement-cornerB", "hs-basement-cornerC"],
-        ];
-        const dimensionSvg = document.getElementById("dimension-overlay");
-        const viewerWrap = document.querySelector(".viewer-wrap");
-
-        function parsePosition(el) {
-            return el.getAttribute("data-position").trim().split(/\s+/).map(parseFloat);
+        // Screen position of an anchor relative to the viewer, or null while model-viewer says it isn't visible
+        function anchorPos(id, wrap) {
+            const el = document.getElementById(id);
+            if (!el || !el.hasAttribute("data-visible")) return null;
+            const r = el.getBoundingClientRect();
+            return { x: r.left - wrap.left, y: r.top - wrap.top };
         }
 
-        // Layer labels: stacked in an evenly spaced vertical column at the side of the viewer nearest the
-        // west wall, each joined by a leader line to an anchor at that layer's mid-depth on the wall.
-        // Swatch colours are the layers' glTF base colours converted from linear to sRGB (what the viewer displays)
-        const layerLabels = [
-            { id: "layer-anchor-0", text: "Upper pillow basalt", color: "#898e95" },
-            { id: "layer-anchor-1", text: "Hyaloclastite breccia", color: "#c4aa89" },
-            { id: "layer-anchor-2", text: "Massive & sheet flows", color: "#6c737c" },
-            { id: "layer-anchor-3", text: "Lower pillow basalt", color: "#9b959e" },
-            { id: "layer-anchor-4", text: "Undifferentiated basalt", color: "#616169" },
-        ];
-        const LABEL_H = 22, LABEL_GAP = 8, LABEL_MARGIN = 14, LABEL_LEAD = 40;   // LEAD: min px between column and nearest anchor
+        // Scene width (m) visible across the view at the orbit target
+        const visibleSpan = orbit => 2 * orbit.radius * Math.tan(viewer.getFieldOfView() * Math.PI / 360);
 
-        // The column only appears when the viewer is zoomed in on the west side of the model
+        // Clip the segment a-b to the viewer rectangle (Liang-Barsky); returns the visible parameter range or null
+        function clipToView(a, b, w, h, pad = 6) {
+            let t0 = 0, t1 = 1;
+            const dx = b.x - a.x, dy = b.y - a.y;
+            for (const [p, q] of [[-dx, a.x - pad], [dx, w - pad - a.x], [-dy, a.y - pad], [dy, h - pad - a.y]]) {
+                if (p === 0) { if (q < 0) return null; continue; }
+                const t = q / p;
+                if (p < 0) { if (t > t1) return null; t0 = Math.max(t0, t); }
+                else { if (t < t0) return null; t1 = Math.min(t1, t); }
+            }
+            return [t0, t1];
+        }
+
+        // Dimension lines connect pairs of anchors and are labelled with the real distance between them.
+        // "cork" lines run between boreholes along the seafloor, so they stay visible in the close-up cork views;
+        // the footprint lines are hidden there because they would cut across the cork.
+        const dimensionPairs = [
+            ["bh-1026B", "bh-1362A", "cork"],
+            ["bh-1362A", "bh-1362B", "cork"],
+            ["corner-B", "corner-seafloor"],
+            ["corner-A", "corner-B"],
+            ["corner-B", "corner-C"],
+        ];
+        const DIMENSION_MIN_SPAN = 200;             // m; footprint lines are hidden when zoomed in closer than this
+
+        function dimensionsSvg(wrap, closeUp) {
+            let svg = "";
+            for (const [aId, bId, kind] of dimensionPairs) {
+                if (closeUp && kind !== "cork") continue;
+                const a = anchorPos(aId, wrap), b = anchorPos(bId, wrap);
+                if (!a || !b) continue;
+
+                // Only the on-screen part of the line is drawn, and its label sits at the middle of that part, so
+                // a line to a far-away borehole still shows (and is readable) when zoomed in on a cork
+                const clip = clipToView(a, b, wrap.width, wrap.height);
+                if (!clip) continue;
+                const at = t => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
+                const p = at(clip[0]), q = at(clip[1]);
+                const dot = e => (e.x >= 0 && e.x <= wrap.width && e.y >= 0 && e.y <= wrap.height)
+                    ? `<circle class="ov-dot" cx="${e.x}" cy="${e.y}" r="3" />` : "";
+
+                const distance = Math.hypot(...anchorPosition[aId].map((v, i) => v - anchorPosition[bId][i]));
+                svg += `
+                    <line class="ov-dim-line" x1="${p.x}" y1="${p.y}" x2="${q.x}" y2="${q.y}" />
+                    ${dot(a)}${dot(b)}
+                    <text class="ov-dim-text" x="${(p.x + q.x) / 2}" y="${(p.y + q.y) / 2 - 6}" text-anchor="middle">${Math.round(distance)} m</text>`;
+            }
+            return svg;
+        }
+
+        // Borehole labels, centred on their anchors. Drawn after the dimension lines so they sit in front of them.
+        function boreholeLabelsSvg(wrap) {
+            return boreholes.map(b => {
+                const c = anchorPos(`bh-${b.id}`, wrap);
+                if (!c) return "";
+                const text = `Borehole ${b.id}`, w = text.length * CHAR_W + 16, h = 20;
+                return `
+                    <g class="ov-shadow"><rect class="ov-pill" x="${c.x - w / 2}" y="${c.y - h / 2}" width="${w}" height="${h}" rx="5" /></g>
+                    <text class="ov-text" x="${c.x}" y="${c.y + 3.5}" text-anchor="middle">${text}</text>`;
+            }).join("");
+        }
+
+        // Layer labels: an evenly spaced vertical column beside the west wall, each joined by a leader line to its
+        // layer. Only shown when the camera is on the west side, zoomed in enough, with every layer anchor on screen.
+        const LABEL_H = 18, LABEL_GAP = 6, LABEL_MARGIN = 14, LABEL_LEAD = 40;   // LEAD: min px between column and nearest anchor
         const LABEL_MAX_SPAN = 7000;     // m of scene visible across the view; zoomed out further than this, hide
         const LABEL_MAX_ANGLE = 55;      // degrees the camera may be off straight-on to the west wall
         const LABEL_EDGE_PAD = 20;       // px; every anchor must be this far inside the viewer
 
-        // Scene width (m) visible across the view at the orbit target
-        function visibleSpan() {
-            return 2 * viewer.getCameraOrbit().radius * Math.tan(viewer.getFieldOfView() * Math.PI / 360);
-        }
-        const DIMENSION_MIN_SPAN = 200;  // m; dimension lines are hidden when zoomed in closer than this
-
-        function westWallInFocus() {
-            const { theta } = viewer.getCameraOrbit();
-            const span = visibleSpan();
-            const thetaModel = theta - viewer.turntableRotation;            // camera azimuth in model space, as the compass uses
+        function westWallInFocus(orbit, span) {
+            const thetaModel = orbit.theta - viewer.turntableRotation;      // camera azimuth in model space, as the compass uses
             const facing = -Math.sin(thetaModel);                           // 1 = looking straight at the west (-X) wall
             return span < LABEL_MAX_SPAN && facing > Math.cos(LABEL_MAX_ANGLE * Math.PI / 180);
         }
 
-        function layerLabelsSvg(wrapRect) {
-            if (!westWallInFocus()) return "";
+        function layerLabelsSvg(wrap, orbit, span) {
+            if (!westWallInFocus(orbit, span)) return "";
             const items = [];
-            for (const l of layerLabels) {
-                const el = document.getElementById(l.id);
-                if (!el || !el.hasAttribute("data-visible")) continue;
-                const r = el.getBoundingClientRect();
-                items.push({ ...l, ax: r.left - wrapRect.left, ay: r.top - wrapRect.top });
-            }
-            // Show the column only if every anchor is actually on screen (west wall in view, not just facing us)
+            layerLabels.forEach((l, i) => {
+                const p = anchorPos(`layer-${i}`, wrap);
+                if (p) items.push({ ...l, ax: p.x, ay: p.y });
+            });
             const pad = LABEL_EDGE_PAD;
-            const allInView = items.length === layerLabels.length && items.every(i =>
-                i.ax > pad && i.ax < wrapRect.width - pad && i.ay > pad && i.ay < wrapRect.height - pad);
-            if (!allInView) return "";
+            const inView = i => i.ax > pad && i.ax < wrap.width - pad && i.ay > pad && i.ay < wrap.height - pad;
+            const required = layerLabels.filter(l => !l.optional);
+            if (!required.every(l => items.some(i => i.text === l.text && inView(i)))) return "";
+            const shown = items.filter(inView);
 
-            // One column of equal-width labels. It sits wholly to one side of every anchor (left of the leftmost
-            // or right of the rightmost, plus a lead-in), so no leader ever has to pass back across a label.
-            items.sort((a, b) => a.ay - b.ay);
-            const w = Math.max(...items.map(i => i.text.length)) * 6.4 + 30;
-            const minX = Math.min(...items.map(i => i.ax)), maxX = Math.max(...items.map(i => i.ax));
+            const w = Math.max(...shown.map(i => i.text.length)) * CHAR_W + 26;
+            const minX = Math.min(...shown.map(i => i.ax)), maxX = Math.max(...shown.map(i => i.ax));
             const leftX = minX - LABEL_LEAD - w;                             // column's left edge if placed on the left
             const rightX = maxX + LABEL_LEAD;                                // ... and if placed on the right
             const leftOk = leftX >= LABEL_MARGIN;
-            const rightOk = rightX + w <= wrapRect.width - LABEL_MARGIN;
+            const rightOk = rightX + w <= wrap.width - LABEL_MARGIN;
             if (!leftOk && !rightOk) return "";
-            const onLeft = leftOk && (!rightOk || minX - leftX - w <= rightX - maxX || (leftX + w / 2) < wrapRect.width / 2);
+            const onLeft = leftOk && (!rightOk || minX - leftX - w <= rightX - maxX || (leftX + w / 2) < wrap.width / 2);
             const x = onLeft ? leftX : rightX;
             const edge = onLeft ? x + w : x;
 
             // Even vertical spacing, centred on the anchors, kept inside the viewer
             const pitch = LABEL_H + LABEL_GAP;
-            const mean = items.reduce((sum, i) => sum + i.ay, 0) / items.length;
-            const total = pitch * (items.length - 1);
-            const top = Math.min(Math.max(mean - total / 2, LABEL_H), wrapRect.height - LABEL_H - total);
+            const mean = shown.reduce((sum, i) => sum + i.ay, 0) / shown.length;
+            const total = pitch * (shown.length - 1);
+            const top = Math.min(Math.max(mean - total / 2, LABEL_H), wrap.height - LABEL_H - total);
 
-            let lines = "", boxes = "";                                       // lines first so labels always paint on top
-            items.forEach((it, n) => {
+            let lines = "", boxes = "";
+            shown.forEach((it, n) => {
                 const cy = top + n * pitch;
                 lines += `
-                    <line x1="${edge}" y1="${cy}" x2="${it.ax}" y2="${it.ay}" style="stroke: var(--ink); stroke-width: 1;" />
-                    <circle cx="${it.ax}" cy="${it.ay}" r="3" style="fill: ${it.color}; stroke: white; stroke-width: 1.5;" />`;
+                    <line class="ov-leader" x1="${edge}" y1="${cy}" x2="${it.ax}" y2="${it.ay}" />
+                    <circle class="ov-anchor-dot" cx="${it.ax}" cy="${it.ay}" r="3" style="fill: ${it.color};" />`;
                 boxes += `
-                    <rect x="${x}" y="${cy - LABEL_H / 2}" width="${w}" height="${LABEL_H}" rx="5" style="fill: var(--panel-bg); stroke: rgba(0,0,0,0.25);" />
-                    <rect x="${x + 7}" y="${cy - 5}" width="10" height="10" rx="2" style="fill: ${it.color};" />
-                    <text x="${x + 23}" y="${cy + 4}" style="font: 500 12px 'Inter', sans-serif; fill: var(--ink);">${it.text.replace("&", "&amp;")}</text>`;
+                    <rect class="ov-pill-outlined" x="${x}" y="${cy - LABEL_H / 2}" width="${w}" height="${LABEL_H}" rx="5" />
+                    <rect x="${x + 6}" y="${cy - 4}" width="8" height="8" rx="2" style="fill: ${it.color};" />
+                    <text class="ov-text" x="${x + 19}" y="${cy + 3.5}">${escapeText(it.text)}</text>`;
             });
             return lines + boxes;
         }
 
-        function updateDimensions() {
-            const wrapRect = viewerWrap.getBoundingClientRect();
-            let svgContent = "";
-
-            const closeUp = visibleSpan() < DIMENSION_MIN_SPAN;
-
-            for (const [aId, bId] of closeUp ? [] : dimensionPairs) {
-                const aEl = document.getElementById(aId);
-                const bEl = document.getElementById(bId);
-                if (!aEl || !bEl) continue;
-                if (!aEl.hasAttribute("data-visible") || !bEl.hasAttribute("data-visible")) continue;
-
-                const aRect = aEl.getBoundingClientRect();
-                const bRect = bEl.getBoundingClientRect();
-                const x1 = aRect.left - wrapRect.left;
-                const y1 = aRect.top - wrapRect.top;
-                const x2 = bRect.left - wrapRect.left;
-                const y2 = bRect.top - wrapRect.top;
-                const midX = (x1 + x2) / 2;
-                const midY = (y1 + y2) / 2;
-
-                const [ax, ay, az] = parsePosition(aEl);
-                const [bx, by, bz] = parsePosition(bEl);
-                const distance = Math.hypot(ax - bx, ay - by, az - bz);
-                const label = `${Math.round(distance)} m`;
-
-                svgContent += `
-                    <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" style="stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 3;" />
-                    <circle cx="${x1}" cy="${y1}" r="3" style="fill: var(--accent);" />
-                    <circle cx="${x2}" cy="${y2}" r="3" style="fill: var(--accent);" />
-                    <text x="${midX}" y="${midY - 6}" text-anchor="middle" style="font: 600 12px 'Inter', sans-serif; fill: var(--ink); paint-order: stroke; stroke: white; stroke-width: 3px;">${label}</text>
-                `;
-            }
-
-            svgContent += layerLabelsSvg(wrapRect);
-            dimensionSvg.innerHTML = svgContent;
-            requestAnimationFrame(updateDimensions);
-        }
-
-        // Compass: model north is the -Z axis. Two things rotate the model
-        // horizontally, and model-viewer treats them differently:
+        // ---- Compass ------------------------------------------------------------------------------------------
+        // Model north is the -Z axis.
         //   - dragging orbits the camera (theta), which fires camera-change
         //   - auto-rotate spins the model itself (turntableRotation, in radians)
         //     and fires NO event, so it has to be polled every frame.
         const compassNeedle = document.getElementById("compass-needle");
 
-        function updateCompass() {
-            const { theta } = viewer.getCameraOrbit();
-            const angle = theta - viewer.turntableRotation;
-            compassNeedle.style.transform = `rotate(${angle * 180 / Math.PI}deg)`;
-            requestAnimationFrame(updateCompass);
+        // One frame loop for the overlay and the compass
+        function frame() {
+            const wrap = viewerWrap.getBoundingClientRect();
+            const orbit = viewer.getCameraOrbit();
+            const span = visibleSpan(orbit);
+
+            overlay.innerHTML = dimensionsSvg(wrap, span < DIMENSION_MIN_SPAN)
+                + boreholeLabelsSvg(wrap)
+                + layerLabelsSvg(wrap, orbit, span);
+
+            compassNeedle.style.transform = `rotate(${(orbit.theta - viewer.turntableRotation) * 180 / Math.PI}deg)`;
+            requestAnimationFrame(frame);
         }
 
-        customElements.whenDefined("model-viewer").then(() => {
-            requestAnimationFrame(updateCompass);
-        });
+        customElements.whenDefined("model-viewer").then(() => requestAnimationFrame(frame));
 
         // Show the seafloor labels on first load
-        loadModel("seafloor_v4.glb", "hotspots-seafloor", document.querySelector(".model-select button.active"));
+        loadModel("seafloor_v4.glb", true, document.querySelector(".model-select button.active"));
     </script>
 </body>
 </html>
