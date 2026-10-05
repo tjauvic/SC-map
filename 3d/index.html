@@ -4,19 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solid Carbon 3D</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
+        :root {
+            --ink: #14293b;
+            --muted: #5b6b76;
+            --accent: #1f7a8c;
+            --panel-bg: rgba(255, 255, 255, 0.97);
+            --panel-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+            --radius: 5px;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #eef2f3;
+            color: var(--ink);
+        }
+
+        header#topbar {
+            height: 56px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            background: var(--ink);
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .topbar-title h1 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: -0.01em;
+        }
+
+        .topbar-title span {
+            display: block;
+            margin-top: 2px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 16px 40px;
+        }
+
+        /* Model selector, styled as a segmented pill control */
+        .model-select {
+            display: flex;
+            gap: 4px;
+            width: fit-content;
+            padding: 5px;
+            margin-bottom: 16px;
+            background: var(--panel-bg);
+            border-radius: 999px;
+            box-shadow: var(--panel-shadow);
+        }
+
+        .model-select button {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font: 600 13px "Inter", sans-serif;
+            color: var(--muted);
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .model-select button:hover {
+            background: #eef4f5;
+            color: var(--accent);
+        }
+
+        .model-select button.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .viewer-wrap {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--panel-shadow);
+        }
+
         model-viewer {
             width: 100%;
-            height: 80vh;
-	    background-color: #78cbff;
+            height: 75vh;
+            background-color: #e9e9e9;
         }
 
         /* Hotspot labels */
         .Hotspot {
-            background: #fff;
-            border: 1px solid #000;
-            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--panel-bg);
+            border: none;
+            border-radius: var(--radius);
+            box-shadow: var(--panel-shadow);
+            padding: 5px 10px;
+            font: 500 12px "Inter", sans-serif;
+            color: var(--ink);
         }
 
         /* Hide labels when they're behind the model */
@@ -24,57 +125,135 @@
             opacity: 0;
             pointer-events: none;
         }
+
+        /* Invisible points used only to anchor dimension lines */
+        .DimAnchor {
+            width: 0;
+            height: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        /* Dimension lines/labels overlay */
+        #dimension-overlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Compass: tracks the horizontal (azimuth) rotation of the model */
+        #compass {
+            position: absolute;
+            right: 16px;
+            bottom: 16px;
+            width: 72px;
+            height: 72px;
+            z-index: 6;
+            pointer-events: none;
+            background: var(--panel-bg);
+            border-radius: 50%;
+            box-shadow: var(--panel-shadow);
+        }
+
+        #compass-needle {
+            transform-origin: 36px 36px;
+        }
     </style>
 </head>
 <body>
 
-    <div>
-        <button onclick="loadModel('sefloor-demo-draco.glb', 'hotspots-seafloor')">Seafloor</button>
-        <button onclick="loadModel('cork-draco.glb')">Cork</button>
-        <button onclick="loadModel('cork1362A-draco.glb')">Cork 1362A</button>
-    </div>
+    <header id="topbar">
+        <div class="topbar-title">
+            <h1>Solid Carbon 3D</h1>
+            <span>Interactive seafloor &amp; borehole models</span>
+        </div>
+    </header>
 
-    <model-viewer
-        id="viewer"
-        src="sefloor-demo-draco.glb"
-        camera-controls
-        auto-rotate
-        ar
-        tone-mapping="neutral"
-        shadow-intensity="1">
-    </model-viewer>
+    <main>
+        <div class="model-select">
+            <button onclick="loadModel('seafloor_v3.glb', 'hotspots-seafloor', this)" class="active">Seafloor</button>
+            <button onclick="loadModel('cork-draco.glb', null, this)">Cork</button>
+            <button onclick="loadModel('cork1362A-draco.glb', null, this)">Cork 1362A</button>
+        </div>
+
+        <div class="viewer-wrap">
+            <model-viewer
+                id="viewer"
+                src="seafloor_v3.glb"
+                camera-controls
+                auto-rotate
+                ar
+                tone-mapping="neutral"
+                shadow-intensity="0"
+                min-field-of-view='1deg'>
+            </model-viewer>
+
+            <svg id="dimension-overlay"></svg>
+
+            <svg id="compass" viewBox="0 0 72 72" aria-label="Compass">
+                <circle cx="36" cy="36" r="33" fill="none" stroke="currentColor" stroke-opacity="0.25" />
+                <g id="compass-needle">
+                    <polygon points="36,19 42,36 30,36" style="fill: var(--accent);" />
+                    <polygon points="36,53 42,36 30,36" fill="#999" />
+                    <text x="36" y="15" text-anchor="middle" font-size="11" font-weight="700" font-family="Inter, sans-serif" style="fill: var(--accent);">N</text>
+                    <g font-size="9" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" fill="#666">
+                        <text x="36" y="66">S</text>
+                        <text x="63" y="39.5">E</text>
+                        <text x="9" y="39.5">W</text>
+                    </g>
+                </g>
+                <circle cx="36" cy="36" r="2.5" fill="#333" />
+            </svg>
+        </div>
+    </main>
 
     <!-- Seafloor labels, as exported from the model-viewer editor -->
     <template id="hotspots-seafloor">
-        <button class="Hotspot" slot="hotspot-16" data-position="-2.6144122364278335m 31.322003185749054m -7.407782075377909m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
+        <button class="Hotspot" slot="hotspot-1" data-position="-1053.2547602494767m 0m -178.7172727747188m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
             <div class="HotspotAnnotation">Borehole 1026B</div>
         </button>
-        <button class="Hotspot" slot="hotspot-18" data-position="-5.949722283283048m 31.322003185749054m 1.419169811999489m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
+        <button class="Hotspot" slot="hotspot-3" data-position="-1202.4134293512127m -1.4210854715202004e-14m 1.9995459612104014m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
             <div class="HotspotAnnotation">Borehole 1362A</div>
         </button>
-        <button class="Hotspot" slot="hotspot-19" data-position="-6.387578594711572m 31.322003185749054m 9.732280820406366m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
+        <button class="Hotspot" slot="hotspot-4" data-position="-1274.2148534180235m 0m 305.8217231597523m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
             <div class="HotspotAnnotation">Borehole 1362B</div>
         </button>
-        <button class="Hotspot" slot="hotspot-20" data-position="69.26033237908582m 31.322003185749054m 2.388470021688531m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
+        <button class="Hotspot" slot="hotspot-5" data-position="-1513.61040564326m 0m 775.4433657001365m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">Borehole 1301B</div>
+        </button>
+        <button class="Hotspot" slot="hotspot-6" data-position="1059.5668762121697m 0m 470.97399151243013m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
             <div class="HotspotAnnotation">Borehole 1027C</div>
         </button>
-        <button class="Hotspot" slot="hotspot-21" data-position="69.19022647956217m -29.40893443237777m 26.939818382263155m" data-normal="0m 0m 1m" data-visibility-attribute="visible">
-            <div class="HotspotAnnotation">Basement Basalt</div>
-        </button>
-        <button class="Hotspot" slot="hotspot-22" data-position="68.93623053224456m 2.843571165615721m 26.517255783081055m" data-normal="0m 0m 1m" data-visibility-attribute="visible">
-            <div class="HotspotAnnotation">Sediment</div>
-        </button>
-        <button class="Hotspot" slot="hotspot-24" data-position="69.4674613039933m 30.823573553004216m 26.517255783081055m" data-normal="0m 0m 1m" data-visibility-attribute="visible">
+        <button id="hs-seafloor-top" class="Hotspot" slot="hotspot-8" data-position="1975.124209101059m 0m 1920.5047987284338m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
             <div class="HotspotAnnotation">Seafloor</div>
         </button>
+        <button id="hs-basement-bottom" class="Hotspot" slot="hotspot-9" data-position="1972.091427038039m -499.93982883445835m 1910.640055371795m" data-normal="0.02197153755817601m 0.9996982457445964m -0.010984943900907103m" data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">Igneous Basement</div>
+        </button>
+
+        <!-- Invisible anchors marking the basement layer's footprint corners, used only to draw its dimension lines -->
+        <button id="hs-basement-cornerA" class="DimAnchor" slot="hotspot-30" data-position="-2400m -500m -1577.300048828125m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
+        <button id="hs-basement-cornerB" class="DimAnchor" slot="hotspot-31" data-position="2100m -500m -1577.300048828125m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
+        <button id="hs-basement-cornerC" class="DimAnchor" slot="hotspot-32" data-position="2100m -500m 1922.699951171875m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
+        <button id="hs-seafloor-corner" class="DimAnchor" slot="hotspot-33" data-position="2100m 0m 1922.699951171875m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
+        <button id="dim-1026B" class="DimAnchor" slot="hotspot-40" data-position="-1053.2547602494767m 0m -178.7172727747188m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
+        <button id="dim-1362A" class="DimAnchor" slot="hotspot-41" data-position="-1202.4134293512127m -1.4210854715202004e-14m 1.9995459612104014m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
+        <button id="dim-1362B" class="DimAnchor" slot="hotspot-42" data-position="-1274.2148534180235m 0m 305.8217231597523m" data-normal="0m 1m 0m" data-visibility-attribute="visible"></button>
     </template>
 
     <script>
         const viewer = document.getElementById("viewer");
 
-        function loadModel(src, hotspotsId) {
+        function loadModel(src, hotspotsId, button) {
+            // Highlight the selected model button
+            document.querySelectorAll(".model-select button").forEach(el => el.classList.remove("active"));
+            if (button) button.classList.add("active");
+
             // Remove any labels from the previous model
-            viewer.querySelectorAll(".Hotspot").forEach(el => el.remove());
+            viewer.querySelectorAll(".Hotspot, .DimAnchor").forEach(el => el.remove());
 
             // Add this model's labels, if it has any
             if (hotspotsId) {
@@ -92,8 +271,86 @@
 
         viewer.addEventListener("load", () => viewer.jumpCameraToGoal());
 
+        customElements.whenDefined("model-viewer").then(() => {
+            requestAnimationFrame(updateDimensions);
+        });
+
+        // Dimension lines: connect pairs of (invisible or labeled) hotspot
+        // anchors with a line, labeled with the real-world distance between
+        // them, computed from their data-position attributes.
+        const dimensionPairs = [
+            ["dim-1026B", "dim-1362A"],
+            ["dim-1362A", "dim-1362B"],
+            ["hs-basement-cornerC", "hs-seafloor-corner"],
+            ["hs-basement-cornerA", "hs-basement-cornerB"],
+            ["hs-basement-cornerB", "hs-basement-cornerC"],
+        ];
+        const dimensionSvg = document.getElementById("dimension-overlay");
+        const viewerWrap = document.querySelector(".viewer-wrap");
+
+        function parsePosition(el) {
+            return el.getAttribute("data-position").trim().split(/\s+/).map(parseFloat);
+        }
+
+        function updateDimensions() {
+            const wrapRect = viewerWrap.getBoundingClientRect();
+            let svgContent = "";
+
+            for (const [aId, bId] of dimensionPairs) {
+                const aEl = document.getElementById(aId);
+                const bEl = document.getElementById(bId);
+                if (!aEl || !bEl) continue;
+                if (!aEl.hasAttribute("data-visible") || !bEl.hasAttribute("data-visible")) continue;
+
+                const aRect = aEl.getBoundingClientRect();
+                const bRect = bEl.getBoundingClientRect();
+                const x1 = aRect.left - wrapRect.left;
+                const y1 = aRect.top - wrapRect.top;
+                const x2 = bRect.left - wrapRect.left;
+                const y2 = bRect.top - wrapRect.top;
+                const midX = (x1 + x2) / 2;
+                const midY = (y1 + y2) / 2;
+
+                const [ax, ay, az] = parsePosition(aEl);
+                const [bx, by, bz] = parsePosition(bEl);
+                const distance = Math.hypot(ax - bx, ay - by, az - bz);
+                const label = `${Math.round(distance)} m`;
+
+                svgContent += `
+                    <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" style="stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 3;" />
+                    <circle cx="${x1}" cy="${y1}" r="3" style="fill: var(--accent);" />
+                    <circle cx="${x2}" cy="${y2}" r="3" style="fill: var(--accent);" />
+                    <text x="${midX}" y="${midY - 6}" text-anchor="middle" style="font: 600 12px 'Inter', sans-serif; fill: var(--ink); paint-order: stroke; stroke: white; stroke-width: 3px;">${label}</text>
+                `;
+            }
+
+            dimensionSvg.innerHTML = svgContent;
+            requestAnimationFrame(updateDimensions);
+        }
+
+        // Compass: model north is the -Z axis. Two things rotate the model
+        // horizontally, and model-viewer treats them differently:
+        //   - dragging orbits the camera (theta), which fires camera-change
+        //   - auto-rotate spins the model itself (turntableRotation, in radians)
+        //     and fires NO event, so it has to be polled every frame.
+        // Orbiting by theta turns the needle by +theta on screen; spinning the
+        // model by yaw is the same as orbiting by -yaw. Pitch (phi) is ignored,
+        // so only horizontal rotation counts.
+        const compassNeedle = document.getElementById("compass-needle");
+
+        function updateCompass() {
+            const { theta } = viewer.getCameraOrbit();
+            const angle = theta - viewer.turntableRotation;
+            compassNeedle.style.transform = `rotate(${angle * 180 / Math.PI}deg)`;
+            requestAnimationFrame(updateCompass);
+        }
+
+        customElements.whenDefined("model-viewer").then(() => {
+            requestAnimationFrame(updateCompass);
+        });
+
         // Show the seafloor labels on first load
-        loadModel("sefloor-demo-draco.glb", "hotspots-seafloor");
+        loadModel("seafloor_v3.glb", "hotspots-seafloor", document.querySelector(".model-select button.active"));
     </script>
 </body>
 </html>
