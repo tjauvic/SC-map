@@ -75,37 +75,10 @@ LABEL ZOOM LOGIC
 
 function updateBareOutcropLabels() {
 
-const currentZoom =
-    map.getZoom();
-
-
-if (
-    currentZoom >= MAP_CONFIG.labelMinZoom
-) {
-
-    if (
-        !map.hasLayer(bareLabelsGroup)
-    ) {
-
-        map.addLayer(
-            bareLabelsGroup
-        );
-
+    if (map.getZoom() >= MAP_CONFIG.labelMinZoom) {
+        map.addLayer(bareLabelsGroup);
+    } else {
+        map.removeLayer(bareLabelsGroup);
     }
-
-}
-else {
-
-    if (
-        map.hasLayer(bareLabelsGroup)
-    ) {
-
-        map.removeLayer(
-            bareLabelsGroup
-        );
-
-    }
-
-}
 
 }

@@ -2,23 +2,46 @@
 MAP INITIALIZATION
 ========================================================= */
 const map = L.map("map", {
-
-center:
-    MAP_CONFIG.center,
-
-zoom:
-    MAP_CONFIG.zoom,
-
-minZoom:
-    MAP_CONFIG.minZoom,
-    
-maxZoom:
-    MAP_CONFIG.maxZoom,
-
-worldCopyJump:
-    MAP_CONFIG.worldCopyJump
-
+    minZoom: MAP_CONFIG.minZoom,
+    maxZoom: MAP_CONFIG.maxZoom
 });
+
+// Layers can't be added until the map has a view, so set it straight away
+map.fitBounds(MAP_CONFIG.initialBounds);
+
+// When a popup opens, pan so that the popup itself (which sits above the clicked
+// marker) is centred on the map. Leaflet's built-in autoPan only nudges the map
+// far enough for the popup to fit, so it is switched off to avoid the two fighting.
+L.Popup.mergeOptions({ autoPan: false });
+
+function centerOnPopup(popup) {
+    const box = popup.getElement().getBoundingClientRect();
+    const view = map.getContainer().getBoundingClientRect();
+    // Leaflet's default pan (0.25 s, nearly linear) feels abrupt; a longer, softer ease is gentler
+    map.panBy([
+        box.left + box.width / 2 - (view.left + view.width / 2),
+        box.top + box.height / 2 - (view.top + view.height / 2)
+    ], { duration: 0.7, easeLinearity: 0.15 });
+}
+
+map.on("popupopen", event => {
+    requestAnimationFrame(() => centerOnPopup(event.popup));
+
+    // Instrument photos load after the popup opens and make it taller, so centre again then
+    event.popup.getElement().querySelectorAll("img").forEach(image => {
+        if (!image.complete) {
+            image.addEventListener("load", () => centerOnPopup(event.popup), { once: true });
+        }
+    });
+});
+
+// Stacking order of what is drawn on the map, bottom to top: ONC cables (the
+// default overlay pane), ONC instruments, proposed instruments, then the
+// borehole pins. Popups (pane 700) stay above all of them.
+map.createPane("oncInstruments").style.zIndex = 610;
+map.createPane("proposed").style.zIndex = 620;
+map.createPane("boreholes").style.zIndex = 630;
+
 /* =========================================================
 BASEMAP
 ========================================================= */
@@ -27,63 +50,43 @@ const osm =
 L.tileLayer(
 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 {
-maxZoom: 19,
+maxNativeZoom: 19,
+
+maxZoom: 22,
 
         attribution:
             '&copy; <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors'
     }
 );
 
-var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC', maxNativeZoom: 12});
+const ESRI_ATTRIBUTION = 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC';
 
-Esri_NatGeoWorldMap.addTo(map);
+const Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', { attribution: ESRI_ATTRIBUTION, maxNativeZoom: 9, maxZoom: 22});
+
+/* GMRT (Global Multi-Resolution Topography): live shaded-relief bathymetry
+   from ship multibeam surveys, up to 100 m resolution. */
+const gmrt =
+L.tileLayer.wms(
+"https://www.gmrt.org/services/mapserver/wms_merc",
+{
+    layers: "GMRT",
+    format: "image/jpeg",          // about a tenth the size of PNG; the layer is opaque anyway
+    version: "1.3.0",
+    maxNativeZoom: 12,             // data is at most 100 m/pixel; past this, scale tiles up instead of asking the slow server
+    maxZoom: 22,
+    updateWhenZooming: false,      // don't fetch tiles for the in-between zoom levels of an animation
+    attribution:
+        'Bathymetry: <a href="https://www.gmrt.org" target="_blank">GMRT</a> (Ryan et al., 2009)'
+}
+);
+
+gmrt.addTo(map);
 /* =========================================================
-MARKER ICONS
+MARKER ICONS (SVG, see js/borehole-icons.js)
 ========================================================= */
 
-const CorkIcon =
-L.Icon.extend({
-
-    options: {
-
-        shadowUrl:
-            "assets/shadow-cork-small.png",
-
-        iconSize:
-            [44.4, 70.4],
-
-        shadowSize:
-            [51.0, 50.6],
-
-        iconAnchor:
-            [22.2, 70.4],
-
-        shadowAnchor:
-            [0, 50.2],
-
-        popupAnchor:
-            [0, -70.4]
-    }
-});
-
-const redCork =
-new CorkIcon({
-iconUrl: "assets/red-cork-small.png"
-});
-const greenCork =
-new CorkIcon({
-iconUrl: "assets/green-cork-small.png"
-});
-
-const blueCork =
-new CorkIcon({
-iconUrl: "assets/blue-cork-small.png"
-});
-
-const yellowCork =
-new CorkIcon({
-iconUrl: "assets/yellow-cork-small.png"
-});
+const redCork = boreholeIcon("red");
+const blueCork = boreholeIcon("blue");
 
 /* =========================================================
 BOREHOLE MARKERS
@@ -128,6 +131,20 @@ function buildDataLinks(hole) {
             (a, b) => a.label.localeCompare(b.label)
         );
 
+}
+
+function buildHoleDetails(hole) {
+    const [lat, lon] = hole.reportedLocation || hole.coords;
+
+    return `
+        <dl class="hole-details">
+            <dt>Expedition leg</dt><dd>${hole.leg}</dd>
+            <dt>Latitude</dt><dd>${formatCoordinate(lat, "N", "S")}</dd>
+            <dt>Longitude</dt><dd>${formatCoordinate(lon, "E", "W")}</dd>
+            <dt>Water depth</dt><dd>${hole.waterDepth} m</dd>
+            <dt>Penetration</dt><dd>${hole.penetration} m</dd>
+        </dl>
+    `;
 }
 
 function buildPopupContent(hole) {
@@ -178,6 +195,7 @@ function buildPopupContent(hole) {
                     ? "<br>" + hole.description
                     : ""
             }
+            ${buildHoleDetails(hole)}
             ${linksHtml}
         </div>
     `;
@@ -236,14 +254,14 @@ boreholes.forEach(
             L.marker(
                 hole.coords,
                 {
+                    pane: "boreholes",
                     icon: iconFor(hole),
                     zIndexOffset: zIndexFor(hole)
                 }
             ).bindPopup(
                 buildPopupContent(hole),
                 {
-                    maxWidth: 260,
-                    maxHeight: 260
+                    maxWidth: 260
                 }
             );
 
@@ -258,58 +276,18 @@ boreholes.forEach(
 FILTER CONTROL
 ========================================================= */
 
-new FilterControl().addTo(map);
-
-document
-.querySelectorAll(".data-filter")
-.forEach(
-checkbox => {
-
-        checkbox.addEventListener(
-            "change",
-            updateBoreholeMarkers
-        );
-
-    }
-);
+buildFilterPanel();
 
 updateBoreholeMarkers();
 
-/* =========================================================
-CASCADIA BASIN BATHYMETRY
-========================================================= */
-
-const bathymetry =
-L.tileLayer(
-DATA_URLS.bathymetry,
-{
-
-        minZoom:
-            7,
-
-        maxNativeZoom:
-            13,
-
-        maxZoom:
-            19,
-
-        tileSize:
-            256,
-
-        opacity:
-            MAP_CONFIG.bathymetryOpacity,
-
-        attribution:
-            'Bathymetry: <a href="https://www.arcgis.com/home/item.html?id=2d33516a1c7d4941ad061a0d84c2fb9a" target="_blank">Cascadia Basin Bathymetry</a> / Ocean Networks Canada'
-    }
-);
-
-bathymetry.addTo(map);
 /* =========================================================
 LAYER CONTROL
 ========================================================= */
 
 const baseMaps = {
+
+"GMRT Bathymetry":
+    gmrt,
 
 "National Geographic (Esri)":
     Esri_NatGeoWorldMap,
@@ -321,38 +299,11 @@ const baseMaps = {
 
 const overlays = {
 
-"Cascadia Basin Bathymetry":
-    bathymetry,
-
 "Borehole markers":
     markerGroup
 
 };
-// Kept in a variable so js/instruments.js can add its overlays later.
-const layerControl =
-L.control.layers(
-baseMaps,
-overlays,
-{
-collapsed: window.matchMedia("(max-width: 600px)").matches
-}
-).addTo(map);
-/* =========================================================
-TILE ERROR REPORTING
-========================================================= */
-
-bathymetry.on(
-"tileerror",
-function (event) {
-
-    console.warn(
-        "Bathymetry tile failed to load:",
-        event.tile.src
-    );
-
-}
-
-);
+buildLayersPanel(baseMaps, overlays);
 
 /* =========================================================
 BARE OUTCROP LABELS
@@ -369,7 +320,7 @@ updateBareOutcropLabels
 ONC CABLE DATA
 ========================================================= */
 
-L.geoJSON(
+const cableLayer = L.geoJSON(
 cableData,
 {
 
@@ -412,21 +363,10 @@ cableData,
 
 ).addTo(map);
 /* =========================================================
-MAP CONTROLS
+SIDEBAR
 ========================================================= */
 
-map.addControl(
-new OpacityControl()
-);
-
-map.addControl(
-new LegendControl()
-);
-
-/* =========================================================
-INITIAL MAP EXTENT
-========================================================= */
-
-map.fitBounds(
-MAP_CONFIG.initialBounds
-);
+addOverlayToggle(cableLayer, "ONC cables");
+addCursorCoordinates();
+buildLegendPanel();
+initSidebar();

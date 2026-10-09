@@ -9,7 +9,11 @@ const boreholes = [
 
     {
         id: "327-U1362A",
-        coords: [47.7610466667, -127.7612],
+        leg: 327,
+        coords: [47.7610467, -127.7612],
+        reportedLocation: [47.7610467, -127.7612],
+        waterDepth: 2661.13,
+        penetration: 528,
         description: "Injection site.",
 
         dataType: {
@@ -66,7 +70,11 @@ const boreholes = [
 
     {
         id: "327-U1362B",
-        coords: [47.7583283333, -127.7621866667],
+        leg: 327,
+        coords: [47.7583283, -127.7621867],
+        reportedLocation: [47.7583283, -127.7621867],
+        waterDepth: 2661.13,
+        penetration: 359,
         description: "Monitoring site.",
 
         dataType: {
@@ -123,7 +131,11 @@ const boreholes = [
 
     {
         id: "168-1026A",
-        coords: [47.7626, -127.759],
+        leg: 168,
+        coords: [47.762695, -127.758911],
+        reportedLocation: [47.7626, -127.759],
+        waterDepth: 2658.1,
+        penetration: 101.4,
         description: "",
 
         dataType: {
@@ -180,7 +192,11 @@ const boreholes = [
 
     {
         id: "168-1026B",
-        coords: [47.7627, -127.759],
+        leg: 168,
+        coords: [47.7626, -127.7592116667],
+        reportedLocation: [47.7627, -127.759],
+        waterDepth: 2657.9,
+        penetration: 39.2,
         description: "Connected to ONC cable network.",
 
         dataType: {
@@ -237,7 +253,11 @@ const boreholes = [
 
     {
         id: "168-1026C",
+        leg: 168,
         coords: [47.771, -127.753],
+        reportedLocation: [47.771, -127.753],
+        waterDepth: 2657.8,
+        penetration: 163.6,
         description: "",
 
         dataType: {
@@ -294,7 +314,11 @@ const boreholes = [
 
     {
         id: "168-1027A",
+        leg: 168,
         coords: [47.7569, -127.73],
+        reportedLocation: [47.7569, -127.73],
+        waterDepth: 2657.0,
+        penetration: 9.5,
         description: "",
 
         dataType: {
@@ -351,7 +375,11 @@ const boreholes = [
 
     {
         id: "168-1027B",
+        leg: 168,
         coords: [47.7569, -127.73],
+        reportedLocation: [47.7569, -127.73],
+        waterDepth: 2657.0,
+        penetration: 577.9,
         description: "",
 
         dataType: {
@@ -408,7 +436,11 @@ const boreholes = [
 
     {
         id: "168-1027C",
-        coords: [47.7565, -127.730],
+        leg: 168,
+        coords: [47.7565, -127.731],
+        reportedLocation: [47.7565, -127.73],
+        waterDepth: 2656.2,
+        penetration: 632.4,
         description: "",
 
         dataType: {
@@ -465,7 +497,11 @@ const boreholes = [
 
     {
         id: "301-U1301A",
-        coords: [47.7534916667, -127.7638816667],
+        leg: 301,
+        coords: [47.7534917, -127.7638817],
+        reportedLocation: [47.7534917, -127.7638817],
+        waterDepth: 2656.64,
+        penetration: 369.5,
         description: "",
 
         dataType: {
@@ -522,7 +558,11 @@ const boreholes = [
 
     {
         id: "301-U1301B",
+        leg: 301,
         coords: [47.75381, -127.76377],
+        reportedLocation: [47.75381, -127.76377],
+        waterDepth: 2656.75,
+        penetration: 582.8,
         description: "",
 
         dataType: {
@@ -579,7 +619,11 @@ const boreholes = [
 
     {
         id: "301-U1301C",
-        coords: [47.754665, -127.76333333333],
+        leg: 301,
+        coords: [47.754665, -127.7633333],
+        reportedLocation: [47.754665, -127.7633333],
+        waterDepth: 2655.95,
+        penetration: 265.3,
         description: "",
 
         dataType: {
@@ -636,7 +680,11 @@ const boreholes = [
 
     {
         id: "301-U1301D",
+        leg: 301,
         coords: [47.7546, -127.763005],
+        reportedLocation: [47.7546, -127.763005],
+        waterDepth: 2655.35,
+        penetration: 177,
         description: "",
 
         dataType: {
@@ -693,7 +741,11 @@ const boreholes = [
 
     {
         id: "328-U1364A",
-        coords: [48.6999366667, -126.8722151667],
+        leg: 328,
+        coords: [48.6999367, -126.8721517],
+        reportedLocation: [48.6999367, -126.8721517],
+        waterDepth: 1317.66,
+        penetration: 336,
         description: "",
 
         dataType: {
@@ -750,7 +802,11 @@ const boreholes = [
 
     {
         id: "146-889A",
+        leg: 146,
         coords: [48.6993, -126.8683],
+        reportedLocation: [48.6993, -126.8683],
+        waterDepth: 1311.2,
+        penetration: 345.8,
         description: "",
 
         dataType: {
@@ -807,7 +863,11 @@ const boreholes = [
 
     {
         id: "146-889B",
+        leg: 146,
         coords: [48.6975, -126.8732],
+        reportedLocation: [48.6975, -126.8732],
+        waterDepth: 1316.2,
+        penetration: 386.5,
         description: "",
 
         dataType: {
@@ -864,7 +924,11 @@ const boreholes = [
 
     {
         id: "146-889C",
+        leg: 146,
         coords: [48.6985, -126.8705],
+        reportedLocation: [48.6985, -126.8705],
+        waterDepth: 1315.1,
+        penetration: 384.5,
         description: "",
 
         dataType: {
@@ -921,7 +985,11 @@ const boreholes = [
 
     {
         id: "146-889D",
-        coords: [48.6999, -126.8688],
+        leg: 146,
+        coords: [48.6997, -126.8688],
+        reportedLocation: [48.6997, -126.8688],
+        waterDepth: 1311.1,
+        penetration: 154,
         description: "",
 
         dataType: {
@@ -978,7 +1046,11 @@ const boreholes = [
 
     {
         id: "311-U1327A",
-        coords: [48.6981166667, -126.86535],
+        leg: 311,
+        coords: [48.6981167, -126.86535],
+        reportedLocation: [48.6981167, -126.86535],
+        waterDepth: 1322.1,
+        penetration: 300,
         description: "",
 
         dataType: {
@@ -1035,7 +1107,11 @@ const boreholes = [
 
     {
         id: "311-U1327B",
-        coords: [48.69815, -126.8652333333],
+        leg: 311,
+        coords: [48.69815, -126.8652333],
+        reportedLocation: [48.69815, -126.8652333],
+        waterDepth: 1306.1,
+        penetration: 9.5,
         description: "",
 
         dataType: {
@@ -1092,7 +1168,11 @@ const boreholes = [
 
     {
         id: "311-U1327C",
-        coords: [48.69815, -126.8652333333],
+        leg: 311,
+        coords: [48.69815, -126.8652333],
+        reportedLocation: [48.69815, -126.8652333],
+        waterDepth: 1304.5,
+        penetration: 300,
         description: "",
 
         dataType: {
@@ -1149,7 +1229,11 @@ const boreholes = [
 
     {
         id: "311-U1327D",
+        leg: 311,
         coords: [48.69825, -126.8651],
+        reportedLocation: [48.69825, -126.8651],
+        waterDepth: 1303.7,
+        penetration: 300,
         description: "",
 
         dataType: {
@@ -1206,7 +1290,11 @@ const boreholes = [
 
     {
         id: "311-U1327E",
-        coords: [48.698333, -126.864933],
+        leg: 311,
+        coords: [48.6983333, -126.8649333],
+        reportedLocation: [48.6983333, -126.8649333],
+        waterDepth: 1303.4,
+        penetration: 300,
         description: "",
 
         dataType: {
@@ -1263,7 +1351,11 @@ const boreholes = [
 
     {
         id: "146-891B",
-        coords: [44.644300, -125.326],
+        leg: 146,
+        coords: [44.6443, -125.326],
+        reportedLocation: [44.6443, -125.326],
+        waterDepth: 2663.0,
+        penetration: 472.3,
         description: "",
 
         dataType: {
@@ -1320,7 +1412,11 @@ const boreholes = [
 
     {
         id: "146-892D",
+        leg: 146,
         coords: [44.674, -125.119],
+        reportedLocation: [44.674, -125.119],
+        waterDepth: 670.3,
+        penetration: 166.5,
         description: "",
 
         dataType: {

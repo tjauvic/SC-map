@@ -12,12 +12,12 @@
 <link rel="icon" type="image/png" sizes="512x512" href="assets/android-chrome-512x512.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/android-chrome-192x192.png">
 
-<title>Solid Carbon Data Finder</title>
+<title>Solid Carbon Data Explorer</title>
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <!-- Leaflet CSS -->
 <link
@@ -27,34 +27,87 @@
     crossorigin=""
 />
 
+<!-- Leaflet.markercluster CSS (groups and fans out overlapping instrument markers) -->
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+    integrity="sha256-YU3qCpj/P06tdPBJGPax0bm6Q1wltfwjsho5TR4+TYc="
+    crossorigin=""
+/>
+
 <!-- Application CSS -->
-<link rel="stylesheet" href="css/map.css">
+<link rel="stylesheet" href="css/map.css?v=20261009">
 
 </head> <body>
 <header id="topbar">
     <div class="topbar-title">
-        <h1>Solid Carbon Data Finder</h1>
-        <span>Data compiled by Ocean Networks Canada from a variety of sources.</span>
+        <h1><img src="assets/logo.svg" alt="">Solid Carbon Data Explorer</h1>
     </div>
-
-    <button id="help-button" aria-label="How to use this map" title="How to use this map">?</button>
 </header>
 
-<div id="help-panel">
-    <strong>About this map</strong>
-    <p>Explore ocean observatories of interest to the Solid Carbon project. The map contains 22 sites of
-       interest marked by the pins, a high resolution bathymetry layer of the northern Cascadia Basin region, 
-       and the current Ocean Networks Canada ocean observation cable network (in orange). The data provided
-       is compiled form a variety of online oceanography databases.</p>
-    <ul>
-        <li><strong>Markers</strong> click a borehole for details and data links.</li>
-        <li><strong>Filter Data Types</strong> narrow markers to boreholes with a chosen data type.</li>
-        <li><strong>Bathymetry opacity</strong> fade the depth layer to see the basemap underneath.</li>
-        <li><strong>Layers</strong> (top right of map) toggle the basemap, bathymetry, and borehole markers.</li>
-    </ul>
-</div>
+<div id="app">
+    <aside id="sidebar">
+        <nav id="rail" aria-label="Map menu">
+            <button class="rail-button" data-panel="filters" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg>
+                <span>Filters</span>
+            </button>
+            <button class="rail-button" data-panel="layers" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.500l9 5 9-5M3 16.500l9 5 9-5"/></svg>
+                <span>Base Layers</span>
+            </button>
+            <button class="rail-button" data-panel="legend" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4.500" cy="6" r="1.500"/><circle cx="4.500" cy="12" r="1.500"/><circle cx="4.500" cy="18" r="1.500"/></svg>
+                <span>Legend</span>
+            </button>
+            <button class="rail-button rail-help" data-panel="help" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.500 9.500a2.500 2.500 0 1 1 3.500 2.300c-.7.400-1 .9-1 1.700M12 17v.01"/></svg>
+                <span>Help</span>
+            </button>
+        </nav>
 
-<div id="map"></div>
+        <div id="panels">
+            <section class="side-panel" data-panel="filters" hidden>
+                <h2>Filters</h2>
+                <p>Show only boreholes that have all of the selected data types.</p>
+                <button id="filter-clear" class="panel-button" type="button">Clear all</button>
+                <div id="filter-list" class="check-list scroll"></div>
+            </section>
+
+            <section class="side-panel" data-panel="layers" hidden>
+                <h2>Base Layers</h2>
+                <h3>Basemap</h3>
+                <div id="basemap-list" class="check-list"></div>
+                <h3>Map layers</h3>
+                <div id="overlay-list" class="check-list"></div>
+            </section>
+
+            <section class="side-panel" data-panel="help" hidden>
+                <h2>How to use this map</h2>
+
+                <ol class="help-steps">
+                    <li><strong>Move around:</strong> drag to pan, scroll or use + / &minus; to zoom. Zoom in where markers overlap to separate them.</li>
+                    <li><strong>Get details:</strong> click any pin or icon to open a popup. Borehole popups link to the available data.</li>
+                    <li><strong>Find boreholes by data type:</strong> open <strong>Filters</strong> and tick the data you need. Only boreholes with all of it stay on the map.</li>
+                    <li><strong>Change what is shown:</strong> open <strong>Base Layers</strong> to switch the basemap or hide layers.</li>
+                    <li><strong>Not sure what a symbol means?</strong> Open <strong>Legend</strong>.</li>
+                </ol>
+
+                <p>Data compiled by
+                   <a href="https://www.oceannetworks.ca" target="_blank" rel="noopener">Ocean Networks Canada</a>
+                   for the <a href="https://solidcarbon.ca" target="_blank" rel="noopener">Solid Carbon</a> project.
+                   Bathymetry from <a href="https://www.gmrt.org" target="_blank" rel="noopener">GMRT</a>.</p>
+            </section>
+
+            <section class="side-panel" data-panel="legend" hidden>
+                <h2>Legend</h2>
+                <div id="legend-content" class="scroll"></div>
+            </section>
+        </div>
+    </aside>
+
+    <div id="map"></div>
+</div>
 
 <!-- Leaflet JS -->
 <script
@@ -63,25 +116,27 @@
     crossorigin=""
 ></script>
 
+<script
+    src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"
+    integrity="sha256-Hk4dIpcqOSb0hZjgyvFOP+cEmDXUKKNE/tT542ZbNQg="
+    crossorigin=""
+></script>
+
 <!-- Application data/configuration -->
-<script src="js/config.js"></script>
-<script src="js/boreholes.js"></script>
-<script src="js/datalinks.js"></script>
-<script src="js/cables.js"></script>
+<script src="js/config.js?v=20261008"></script>
+<script src="js/boreholes.js?v=20261008"></script>
+<script src="js/datalinks.js?v=20261008"></script>
+<script src="js/cables.js?v=20261008"></script>
 
 <!-- Application components -->
-<script src="js/controls.js"></script>
-<script src="js/labels.js"></script>
+<script src="js/controls.js?v=20261008"></script>
+<script src="js/labels.js?v=20261008"></script>
+
+<script src="js/instrument-catalog.js?v=20261009"></script>
+<script src="js/borehole-icons.js?v=20261009"></script>
 
 <!-- Application entry point -->
-<script src="js/map.js"></script>
-<script src="js/instruments.js"></script>
-
-<!-- Page chrome (title bar / help toggle) -->
-<script>
-document.getElementById("help-button").addEventListener("click", function () {
-    document.getElementById("help-panel").classList.toggle("open");
-});
-</script>
+<script src="js/map.js?v=20261008"></script>
+<script src="js/instruments.js?v=20261008"></script>
 
 </body> </html>

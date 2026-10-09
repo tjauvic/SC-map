@@ -58,33 +58,15 @@ MAP CONFIGURATION
 
 const MAP_CONFIG = {
 
-center: [48.5, -127.0],
+minZoom: 5,
 
-zoom: 8,
-
-minZoom: 7,
-
-maxZoom: 18,
-
-worldCopyJump: false,
+maxZoom: 22,
 
 initialBounds: [
     [47.75, -129.35],
     [48.95, -125.97]
 ],
 
-labelMinZoom: 9,
-
-bathymetryOpacity: 0.30
-
-};
-/* =========================================================
-DATA URLS
-========================================================= */
-
-const DATA_URLS = {
-
-bathymetry:
-    "https://tiles.arcgis.com/tiles/qRqOFxxnwUHOSocZ/arcgis/rest/services/CascadiaBasinBathymetry2/MapServer/tile/{z}/{y}/{x}"
+labelMinZoom: 9
 
 };

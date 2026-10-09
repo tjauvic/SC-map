@@ -1,135 +1,364 @@
 {
-  "type": "FeatureCollection",
-  "name": "solid_carbon_proposed_monitoring",
-  "metadata": {
-    "description": "Proposed Solid Carbon monitoring tools. Points sit at the borehole they will be installed on; cable lines are straight-line schematics, not surveyed routes.",
-    "unlocated": [
-      {
-        "name": "CSEM receivers (3D array)",
-        "note": "Autonomously distributed"
-      },
-      {
-        "name": "Ocean-bottom seismometers (OBS)",
-        "note": "Autonomously distributed, 2028–2030"
-      },
-      {
-        "name": "Controlled-source EM transmitter + 1–2 cabled receivers",
-        "note": "Location flexible / TBD"
-      }
-    ]
-  },
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -127.7612,
-          47.7610466667
-        ]
-      },
-      "properties": {
-        "hole_id": "327-U1362A",
-        "name": "U1362A",
-        "role": "Injection and monitoring hole",
-        "status": "proposed",
-        "connection": "To be cabled to ONC via 1026B (≈235 m)",
-        "instruments": [
-          "Camera with pan & tilt",
-          "Sonar (COVIS)",
-          "Hydrophone array (4, high-frequency)",
-          "CO2 injection pump",
-          "CORK: OSMO-sampler",
-          "CORK: pressure",
-          "CORK: \"Ferry Box\" with fluorometer, \"carbon\" meter and resistivity meter (CTD)"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -127.759,
-          47.7627
-        ]
-      },
-      "properties": {
-        "hole_id": "168-1026B",
-        "name": "1026B",
-        "role": "Monitoring hole",
-        "status": "proposed additions",
-        "connection": "Already connected to ONC",
-        "instruments": [
-          "Camera",
-          "CORK: OSMO-sampler",
-          "CORK: pressure",
-          "CORK: \"Ferry Box\" with fluorometer, \"carbon\" meter and resistivity meter (CTD)"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -127.7621866667,
-          47.7583283333
-        ]
-      },
-      "properties": {
-        "hole_id": "327-U1362B",
-        "name": "U1362B",
-        "role": "Monitoring hole",
-        "status": "proposed",
-        "connection": "Autonomous; cable connection possible (≈311 m from U1362A)",
-        "instruments": [
-          "CORK: OSMO-sampler",
-          "CORK: pressure (autonomous)"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -127.759,
-            47.7627
-          ],
-          [
-            -127.7612,
-            47.7610466667
-          ]
-        ]
-      },
-      "properties": {
-        "name": "Proposed cable 1026B – U1362A",
-        "status": "planned",
-        "length_m": 235
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -127.7612,
-            47.7610466667
-          ],
-          [
-            -127.7621866667,
-            47.7583283333
-          ]
-        ]
-      },
-      "properties": {
-        "name": "Possible cable U1362A – U1362B",
-        "status": "possible",
-        "length_m": 311
-      }
-    }
+ "type": "FeatureCollection",
+ "name": "solid_carbon_proposed_monitoring",
+ "metadata": {
+  "description": "Proposed Solid Carbon monitoring tools. Each hole is a point; planned equipment is placed around its hole following the site-layout slides (bearing and distance from the CORK). Distances from the slides are roughly doubled so the icons stay separate when zoomed in, and tether lines and cable lines are schematic, not surveyed routes.",
+  "unlocated": [
+   {
+    "name": "CSEM receivers (3D array)",
+    "note": "Autonomously distributed"
+   },
+   {
+    "name": "Ocean-bottom seismometers (OBS)",
+    "note": "Autonomously distributed, 2028–2030"
+   },
+   {
+    "name": "Controlled-source EM transmitter + 1–2 cabled receivers",
+    "note": "Location flexible / TBD"
+   }
   ]
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.7612,
+     47.7610466667
+    ]
+   },
+   "properties": {
+    "hole_id": "327-U1362A",
+    "name": "U1362A",
+    "role": "Injection and monitoring hole",
+    "status": "proposed",
+    "connection": "To be cabled to ONC via 1026B (≈235 m)",
+    "instruments": [
+     "OSMO-sampler",
+     "Pressure",
+     "\"Ferry Box\" with fluorometer, \"carbon\" meter and resistivity meter (CTD)"
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.7592116667,
+     47.7626
+    ]
+   },
+   "properties": {
+    "hole_id": "168-1026B",
+    "name": "1026B",
+    "role": "Monitoring hole",
+    "status": "proposed additions",
+    "connection": "Already connected to ONC",
+    "instruments": [
+     "OSMO-sampler",
+     "Pressure",
+     "\"Ferry Box\" with fluorometer, \"carbon\" meter and resistivity meter (CTD)"
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.7621866667,
+     47.7583283333
+    ]
+   },
+   "properties": {
+    "hole_id": "327-U1362B",
+    "name": "U1362B",
+    "role": "Monitoring hole",
+    "status": "proposed",
+    "connection": "Autonomous; cable connection possible (≈311 m from U1362A)",
+    "instruments": [
+     "OSMO-sampler",
+     "Pressure (autonomous)"
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -127.7592116667,
+      47.7626
+     ],
+     [
+      -127.7612,
+      47.7610466667
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Proposed cable 1026B – U1362A",
+    "status": "planned",
+    "length_m": 235
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -127.7612,
+      47.7610466667
+     ],
+     [
+      -127.7621866667,
+      47.7583283333
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Possible cable U1362A – U1362B",
+    "status": "possible",
+    "length_m": 311
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.76088622,
+     47.7612918
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "hole": "U1362A",
+    "name": "Mini junction box",
+    "glyph": "junctionBox",
+    "status": "proposed",
+    "note": "Hub for the U1362A instruments; about 15–20 m NE of the CORK, on the 235 m link toward 1026B",
+    "description": "A small local hub that gives the planned instruments power and communications and links them to the cable."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.76169136,
+     47.76137697
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "hole": "U1362A",
+    "name": "Sonar (COVIS)",
+    "glyph": "sonar",
+    "status": "proposed",
+    "note": "About 20–30 m NW of the CORK, opposite the hydrophones",
+    "description": "An imaging sonar that scans the surrounding water and seafloor with sound, to detect fluids rising from the seafloor and changes around the site."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.7616009,
+     47.76104667
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "hole": "U1362A",
+    "name": "Camera with pan & tilt",
+    "glyph": "panTilt",
+    "status": "proposed",
+    "note": "Positioned to view the injection pump (3–5 m away on the slide)",
+    "description": "A camera on a motorised mount that swivels up, down and sideways, to watch the injection site and the other equipment."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.76113601,
+     47.76092849
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "hole": "U1362A",
+    "name": "CO2 injection pump",
+    "glyph": "pump",
+    "status": "proposed",
+    "note": "Injection into Bay C, in view of the camera",
+    "description": "Pumps CO₂-charged fluid down the borehole into the basalt beneath the seafloor, where the carbon is meant to turn into solid mineral."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.76091652,
+     47.76085611
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "hole": "U1362A",
+    "name": "Hydrophone array (4, high-frequency)",
+    "glyph": "hydrophone",
+    "status": "proposed",
+    "note": "Tetrahedral platform, opposite the sonar; installed with an accelerometer",
+    "description": "Four high-frequency hydrophones (underwater microphones) that listen around the site and can help locate where sounds come from."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.75955887,
+     47.76273475
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "hole": "1026B",
+    "name": "Camera (no pan & tilt)",
+    "glyph": "videoCamera",
+    "status": "proposed",
+    "note": "Added to the existing 1026B installation",
+    "description": "A fixed camera that films the equipment at the borehole."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -127.76088622,
+      47.7612918
+     ],
+     [
+      -127.7612,
+      47.7610466667
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Mini junction box link",
+    "status": "tether"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -127.76169136,
+      47.76137697
+     ],
+     [
+      -127.76088622,
+      47.7612918
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Sonar (COVIS) link",
+    "status": "tether"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -127.7616009,
+      47.76104667
+     ],
+     [
+      -127.76088622,
+      47.7612918
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Camera with pan & tilt link",
+    "status": "tether"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -127.76113601,
+      47.76092849
+     ],
+     [
+      -127.76088622,
+      47.7612918
+     ]
+    ]
+   },
+   "properties": {
+    "name": "CO2 injection pump link",
+    "status": "tether"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -127.76091652,
+      47.76085611
+     ],
+     [
+      -127.76088622,
+      47.7612918
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Hydrophone array (4, high-frequency) link",
+    "status": "tether"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -127.75955887,
+      47.76273475
+     ],
+     [
+      -127.7592116667,
+      47.7626
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Camera (no pan & tilt) link",
+    "status": "tether"
+   }
+  }
+ ]
 }
