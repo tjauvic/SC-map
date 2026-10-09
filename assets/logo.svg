@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>Solid Carbon</title>
+  <circle cx="256" cy="256" r="256" fill="#48808f"/>
+  <g stroke="#fff" stroke-width="10" fill="none"><path d="M304.1 304.1L437.0 437.0"/><path d="M324.0 256.0L512.0 256.0"/><path d="M256.0 324.0L256.0 512.0"/><path d="M207.9 304.1L75.0 437.0"/><path d="M188.0 256.0L0.0 256.0"/><path d="M207.9 207.9L75.0 75.0"/><path d="M256.0 188.0L256.0 0.0"/><path d="M304.1 207.9L437.0 75.0"/></g>
+  <path d="M437 75L272 193 321 228z" fill="#f2c230" stroke="#fff" stroke-width="7" stroke-linejoin="round"/>
+  <circle cx="256" cy="256" r="63" fill="#0b3a66" stroke="#fff" stroke-width="10"/>
+</svg>
