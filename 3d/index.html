@@ -159,7 +159,15 @@
             box-shadow: var(--panel-shadow);
         }
 
+        #compass svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
         #compass-needle {
+            transform-box: view-box;
             transform-origin: 36px 36px;
         }
     </style>
@@ -203,7 +211,8 @@
 
             <svg id="dimension-overlay"></svg>
 
-            <svg id="compass" viewBox="0 0 72 72" aria-label="Compass">
+            <div id="compass">
+            <svg viewBox="0 0 72 72" aria-label="Compass">
                 <circle cx="36" cy="36" r="33" fill="none" stroke="currentColor" stroke-opacity="0.25" />
                 <g id="compass-needle">
                     <polygon points="36,19 42,36 30,36" style="fill: var(--accent);" />
@@ -217,6 +226,7 @@
                 </g>
                 <circle cx="36" cy="36" r="2.5" fill="#333" />
             </svg>
+            </div>
         </div>
     </main>
 
