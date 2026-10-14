@@ -21,6 +21,24 @@ function listHtml(items, extraClass = "") {
     }</ul>`;
 }
  
+/* Search entry for an instrument marker. `layer` is the layer group it lives in:
+   the cluster group for current instruments, which has to open up around the
+   marker before its popup can be shown. */
+function instrumentSearchItem(marker, layer, label, detail, extra) {
+    return {
+        label: label,
+        detail: detail,
+        text: `${label} ${detail} ${extra}`,
+        visible: () => map.hasLayer(layer),
+        show() {
+            flyThen(marker.getLatLng(), () => {
+                if (layer.zoomToShowLayer) layer.zoomToShowLayer(marker, () => marker.openPopup());
+                else marker.openPopup();
+            });
+        }
+    };
+}
+
 /* ---------- current ONC instruments ---------- */
  
 /* What this type of instrument does, with a link to ONC's page for it when there is one */
@@ -97,6 +115,7 @@ function buildCurrentInstrumentsLayer(data) {
         spiderLegPolylineOptions: { weight: 1.5, color: "#1b2a3a", opacity: 0.6 },
         iconCreateFunction: currentClusterIcon
     });
+    const searchEntries = [];
     group.addLayer(L.geoJSON(data, {
         pointToLayer: (feature, latlng) =>
             L.marker(latlng, {
@@ -104,9 +123,18 @@ function buildCurrentInstrumentsLayer(data) {
                 icon: instrumentIcon(glyphForCategory(feature.properties.devicecategoryname), "current"),
                 title: feature.properties.devicecategoryname || ""
             }),
-        onEachFeature: (feature, layer) =>
-            layer.bindPopup(currentInstrumentPopup(feature.properties || {}, meta), { maxWidth: 280 })
+        onEachFeature: (feature, layer) => {
+            const p = feature.properties || {};
+            layer.bindPopup(currentInstrumentPopup(p, meta), { maxWidth: 280 });
+            searchEntries.push(instrumentSearchItem(
+                layer, group,
+                p.devicename || p.devicecode || "ONC instrument",
+                [p.devicecategoryname, p.locationname].filter(Boolean).join(" · "),
+                `${p.devicecode || ""} ${p.sitename || ""} ${p.locationcode || ""}`
+            ));
+        }
     }));
+    addSearchItems(searchEntries);
     return group;
 }
  
@@ -155,7 +183,7 @@ function plannedInstrumentItem(text) {
 
 function buildProposedLayer(data) {
     const meta = data.metadata || {};
-    return L.geoJSON(data, {
+    const layer = L.geoJSON(data, {
         style: feature =>
             INSTRUMENT_STYLE.proposedCable[feature.properties.status] ||
             INSTRUMENT_STYLE.proposedCable.possible,
@@ -176,6 +204,22 @@ function buildProposedLayer(data) {
             layer.bindPopup(proposedPopup(feature.properties || {}, meta), { maxWidth: 300 });
         }
     });
+
+    // Only the planned holes and equipment can be searched for, not the cable lines
+    addSearchItems(
+        layer.getLayers()
+            .filter(marker => marker.feature.geometry.type === "Point")
+            .map(marker => {
+                const p = marker.feature.properties;
+                return instrumentSearchItem(
+                    marker, layer,
+                    p.name,
+                    ["Planned", p.role || (p.hole && `at ${p.hole}`)].filter(Boolean).join(" · "),
+                    "planned"
+                );
+            })
+    );
+    return layer;
 }
  
 /* ---------- load and register ---------- */

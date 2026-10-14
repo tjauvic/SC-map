@@ -72,7 +72,7 @@ L.tileLayer.wms(
     layers: "GMRT",
     format: "image/jpeg",          // about a tenth the size of PNG; the layer is opaque anyway
     version: "1.3.0",
-    maxNativeZoom: 12,             // data is at most 100 m/pixel; past this, scale tiles up instead of asking the slow server
+    maxNativeZoom: 11,             // data is at most 100 m/pixel (about zoom 10 here, so 11 is a little sharper); past this, scale tiles up instead of asking the slow server
     maxZoom: 22,
     updateWhenZooming: false,      // don't fetch tiles for the in-between zoom levels of an animation
     attribution:
@@ -94,6 +94,9 @@ BOREHOLE MARKERS
 
 const markerGroup =
 L.layerGroup().addTo(map);
+
+/* Marker for each hole currently shown, by hole id (used by the search panel) */
+const boreholeMarkers = new Map();
 
 /* =========================================================
 POPUP DATA LINKS
@@ -189,7 +192,7 @@ function buildPopupContent(hole) {
 
     return `
         <div class="borehole-popup">
-            <b>BoreHole ${hole.id}</b>
+            <b>Borehole ${hole.id}</b>
             ${
                 hole.description
                     ? "<br>" + hole.description
@@ -223,6 +226,7 @@ function zIndexFor(hole) {
 function updateBoreholeMarkers() {
 
 markerGroup.clearLayers();
+boreholeMarkers.clear();
 
 const selectedFilters =
     Array.from(
@@ -267,6 +271,7 @@ boreholes.forEach(
 
 
         markerGroup.addLayer(marker);
+        boreholeMarkers.set(hole.id, marker);
 
     }
 );
@@ -330,7 +335,7 @@ cableData,
             return {
 
                 color:
-                    "#e8a33d",
+                    "#d6336c",
 
                 weight:
                     2,
@@ -369,4 +374,5 @@ SIDEBAR
 addOverlayToggle(cableLayer, "ONC cables");
 addCursorCoordinates();
 buildLegendPanel();
+initSearch();
 initSidebar();

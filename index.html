@@ -48,6 +48,10 @@
 <div id="app">
     <aside id="sidebar">
         <nav id="rail" aria-label="Map menu">
+            <button class="rail-button" data-panel="search" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.500" cy="10.500" r="6"/><path d="M15 15l6 6"/></svg>
+                <span>Search</span>
+            </button>
             <button class="rail-button" data-panel="filters" aria-expanded="false">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg>
                 <span>Filters</span>
@@ -67,6 +71,12 @@
         </nav>
 
         <div id="panels">
+            <section class="side-panel" data-panel="search" hidden>
+                <h2>Search</h2>
+                <input id="search-input" class="search-input" type="search" placeholder="Borehole or instrument" autocomplete="off" aria-label="Search boreholes and instruments">
+                <ul id="search-results" class="search-results"></ul>
+            </section>
+
             <section class="side-panel" data-panel="filters" hidden>
                 <h2>Filters</h2>
                 <p>Show only boreholes that have all of the selected data types.</p>
@@ -134,6 +144,7 @@
 
 <script src="js/instrument-catalog.js?v=20261009"></script>
 <script src="js/borehole-icons.js?v=20261009"></script>
+<script src="js/search.js?v=20261009"></script>
 
 <!-- Application entry point -->
 <script src="js/map.js?v=20261008"></script>

@@ -161,6 +161,42 @@
         .ov-leader { stroke: var(--ink); stroke-width: 1; }
         .ov-anchor-dot { stroke: white; stroke-width: 1.5; }
 
+        /* Whether the seafloor model is to scale or exaggerated: a note above the viewer and a badge on it */
+        .scale-note {
+            margin: 0 0 12px;
+            padding: 8px 12px;
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius);
+            background: var(--panel-bg);
+            box-shadow: var(--panel-shadow);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .scale-note.exaggerated {
+            border-left-color: #d98e04;
+            background: #fff8e6;
+        }
+
+        #scale-badge {
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            z-index: 6;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: var(--panel-bg);
+            box-shadow: var(--panel-shadow);
+            font: 600 12px "Inter", sans-serif;
+            color: var(--ink);
+            pointer-events: none;
+        }
+
+        #scale-badge.exaggerated {
+            background: #d98e04;
+            color: white;
+        }
+
         /* Compass: tracks the horizontal (azimuth) rotation of the model */
         #compass {
             position: absolute;
@@ -199,11 +235,12 @@
     <main>
         <div class="controls">
             <div class="model-select">
-                <button onclick="loadModel('seafloor_v4.glb', true, this)" class="active">Seafloor</button>
+                <button onclick="loadModel('seafloor_v4.glb', true, this)" class="active">Seafloor (to scale)</button>
+                <button onclick="loadModel('Exaggerated.glb', true, this)">Seafloor (5× vertical)</button>
                 <button onclick="loadModel('cork-draco.glb', false, this)">Cork</button>
                 <button onclick="loadModel('cork1362A-draco.glb', false, this)">Cork 1362A</button>
             </div>
-            <!-- Camera presets for the seafloor model (see cameraViews in the script) -->
+            <!-- Camera presets for the seafloor models (see seafloorModels in the script) -->
             <div class="view-select" id="view-select">
                 <button data-view="overview" class="active">Overview</button>
                 <button data-view="layers">Basement Layers</button>
@@ -211,6 +248,9 @@
                 <button data-view="monitoring">Monitoring site</button>
             </div>
         </div>
+
+        <!-- Says whether the seafloor model on show is to scale or exaggerated (text set in loadModel) -->
+        <p id="scale-note" class="scale-note" hidden></p>
 
         <div class="viewer-wrap">
             <model-viewer
@@ -223,6 +263,8 @@
                 min-camera-orbit="auto auto 15m"
                 min-field-of-view='1deg'>
             </model-viewer>
+
+            <div id="scale-badge" hidden></div>
 
             <svg id="dimension-overlay"></svg>
 
@@ -253,8 +295,42 @@
         // ---- Scene anchors ------------------------------------------------------------------------------------
         // Everything drawn over the seafloor model (borehole labels, dimension lines, the layer label column) hangs
         // off invisible anchors that model-viewer keeps projected onto the screen. Positions are scene metres
-        // [x, y, z]; -Z is north, Y is up, and the seafloor is y = 0.
+        // [x, y, z]; -Z is north and Y is up.
         const WEST = -2400, EAST = 2100, NORTH = -1577.300048828125, SOUTH = 1922.699951171875, FLOOR = -700;
+
+        // The two seafloor models. seaY is where the seafloor sits in the scene and vScale how many times taller than
+        // life it is drawn. views are the camera presets; minDimSpan is the visible width (m) below which the
+        // footprint dimension lines are hidden, because they would cut across the large CORKs in the close-ups.
+        const OVERVIEW = { orbit: "0deg 75deg auto", target: "auto auto auto", fov: "auto" };
+        const seafloorModels = {
+            "seafloor_v4.glb": {
+                seaY: 0, vScale: 1, minDimSpan: 200,
+                badge: "To scale",
+                note: "This model is drawn to true scale: heights and depths are not exaggerated.",
+                // Orbit = "azimuth polar radius" about the target; azimuth is measured from +Z (south), so -90deg
+                // looks at the west face.
+                views: {
+                    overview:   OVERVIEW,
+                    layers:     { orbit: "-62deg 74deg 1500m", target: "-2400m -300m 900m", fov: "30deg" },   // west wall, labels in view
+                    injection:  { orbit: "63deg 78deg 40m", target: "-1203.3m 3.4m 0m", fov: "12deg" },       // cork at the top of 1362A
+                    monitoring: { orbit: "77deg 78deg 40m", target: "-1272.5m 3.4m 303.4m", fov: "12deg" },   // cork at the top of 1362B
+                },
+            },
+            "Exaggerated.glb": {
+                seaY: 1498.2, vScale: 5, minDimSpan: 500,
+                badge: "5× vertical exaggeration",
+                note: "This model is exaggerated: terrain relief, layer thicknesses and Corks are drawn with a 5X " +
+                      "verictal exaggeration. Horizontal distances remain consistent however, CORKs are not drawn to scale.",
+                views: {
+                    overview:   OVERVIEW,
+                    layers:     { orbit: "-62deg 74deg 6800m", target: "-2400m -10m 900m", fov: "30deg" },
+                    injection:  { orbit: "63deg 78deg 700m", target: "-1203.3m 1600m 0m", fov: "30deg" },
+                    monitoring: { orbit: "77deg 78deg 700m", target: "-1272.5m 1600m 303.4m", fov: "30deg" },
+                },
+            },
+        };
+        let model = seafloorModels["seafloor_v4.glb"];
+        const sceneY = y => model.seaY + model.vScale * y;
 
         const boreholes = [
             { id: "1026B", pos: [-1053.2547602494767, 0, -178.7172727747188] },
@@ -286,12 +362,18 @@
             { text: "Undifferentiated basalt", color: "#616169", y: -604.0 },
         ];
 
-        const anchors = [
-            ...boreholes.map(b => ({ id: `bh-${b.id}`, pos: b.pos })),
-            ...Object.entries(corners).map(([k, pos]) => ({ id: `corner-${k}`, pos })),
-            ...layerLabels.map((l, i) => ({ id: `layer-${i}`, pos: [WEST, l.y, WALL_Z], normal: [-1, 0, 0] })),
-        ];
-        const anchorPosition = Object.fromEntries(anchors.map(a => [a.id, a.pos]));
+        // Built for the model on show, since sceneY() depends on it
+        let anchors = [], anchorPosition = {};
+
+        function buildAnchors() {
+            const at = ([x, y, z]) => [x, sceneY(y), z];
+            anchors = [
+                ...boreholes.map(b => ({ id: `bh-${b.id}`, pos: at(b.pos) })),
+                ...Object.entries(corners).map(([k, pos]) => ({ id: `corner-${k}`, pos: at(pos) })),
+                ...layerLabels.map((l, i) => ({ id: `layer-${i}`, pos: at([WEST, l.y, WALL_Z]), normal: [-1, 0, 0] })),
+            ];
+            anchorPosition = Object.fromEntries(anchors.map(a => [a.id, a.pos]));
+        }
 
         function addAnchors() {
             anchors.forEach(({ id, pos, normal = [0, 1, 0] }, n) => {
@@ -306,16 +388,6 @@
             });
         }
 
-        // Camera presets. orbit = "azimuth polar radius" about the target; azimuth is measured from +Z (south),
-        // so -90deg looks at the west face. Positions are scene metres.
-        const cameraViews = {
-            overview:   { orbit: "0deg 75deg auto", target: "auto auto auto", fov: "auto" },
-            layers:     { orbit: "-62deg 74deg 1500m", target: "-2400m -300m 900m", fov: "30deg" },   // west wall, labels in view
-            // Close-ups: a narrow field of view from ~40 m away fills the frame with the ~7 m cork. Moving the camera
-            // in closer instead would put the cork inside model-viewer's near plane (about 10 m here) and clip it.
-            injection:  { orbit: "63deg 78deg 40m", target: "-1203.3m 3.4m 0m", fov: "12deg" },        // cork at the top of 1362A
-            monitoring: { orbit: "77deg 78deg 40m", target: "-1272.5m 3.4m 303.4m", fov: "12deg" },    // cork at the top of 1362B
-        };
         const viewSelect = document.getElementById("view-select");
         const viewButtons = [...viewSelect.querySelectorAll("button")];
 
@@ -324,7 +396,7 @@
         }
 
         function setView(name) {
-            const v = cameraViews[name];
+            const v = model.views[name];
             viewer.cameraTarget = v.target;
             viewer.cameraOrbit = v.orbit;
             viewer.fieldOfView = v.fov;
@@ -341,15 +413,30 @@
             if (e.detail.source === "user-interaction") markView(null);
         });
 
+        const scaleNote = document.getElementById("scale-note");
+        const scaleBadge = document.getElementById("scale-badge");
+
         function loadModel(src, withAnchors, button) {
             // Highlight the selected model button
             document.querySelectorAll(".model-select button").forEach(el => el.classList.remove("active"));
             if (button) button.classList.add("active");
 
-            // Swap the anchors, and show the camera presets, only for the seafloor model
+            // Swap the anchors, the camera presets and the scale note, only for the seafloor models
             viewer.querySelectorAll(".DimAnchor").forEach(el => el.remove());
-            if (withAnchors) addAnchors();
+            if (withAnchors) {
+                model = seafloorModels[src];
+                buildAnchors();
+                addAnchors();
+            }
             viewSelect.hidden = !withAnchors;
+            for (const el of [scaleNote, scaleBadge]) {
+                el.hidden = !withAnchors;
+                el.classList.toggle("exaggerated", withAnchors && model.vScale > 1);
+            }
+            if (withAnchors) {
+                scaleNote.textContent = model.note;
+                scaleBadge.textContent = model.badge;
+            }
 
             // Reset the camera so each model is framed fresh
             setView("overview");
@@ -397,8 +484,7 @@
             ["corner-A", "corner-B"],
             ["corner-B", "corner-C"],
         ];
-        const DIMENSION_MIN_SPAN = 200;             // m; footprint lines are hidden when zoomed in closer than this
-
+        
         function dimensionsSvg(wrap, closeUp) {
             let svg = "";
             for (const [aId, bId, kind] of dimensionPairs) {
@@ -415,7 +501,9 @@
                 const dot = e => (e.x >= 0 && e.x <= wrap.width && e.y >= 0 && e.y <= wrap.height)
                     ? `<circle class="ov-dot" cx="${e.x}" cy="${e.y}" r="3" />` : "";
 
-                const distance = Math.hypot(...anchorPosition[aId].map((v, i) => v - anchorPosition[bId][i]));
+                // True distance: the vertical part is divided by how much the model is stretched
+                const [dx, dy, dz] = anchorPosition[aId].map((v, i) => v - anchorPosition[bId][i]);
+                const distance = Math.hypot(dx, dy / model.vScale, dz);
                 svg += `
                     <line class="ov-dim-line" x1="${p.x}" y1="${p.y}" x2="${q.x}" y2="${q.y}" />
                     ${dot(a)}${dot(b)}
@@ -506,7 +594,7 @@
             const orbit = viewer.getCameraOrbit();
             const span = visibleSpan(orbit);
 
-            overlay.innerHTML = dimensionsSvg(wrap, span < DIMENSION_MIN_SPAN)
+            overlay.innerHTML = dimensionsSvg(wrap, span < model.minDimSpan)
                 + boreholeLabelsSvg(wrap)
                 + layerLabelsSvg(wrap, orbit, span);
 
