@@ -1,0 +1,367 @@
+/* =========================================================
+Styles for the 3D viewer page (3d/index.html)
+========================================================= */
+
+:root {
+    --ink: #14293b;
+    --muted: #5b6b76;
+    --accent: #1f7a8c;
+    --panel-bg: rgba(255, 255, 255, 0.97);
+    --panel-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+    --radius: 5px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #eef2f3;
+    color: var(--ink);
+}
+
+:root { --topbar-height: 56px; }
+
+#topbar {
+    height: var(--topbar-height);
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr minmax(0, auto) 1fr;
+    align-items: center;
+    padding: 0 16px;
+    background: var(--ink);
+    border-bottom: 3px solid var(--accent);
+}
+
+.topbar-title {
+    grid-column: 2;
+    text-align: center;
+}
+
+.topbar-title h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+    font-family: "Barlow Condensed", "Inter", sans-serif;
+    font-size: 30px;
+    line-height: 1.05;
+    text-transform: uppercase;
+    font-weight: 400;
+    -webkit-text-stroke: 0.011em currentColor;
+    color: white;
+    letter-spacing: 0.04em;
+}
+
+.topbar-title h1 img {
+    height: 0.91em;
+    width: auto;
+    position: relative;
+    top: 0.05em;
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+/* Model and camera-view selectors, styled as segmented pill controls */
+.model-select, .view-select {
+    display: flex;
+    gap: 4px;
+    width: fit-content;
+    padding: 5px;
+    background: var(--panel-bg);
+    border-radius: 999px;
+    box-shadow: var(--panel-shadow);
+}
+
+.model-select button, .view-select button {
+    border: none;
+    background: transparent;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font: 600 13px "Inter", sans-serif;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.model-select button:hover, .view-select button:hover {
+    background: #eef4f5;
+    color: var(--accent);
+}
+
+.model-select button.active, .view-select button.active {
+    background: var(--accent);
+    color: white;
+}
+
+.viewer-wrap {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--panel-shadow);
+}
+
+model-viewer {
+    width: 100%;
+    height: 75vh;
+    background-color: #fcfbfb;
+}
+
+.view-select[hidden] {
+    display: none;
+}
+
+/* Invisible points that model-viewer keeps projected onto the screen; the overlay below draws from them */
+.DimAnchor {
+    width: 0;
+    height: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* Dimension lines/labels overlay */
+#dimension-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Overlay drawing: dimension lines, borehole labels, and the layer label column */
+.ov-dim-line { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.ov-dot { fill: var(--accent); }
+.ov-dim-text { font: 600 12px "Inter", sans-serif; fill: var(--ink); paint-order: stroke; stroke: white; stroke-width: 3px; }
+.ov-text { font: 500 10px "Inter", sans-serif; fill: var(--ink); }
+.ov-shadow { filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4)); }
+.ov-pill { fill: var(--panel-bg); }
+.ov-pill-outlined { fill: var(--panel-bg); stroke: rgba(0, 0, 0, 0.25); }
+.ov-leader { stroke: var(--ink); stroke-width: 1; }
+.ov-anchor-dot { stroke: white; stroke-width: 1.5; }
+
+/* Whether the seafloor model is to scale or exaggerated: a note above the viewer and a badge on it */
+.scale-note {
+    margin: 0 0 12px;
+    padding: 8px 12px;
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--panel-bg);
+    box-shadow: var(--panel-shadow);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.scale-note.exaggerated {
+    border-left-color: #d98e04;
+    background: #fff8e6;
+}
+
+#scale-badge {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    z-index: 6;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--panel-bg);
+    box-shadow: var(--panel-shadow);
+    font: 600 12px "Inter", sans-serif;
+    color: var(--ink);
+    pointer-events: none;
+}
+
+#scale-badge.exaggerated {
+    background: #d98e04;
+    color: white;
+}
+
+/* Tools on and around the CORK (cork-tools.js): the pins on the model, the key, and the panel a pin opens */
+/* The key and, under it, the panel for the pin picked. A column down the left of the viewer; it lets
+   mouse events through to the model except over the boxes themselves. */
+.cork-side {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    bottom: 12px;
+    z-index: 7;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: min(300px, calc(100% - 24px));
+    pointer-events: none;
+}
+
+.cork-key {
+    flex: none;
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    background: var(--panel-bg);
+    box-shadow: var(--panel-shadow);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--muted);
+}
+
+.cork-key[hidden] { display: none; }
+.cork-key p { margin: 6px 0 0; }
+.cork-key .cork-chip { margin-right: 6px; }
+
+/* The one clickable part of the key (the column lets mouse events through to the model) */
+.pins-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.pins-toggle input { margin: 0; accent-color: var(--accent); cursor: pointer; }
+
+/* Pins switched off with the toggle */
+.pins-off .ToolPin { display: none !important; }
+
+/* Status: installed tools are solid navy; planned ones follow the 2D map's dashed green */
+.cork-chip {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--ink);
+    color: #fff;
+}
+
+.cork-chip.planned { background: #e8f5ed; color: #14693a; box-shadow: inset 0 0 0 1.5px #1f9d55; }
+
+.ToolPin {
+    position: relative;
+    box-sizing: border-box;
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+    padding: 0;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+}
+
+.ToolPin.installed { background: var(--ink); border: 2px solid #fff; }
+.ToolPin.planned { background: #e8f5ed; border: 2px dashed #1f9d55; }
+.ToolPin:not([data-visible]) { opacity: 0.25; pointer-events: none; }
+.ToolPin.selected { transform: scale(1.3); outline: 3px solid var(--accent); outline-offset: 1px; }
+
+/* A pin's name shows when you point at it, and beside every pin for tools around the CORK in the site layout view */
+.ToolPin-label {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 8px;
+    padding: 1px 7px;
+    border-radius: 4px;
+    background: var(--panel-bg);
+    box-shadow: var(--panel-shadow);
+    font: 500 11px "Inter", sans-serif;
+    color: var(--ink);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.ToolPin:hover .ToolPin-label, .ToolPin:focus-visible .ToolPin-label { display: block; }
+.show-labels .ToolPin.nearby .ToolPin-label { display: block; }
+
+/* Pins for tools around the CORK float in empty space, so they only show in the site layout view */
+.ToolPin.nearby { display: none; }
+.show-labels .ToolPin.nearby { display: block; }
+
+/* The panel for the pin picked, under the key. It scrolls if the content is taller than the space left. */
+.tool-popup {
+    position: relative;
+    flex: 0 1 auto;
+    min-height: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--panel-shadow);
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink);
+    pointer-events: auto;
+}
+
+.tool-popup[hidden] { display: none; }
+
+.tool-popup-close {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    padding: 0 4px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.tool-popup-close:hover { color: var(--ink); }
+.tool-popup figure { margin: 4px 0 8px; }
+
+.tool-popup figure img {
+    display: block;
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+    border-radius: 4px;
+    background: #f3f6f7;
+}
+
+.tool-popup figcaption { margin-top: 3px; font-size: 11px; color: var(--muted); }
+.tool-popup h3 { margin: 6px 0 4px; padding-right: 18px; font-size: 14px; line-height: 1.3; }
+.tool-popup p { margin: 6px 0 0; color: var(--muted); }
+.tool-popup .tool-where { margin: 0; font-size: 12px; color: var(--muted); }
+.tool-popup a { color: var(--accent); }
+
+/* Compass: tracks the horizontal (azimuth) rotation of the model */
+#compass {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    width: 72px;
+    height: 72px;
+    z-index: 6;
+    pointer-events: none;
+    background: var(--panel-bg);
+    border-radius: 50%;
+    box-shadow: var(--panel-shadow);
+}
+
+#compass svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+#compass-needle {
+    transform-box: view-box;
+    transform-origin: 36px 36px;
+}

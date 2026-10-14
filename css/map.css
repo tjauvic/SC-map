@@ -491,14 +491,6 @@ INSTRUMENT LAYERS (js/instruments.js)
     border-radius: 4px;
 }
 
-.instrument-source {
-    margin-top: 8px;
-    padding-top: 6px;
-    border-top: 1px solid #e4eaec;
-    color: var(--muted);
-    font-size: 11px;
-}
-
 /* Instrument markers: full-colour device drawings (js/instrument-catalog.js) */
 .instrument-marker {
     display: flex;

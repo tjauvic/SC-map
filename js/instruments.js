@@ -51,7 +51,7 @@ function categoryInfoHtml(category) {
     return `<p class="instrument-desc">${escapeHtml(info.description)}${link}</p>`;
 }
 
-function currentInstrumentPopup(p, meta) {
+function currentInstrumentPopup(p) {
     const name = p.devicename || p.devicecode || "ONC instrument";
     const depth = p.depth != null ? `${Math.round(p.depth)} m depth` : "";
     const details = [
@@ -75,10 +75,6 @@ function currentInstrumentPopup(p, meta) {
             ${image}
             <div class="popup-data-heading">Instrument details</div>
             ${listHtml(details)}
-            <div class="instrument-source">
-                Source: ${escapeHtml(meta.source || "Ocean Networks Canada")}${
-                    meta.retrieved ? `, retrieved ${escapeHtml(meta.retrieved)}` : ""}
-            </div>
         </div>`;
 }
  
@@ -106,7 +102,6 @@ function currentClusterIcon(cluster) {
 }
 
 function buildCurrentInstrumentsLayer(data) {
-    const meta = data.metadata || {};
     const group = L.markerClusterGroup({
         clusterPane: "oncInstruments",
         maxClusterRadius: 30,
@@ -125,7 +120,7 @@ function buildCurrentInstrumentsLayer(data) {
             }),
         onEachFeature: (feature, layer) => {
             const p = feature.properties || {};
-            layer.bindPopup(currentInstrumentPopup(p, meta), { maxWidth: 280 });
+            layer.bindPopup(currentInstrumentPopup(p), { maxWidth: 280 });
             searchEntries.push(instrumentSearchItem(
                 layer, group,
                 p.devicename || p.devicecode || "ONC instrument",
