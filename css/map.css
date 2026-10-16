@@ -14,6 +14,11 @@ margin: 0;
 padding: 0;
 width: 100%;
 height: 100%;
+/* iOS Safari's address and tool bars grow and shrink, so plain 100% (and 100vh) can be taller
+   than what is visible. dvh follows the visible area, with 100% above as the fallback. */
+height: 100dvh;
+overflow: hidden;
+-webkit-text-size-adjust: 100%;
 font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 color: var(--ink);
 }
@@ -39,6 +44,7 @@ TOP BAR
 
 .topbar-title {
     grid-column: 2;
+    min-width: 0;
     text-align: center;
 }
 
@@ -49,7 +55,8 @@ TOP BAR
     gap: 10px;
     margin: 0;
     font-family: "Barlow Condensed", "Inter", sans-serif;
-    font-size: 30px;
+    /* 30px on a computer, shrinking on narrow screens so the title and logo always fit */
+    font-size: clamp(15px, 5.6vw, 30px);
     line-height: 1.05;
     text-transform: uppercase;
     font-weight: 400;
@@ -102,6 +109,8 @@ SIDEBAR
 #rail {
     display: flex;
     flex-direction: column;
+    /* a short screen (a phone on its side) scrolls the menu instead of cutting it off */
+    overflow-y: auto;
     width: 68px;
     background: var(--ink);
 }
@@ -374,8 +383,31 @@ SIDEBAR
         left: 0;
     }
 
+    /* a slimmer menu strip with smaller buttons */
+    #rail {
+        width: 50px;
+    }
+
+    .rail-button {
+        gap: 2px;
+        padding: 8px 2px 7px;
+        font-size: 9px;
+        border-left-width: 2px;
+    }
+
+    .rail-button svg {
+        width: 19px;
+        height: 19px;
+    }
+
     #sidebar.open #panels {
-        width: min(300px, calc(100vw - 68px));
+        width: min(300px, calc(100vw - 50px));
+    }
+
+    /* the menu strip floats over the left edge of the map here, so keep the zoom buttons,
+       scale and coordinates clear of it */
+    .leaflet-left .leaflet-control {
+        margin-left: 60px;
     }
 }
 
@@ -739,4 +771,13 @@ INSTRUMENT LAYERS (js/instruments.js)
 .instrument-data-link-secondary {
     background: #fff;
     color: var(--accent) !important;
+}
+
+/* Popups never wider than the screen */
+.leaflet-popup-content {
+    max-width: calc(100vw - 80px);
+}
+
+.leaflet-popup-content img {
+    max-width: 100%;
 }

@@ -14,6 +14,7 @@ Styles for the 3D viewer page (3d/index.html)
 html, body {
     margin: 0;
     padding: 0;
+    -webkit-text-size-adjust: 100%;
     font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: #eef2f3;
     color: var(--ink);
@@ -32,8 +33,10 @@ html, body {
     border-bottom: 3px solid var(--accent);
 }
 
+/* The top bar rules below are kept identical to css/map.css, so both pages share one look */
 .topbar-title {
     grid-column: 2;
+    min-width: 0;
     text-align: center;
 }
 
@@ -44,18 +47,24 @@ html, body {
     gap: 10px;
     margin: 0;
     font-family: "Barlow Condensed", "Inter", sans-serif;
-    font-size: 30px;
+    /* 30px on a computer, shrinking on narrow screens so the title and logo always fit */
+    font-size: clamp(15px, 5.6vw, 30px);
     line-height: 1.05;
     text-transform: uppercase;
     font-weight: 400;
+    /* Barlow Condensed only comes in whole weights. A hairline stroke thickens the
+       400 stems to halfway between 400 and 500 (measured: 21px, 28px and 25px stems at 300px) */
     -webkit-text-stroke: 0.011em currentColor;
     color: white;
     letter-spacing: 0.04em;
 }
 
+/* The icon is 30% taller than the capital letters of the title (cap height is about 0.7em),
+   kept centred on them */
 .topbar-title h1 img {
     height: 0.91em;
     width: auto;
+    /* Measured: the flex centring leaves the icon 0.05em higher than the letters */
     position: relative;
     top: 0.05em;
 }
@@ -117,6 +126,9 @@ model-viewer {
     height: 75vh;
     background-color: #fcfbfb;
 }
+
+/* Short button labels are for phones only */
+.model-select .short, .view-select .short { display: none; }
 
 .view-select[hidden] {
     display: none;
@@ -364,4 +376,125 @@ model-viewer {
 #compass-needle {
     transform-box: view-box;
     transform-origin: 36px 36px;
+}
+
+/* =========================================================
+Phones: everything fits inside the window, with no page scroll. The top bar, the two rows of
+pill selectors and the viewer share the screen, and the viewer takes whatever height is left.
+(100dvh follows the visible area as Safari's address and tool bars come and go.)
+========================================================= */
+@media (max-width: 600px) {
+    html, body {
+        height: 100dvh;
+        overflow: hidden;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #topbar {
+        flex: none;
+    }
+
+    main {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    .controls {
+        flex: none;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 4px;
+        margin-bottom: 6px;
+    }
+
+    /* each pill row spans the screen, its buttons sharing the width equally and wrapping their words */
+    .model-select, .view-select {
+        width: 100%;
+        box-sizing: border-box;
+        gap: 2px;
+        padding: 2px;
+    }
+
+    /* short one-line labels, so a row always fits however wide the phone's font runs */
+    .model-select .full, .view-select .full { display: none; }
+    .model-select .short, .view-select .short { display: inline; }
+
+    .model-select button, .view-select button {
+        flex: 1 1 auto;
+        min-width: 0;
+        padding: 6px 4px;
+        font-size: 11.5px;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    /* the badge in the corner of the viewer already says whether the model is to scale */
+    .scale-note {
+        display: none !important;
+    }
+
+    .viewer-wrap {
+        flex: 1;
+        min-height: 0;
+    }
+
+    model-viewer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    #scale-badge {
+        left: 8px;
+        top: 8px;
+        padding: 3px 9px;
+        font-size: 11px;
+    }
+
+    #compass {
+        right: 8px;
+        bottom: 8px;
+        width: 52px;
+        height: 52px;
+    }
+
+    /* the pin key and the panel for a picked pin */
+    .cork-side {
+        left: 8px;
+        top: 8px;
+        bottom: 8px;
+        width: calc(100% - 16px);
+    }
+
+    .cork-key {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    /* the key's explanation is in the Help of the desktop page; keep only the chips and the toggle */
+    .cork-key p {
+        display: none;
+    }
+
+    .tool-popup {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .tool-popup figure img {
+        max-height: 100px;
+    }
 }

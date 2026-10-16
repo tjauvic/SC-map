@@ -17,9 +17,17 @@ L.Popup.mergeOptions({ autoPan: false });
 function centerOnPopup(popup) {
     const box = popup.getElement().getBoundingClientRect();
     const view = map.getContainer().getBoundingClientRect();
+
+    // On a phone the left menu floats over the map instead of sitting beside it, so the part
+    // of the map that can actually be seen starts at the menu's right edge. On a computer the
+    // menu is next to the map, so nothing is covered.
+    const menu = document.getElementById("sidebar").getBoundingClientRect();
+    const visibleLeft = Math.max(view.left, menu.right);
+    const visibleCentreX = (visibleLeft + view.right) / 2;
+
     // Leaflet's default pan (0.25 s, nearly linear) feels abrupt; a longer, softer ease is gentler
     map.panBy([
-        box.left + box.width / 2 - (view.left + view.width / 2),
+        box.left + box.width / 2 - visibleCentreX,
         box.top + box.height / 2 - (view.top + view.height / 2)
     ], { duration: 0.7, easeLinearity: 0.15 });
 }
