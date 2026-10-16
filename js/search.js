@@ -26,11 +26,25 @@ function flyThen(latlng, then) {
     map.flyTo(latlng, Math.max(map.getZoom(), 15));
 }
 
+/* The names of the data types a borehole has, as its popup lists them ("Bathymetry", "Lithology", ...) */
+function holeDataTypes(hole) {
+    return buildDataLinks(hole).map(link => link.label);
+}
+
 function boreholeSearchItems() {
-    return boreholes.map(hole => ({
+    return boreholes.map(hole => {
+        const dataTypes = holeDataTypes(hole);
+        const about = hole.description || `Expedition leg ${hole.leg}`;
+        return {
         label: `Borehole ${hole.id}`,
-        detail: hole.description || `Expedition leg ${hole.leg}`,
-        text: `Borehole ${hole.id} ${hole.description} ${hole.leg}`,
+        detail: about,
+        // Searching a data type ("bathymetry", "lithology") finds the holes that have it
+        text: `Borehole ${hole.id} ${hole.description} ${hole.leg} ${dataTypes.join(" ")}`,
+        // When the search is for a data type, say so under the name
+        detailFor(words) {
+            const matches = dataTypes.filter(type => words.every(word => type.toLowerCase().includes(word)));
+            return matches.length > 0 ? `Has ${matches.slice(0, 3).join(", ")}${matches.length > 3 ? "…" : ""}` : about;
+        },
         visible: () => map.hasLayer(markerGroup),
         show() {
             flyThen(hole.coords, () => {
@@ -46,7 +60,8 @@ function boreholeSearchItems() {
                 }
             });
         }
-    }));
+        };
+    });
 }
 
 function initSearch() {
@@ -71,7 +86,7 @@ function initSearch() {
         shown = query === "" ? [] : searchItems
             .filter(item => item.visible() && words.every(word => item.text.toLowerCase().includes(word)))
             .sort((a, b) => rank(a) - rank(b) || a.label.localeCompare(b.label, undefined, { numeric: true }))
-            .slice(0, 15);
+            .slice(0, 30);
 
         list.innerHTML = "";
         if (query !== "" && shown.length === 0) {
@@ -86,7 +101,7 @@ function initSearch() {
             button.type = "button";
             button.innerHTML = '<span class="search-label"></span><small class="search-detail"></small>';
             button.querySelector(".search-label").textContent = item.label;
-            button.querySelector(".search-detail").textContent = item.detail;
+            button.querySelector(".search-detail").textContent = item.detailFor ? item.detailFor(words) : item.detail;
             button.addEventListener("click", () => choose(item));
             row.appendChild(button);
             list.appendChild(row);

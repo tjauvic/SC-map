@@ -146,13 +146,32 @@ function buildDataLinks(hole) {
         .map(
             ([key, label]) => ({
                 label: label,
-                url: holeLinks[key] || null
+                url: holeLinks[key] || null,
+                sources: DATA_SOURCES[hole.id]?.data?.[key] || []
             })
         )
         .sort(
             (a, b) => a.label.localeCompare(b.label)
         );
 
+}
+
+function escapeAttr(value) {
+    return String(value).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+}
+
+/* One "Source" link under the hole's facts (location, depth, penetration), to the hole summary where they
+   come from (see datasources.js). The location's source is used, as it is a hole summary for every hole. */
+function factsSourceHtml(hole) {
+    const facts = DATA_SOURCES[hole.id]?.facts || {};
+    const url = facts.location || facts.waterDepth || facts.penetration;
+    if (!url) {
+        return "";
+    }
+    const label = url.includes("janusweb") ? "IODP JANUS database"
+        : url.includes("LORE") ? "IODP LIMS hole summary"
+        : "IODP/ODP publication";
+    return `<div class="hole-facts-source">Source: <a href="${escapeAttr(url)}" target="_blank" rel="noopener">${label}</a></div>`;
 }
 
 function buildHoleDetails(hole) {
@@ -166,6 +185,20 @@ function buildHoleDetails(hole) {
             <dt>Water depth</dt><dd>${hole.waterDepth} m</dd>
             <dt>Penetration</dt><dd>${hole.penetration} m</dd>
         </dl>
+        ${factsSourceHtml(hole)}
+    `;
+}
+
+/* "Source: IODP LIMS report · IODP/ODP publication (page 3)" under a data type */
+function sourcesHtml(sources) {
+    if (sources.length === 0) {
+        return "";
+    }
+    return `
+        <div class="popup-sources">
+            Source:
+            ${sources.map(source => `<a href="${escapeAttr(source.url)}" target="_blank" rel="noopener">${source.label}${source.note ? ` (${source.note})` : ""}</a>`).join(" · ")}
+        </div>
     `;
 }
 
@@ -185,24 +218,16 @@ function buildPopupContent(hole) {
                     ${
                         dataLinks
                             .map(
-                                link => link.url
-                                    ? `
-                                        <a
-                                            href="${link.url.replace(/"/g, "&quot;")}"
-                                            target="_blank"
-                                            rel="noopener"
-                                        >
-                                            ${link.label}
-                                        </a>
-                                    `
-                                    : `
-                                        <span
-                                            class="popup-data-unlinked"
-                                            title="Listed in the inventory, but no link has been added yet"
-                                        >
-                                            ${link.label}
-                                        </span>
-                                    `
+                                link => `
+                                    <div class="popup-data-item">
+                                        ${
+                                            link.url
+                                                ? `<a class="popup-data-main" href="${escapeAttr(link.url)}" target="_blank" rel="noopener">${link.label}</a>`
+                                                : `<span class="popup-data-unlinked" title="Listed in the inventory, but no link has been added yet">${link.label}</span>`
+                                        }
+                                        ${sourcesHtml(link.sources)}
+                                    </div>
+                                `
                             )
                             .join("")
                     }

@@ -457,34 +457,62 @@ BOREHOLE POPUP
 }
 
 .popup-data-links {
-    display: flex;
-    flex-direction: column;
-    max-height: 150px;
+    max-height: 230px;
     overflow-y: auto;
     border-top: 1px solid #e4eaec;
 }
 
-.popup-data-links a {
-    display: block;
-    padding: 6px 2px;
-    color: var(--accent);
-    font-size: 12px;
-    text-decoration: none;
+.popup-data-item {
+    padding: 5px 2px 6px;
     border-bottom: 1px solid #e4eaec;
 }
 
-.popup-data-links a:hover {
-    background: #eef4f5;
+.popup-data-main {
+    display: block;
+    color: var(--accent);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.popup-data-main:hover {
+    text-decoration: underline;
 }
 
 .popup-data-unlinked {
     display: block;
-    padding: 6px 2px;
     color: var(--muted);
     font-size: 12px;
     font-style: italic;
-    border-bottom: 1px solid #e4eaec;
     cursor: help;
+}
+
+/* Where the data originally comes from, under each data type */
+.popup-sources {
+    margin-top: 2px;
+    font-size: 11px;
+    line-height: 1.35;
+    color: var(--muted);
+}
+
+.popup-sources a,
+.hole-facts-source a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.popup-sources a:hover,
+.hole-facts-source a:hover {
+    text-decoration: underline;
+}
+
+.hole-facts-source {
+    margin-bottom: 2px;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.hole-facts-source a {
+    text-decoration: none;
 }
 
 /* =========================================================
