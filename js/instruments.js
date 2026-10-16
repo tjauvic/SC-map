@@ -51,6 +51,23 @@ function categoryInfoHtml(category) {
     return `<p class="instrument-desc">${escapeHtml(info.description)}${link}</p>`;
 }
 
+/* Two links at the bottom of an instrument popup, both into ONC's Oceans 3.0 portal:
+   the device's own information page, and the generic Data Search page, where data can be
+   browsed and downloaded. (The generic page is deliberate: a link that preselects the
+   instrument would depend on ONC's internal page structure.) */
+const ONC_DATA_SEARCH_URL = "https://data.oceannetworks.ca/DataSearch";
+
+function accessDataHtml(deviceId) {
+    const deviceUrl = deviceId
+        ? `https://data.oceannetworks.ca/DeviceListing?DeviceId=${encodeURIComponent(deviceId)}`
+        : "";
+    return `
+        <div class="instrument-links">
+            <a class="instrument-data-link" href="${ONC_DATA_SEARCH_URL}" target="_blank" rel="noopener">Download data &rarr;</a>
+            ${deviceUrl ? `<a class="instrument-data-link instrument-data-link-secondary" href="${deviceUrl}" target="_blank" rel="noopener">Device information &rarr;</a>` : ""}
+        </div>`;
+}
+
 function currentInstrumentPopup(p) {
     const name = p.devicename || p.devicecode || "ONC instrument";
     const depth = p.depth != null ? `${Math.round(p.depth)} m depth` : "";
@@ -75,6 +92,7 @@ function currentInstrumentPopup(p) {
             ${image}
             <div class="popup-data-heading">Instrument details</div>
             ${listHtml(details)}
+            ${accessDataHtml(p.deviceid)}
         </div>`;
 }
  

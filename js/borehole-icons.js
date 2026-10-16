@@ -26,3 +26,23 @@ function boreholeIcon(color) {
         popupAnchor: [0, -height]
     });
 }
+
+/* A borehole with no CORK: a drill bit in a shaft cut down through layers of sediment, drawn in
+   the same flat cartoon style and palette as the instrument icons (hole.svg, 32x26 grid, cropped
+   from a 32 grid). The marker is anchored at the top of the shaft, where it meets the seafloor. */
+function holeSvg(width) {
+    const height = Math.round(width * 26 / 32 * 10) / 10;
+    return `<img src="${BOREHOLE_DIR}hole.svg" width="${width}" height="${height}" alt="">`;
+}
+
+function holeIcon() {
+    const width = 34, height = 27.6;
+    const surfaceY = height * 7 / 26;
+    return L.divIcon({
+        className: "borehole-marker",
+        html: holeSvg(width),
+        iconSize: [width, height],
+        iconAnchor: [width / 2, surfaceY],
+        popupAnchor: [0, -surfaceY]
+    });
+}

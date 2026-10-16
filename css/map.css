@@ -699,3 +699,44 @@ INSTRUMENT LAYERS (js/instruments.js)
     padding: 6px 4px;
     color: var(--muted);
 }
+
+/* Scale bar (Leaflet's own control), styled like the other map panels */
+.leaflet-control-scale-line {
+    border: 2px solid var(--ink);
+    border-top: none;
+    box-shadow: var(--panel-shadow);
+    color: var(--ink);
+    font: 500 11px "Inter", sans-serif;
+    padding: 1px 6px;
+}
+
+/* Links at the bottom of an ONC instrument popup: a main "Download data" button and a quieter
+   "Device information" one beneath it */
+.instrument-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.instrument-data-link {
+    display: block;
+    padding: 7px 10px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: #fff !important;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+
+.instrument-data-link:hover {
+    filter: brightness(1.12);
+}
+
+.instrument-data-link-secondary {
+    background: #fff;
+    color: var(--accent) !important;
+}

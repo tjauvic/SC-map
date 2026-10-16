@@ -87,6 +87,17 @@ MARKER ICONS (SVG, see js/borehole-icons.js)
 
 const redCork = boreholeIcon("red");
 const blueCork = boreholeIcon("blue");
+// Holes with no CORK are drawn as a bare open hole
+const noCork = holeIcon();
+
+// Holes on the IODP borehole-observatory list (https://iodp.tamu.edu/database/borehole.html),
+// i.e. holes where a CORK was installed. Every other hole gets the bare-hole pin.
+const CORK_HOLE_IDS = [
+    "327-U1362A", "327-U1362B",
+    "168-1026B", "168-1027C",
+    "301-U1301A", "301-U1301B",
+    "328-U1364A", "146-889C"
+];
 
 /* =========================================================
 BOREHOLE MARKERS
@@ -209,6 +220,9 @@ const PROJECT_SITE_ID = "327-U1362";
 
 function iconFor(hole) {
 
+    if (!CORK_HOLE_IDS.includes(hole.id)) {
+        return noCork;
+    }
     return siteIdFor(hole.id) === PROJECT_SITE_ID
         ? redCork
         : blueCork;
@@ -373,6 +387,9 @@ SIDEBAR
 
 addOverlayToggle(cableLayer, "ONC cables");
 addCursorCoordinates();
+
+// Scale bar (metric only), bottom left under the coordinates readout
+L.control.scale({ position: "bottomleft", imperial: false, maxWidth: 140 }).addTo(map);
 buildLegendPanel();
 initSearch();
 initSidebar();

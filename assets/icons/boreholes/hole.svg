@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="26" viewBox="0 2 32 26" fill="none" stroke="#1b2a3a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <title>Borehole (no CORK)</title>
+    <defs>
+        <clipPath id="ground"><path d="M3 9H11.500V20a4.500 4.500 0 0 0 9 0V9H29V27H3z"/></clipPath>
+    </defs>
+    <!-- sediment layers: separated by colour only, with no lines between them -->
+    <g clip-path="url(#ground)" stroke="none">
+        <rect x="0" y="9" width="32" height="4.500" fill="#f9dc6a"/>
+        <rect x="0" y="13.500" width="32" height="7.500" fill="#b08457"/>
+        <rect x="0" y="21" width="32" height="7" fill="#8a6a45"/>
+    </g>
+    <!-- one outline around the ground, with the shaft cut out of it -->
+    <path d="M3 9H11.500V20a4.500 4.500 0 0 0 9 0V9H29V27H3z"/>
+    <!-- the drill bit in the shaft -->
+    <path d="M13.800 3.500H18.200V18L16 21 13.800 18z" fill="#d6dde2"/>
+    <path d="M16 3.500H18.200V18L16 21z" fill="#9fb0bd" stroke="none"/>
+    <path d="M13.800 18L16 21 18.200 18z" fill="#5f7280"/>
+    <path d="M15 5.500V15" stroke="#fff" stroke-opacity=".55" stroke-width="1.600"/>
+    <path d="M13.800 8.500H18.200M13.800 12.500H18.200" stroke-width="1.100"/>
+    <path d="M13.800 3.500H18.200V18L16 21 13.800 18z"/>
+</svg>

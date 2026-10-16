@@ -79,9 +79,10 @@ function buildLegendPanel() {
     document.getElementById("legend-content").innerHTML = `
         <h3>Boreholes</h3>
         <ul class="legend-list">
-            <li>${boreholeSvg("red", 22)}<span>Solid Carbon project holes</span></li>
-            <li>${boreholeSvg("blue", 22)}<span>Other boreholes</span></li>
+            <li>${boreholeSvg("blue", 22)}<span>Boreholes with CORKs</span></li>
+            <li>${holeSvg(22)}<span>Boreholes without CORKs</span></li>
         </ul>
+        <p class="legend-note">Solid Carbon demonstration holes with a CORK are drawn in red.</p>
 
         <h3>Ocean Networks Canada</h3>
         <ul class="legend-list">
