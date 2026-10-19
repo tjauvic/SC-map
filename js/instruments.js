@@ -51,19 +51,41 @@ function categoryInfoHtml(category) {
     return `<p class="instrument-desc">${escapeHtml(info.description)}${link}</p>`;
 }
 
-/* Two links at the bottom of an instrument popup, both into ONC's Oceans 3.0 portal:
-   the device's own information page, and the generic Data Search page, where data can be
-   browsed and downloaded. (The generic page is deliberate: a link that preselects the
-   instrument would depend on ONC's internal page structure.) */
+/* Two links at the bottom of an instrument popup, both into ONC's Oceans 3.0 portal: Data Search, where
+   the data can be browsed and downloaded, and the device's own information page. Nothing is downloaded by
+   either; they only open pages.
+
+   The Data Search link narrows the search as far as the instrument's data allows:
+     its location and its kind of instrument   DataSearch?locationCode=NC27&deviceCategoryCode=HYDROPHONE
+     just its kind of instrument               DataSearch?treeType=17&deviceCategoryCode=HYDROPHONE
+     just its location                         DataSearch?locationCode=NC27
+     neither                                   DataSearch
+   The category codes are in onc-categories.js. This is the one place the address format is written down,
+   so it is the one thing to change if ONC changes its page addresses. */
 const ONC_DATA_SEARCH_URL = "https://data.oceannetworks.ca/DataSearch";
 
-function accessDataHtml(deviceId) {
-    const deviceUrl = deviceId
-        ? `https://data.oceannetworks.ca/DeviceListing?DeviceId=${encodeURIComponent(deviceId)}`
+function dataSearchUrl(p) {
+    const category = ONC_DEVICE_CATEGORIES[p.devicecategoryname]?.code;
+    const location = p.locationcode;
+    if (location && category) {
+        return `${ONC_DATA_SEARCH_URL}?locationCode=${encodeURIComponent(location)}&deviceCategoryCode=${encodeURIComponent(category)}`;
+    }
+    if (category) {
+        return `${ONC_DATA_SEARCH_URL}?treeType=17&deviceCategoryCode=${encodeURIComponent(category)}`;
+    }
+    if (location) {
+        return `${ONC_DATA_SEARCH_URL}?locationCode=${encodeURIComponent(location)}`;
+    }
+    return ONC_DATA_SEARCH_URL;
+}
+
+function accessDataHtml(p) {
+    const deviceUrl = p.deviceid
+        ? `https://data.oceannetworks.ca/DeviceListing?DeviceId=${encodeURIComponent(p.deviceid)}`
         : "";
     return `
         <div class="instrument-links">
-            <a class="instrument-data-link" href="${ONC_DATA_SEARCH_URL}" target="_blank" rel="noopener">Download data &rarr;</a>
+            <a class="instrument-data-link" href="${dataSearchUrl(p)}" target="_blank" rel="noopener">Download data &rarr;</a>
             ${deviceUrl ? `<a class="instrument-data-link instrument-data-link-secondary" href="${deviceUrl}" target="_blank" rel="noopener">Device information &rarr;</a>` : ""}
         </div>`;
 }
@@ -92,7 +114,7 @@ function currentInstrumentPopup(p) {
             ${image}
             <div class="popup-data-heading">Instrument details</div>
             ${listHtml(details)}
-            ${accessDataHtml(p.deviceid)}
+            ${accessDataHtml(p)}
         </div>`;
 }
  
