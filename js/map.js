@@ -168,7 +168,8 @@ function factsSourceHtml(hole) {
     if (!url) {
         return "";
     }
-    const label = url.includes("janusweb") ? "IODP JANUS database"
+    const label = url.includes("sitesumm") ? "IODP JANUS site summary"
+        : url.includes("janusweb") ? "IODP JANUS database"
         : url.includes("LORE") ? "IODP LIMS hole summary"
         : "IODP/ODP publication";
     return `<div class="hole-facts-source">Source: <a href="${escapeAttr(url)}" target="_blank" rel="noopener">${label}</a></div>`;

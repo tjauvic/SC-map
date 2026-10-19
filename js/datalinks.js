@@ -47,7 +47,6 @@ const DATA_LINKS = {
         seismicProfile: "https://drive.google.com/file/d/1W7JXX56TlmnPc51ofHFmbfe7Zb64h_mq/view?usp=sharing",
         corePhotoImages: "https://docs.google.com/spreadsheets/d/1pyxj822xJdKX2CObs2l65fiCrjlBToeMn1vUohMHfeg/edit?usp=sharing",
         coreSections: "https://docs.google.com/spreadsheets/d/1WjRx_qdgu7WhiUQTrOyz9VASQqI31WQgwaNMVR4I3x8/edit?usp=sharing",
-        xRay: "https://docs.google.com/spreadsheets/d/1KsXhIXlJNP4r3VU1Ia9Sq2PxqdPMz7L8QvMn3nACCfM/edit?usp=sharing",
         boreholePressure: "https://docs.google.com/spreadsheets/d/1_DDkQcxGuZW0WgIfwD3-xmULgFpPBWbB/edit?usp=sharing&ouid=115391020371454268083&rtpof=true&sd=true",
         bulkDensity: "https://web.iodp.tamu.edu/LORE/?reportName=mad&appl=LORE&action=show&filters=%5B%22x_expedition%20in%20(%27327%27)%22,%22x_site%20in%20(%27U1362%27)%22,%22x_hole%20in%20(%27B%27)%22%5D&postretrieve=%7B%22scale_id%22:%2211331%22%7D",
         moistureDensity: "https://web.iodp.tamu.edu/LORE/?reportName=mad&appl=LORE&action=show&filters=%5B%22x_expedition%20in%20(%27327%27)%22,%22x_site%20in%20(%27U1362%27)%22,%22x_hole%20in%20(%27B%27)%22%5D&postretrieve=%7B%22scale_id%22:%2211331%22%7D",
