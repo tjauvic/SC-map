@@ -565,11 +565,8 @@ INSTRUMENT LAYERS (js/instruments.js)
     transform: scale(1.18);
 }
 
-/* Count badge on a cluster of overlapping instruments */
-.instrument-cluster {
-    position: relative;
-}
-
+/* Count badge on a cluster of overlapping instruments (positioned against the
+   marker itself, which Leaflet already makes position: absolute) */
 .instrument-cluster-count {
     position: absolute;
     right: -6px;
@@ -664,6 +661,10 @@ INSTRUMENT LAYERS (js/instruments.js)
     font-size: 11.5px;
     line-height: 1.35;
     color: var(--muted);
+}
+
+.descriptions-hidden .legend-instruments small {
+    display: none;
 }
 
 /* Hole facts (leg, position, water depth, penetration) at the top of a borehole popup */

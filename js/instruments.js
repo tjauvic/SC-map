@@ -141,15 +141,20 @@ function currentClusterIcon(cluster) {
     });
 }
 
+/* Set to false to draw every ONC instrument as its own icon instead of grouping nearby ones */
+const CLUSTER_INSTRUMENTS = true;
+
 function buildCurrentInstrumentsLayer(data) {
-    const group = L.markerClusterGroup({
-        clusterPane: "oncInstruments",
-        maxClusterRadius: 30,
-        showCoverageOnHover: false,
-        spiderfyOnMaxZoom: true,
-        spiderLegPolylineOptions: { weight: 1.5, color: "#1b2a3a", opacity: 0.6 },
-        iconCreateFunction: currentClusterIcon
-    });
+    const group = CLUSTER_INSTRUMENTS
+        ? L.markerClusterGroup({
+            clusterPane: "oncInstruments",
+            maxClusterRadius: 20,
+            showCoverageOnHover: false,
+            spiderfyOnMaxZoom: true,
+            spiderLegPolylineOptions: { weight: 1.5, color: "#1b2a3a", opacity: 0.6 },
+            iconCreateFunction: currentClusterIcon
+        })
+        : L.layerGroup();
     const searchEntries = [];
     group.addLayer(L.geoJSON(data, {
         pointToLayer: (feature, latlng) =>
@@ -180,7 +185,7 @@ function proposedPopup(p, meta) {
         return `
             <div class="instrument-popup">
                 <strong>${escapeHtml(p.name)}</strong>
-                <div class="instrument-muted">Planned at ${escapeHtml(p.hole)}</div>
+                <div class="instrument-muted">${p.status === "installed" ? "Installed" : "Planned"} at ${escapeHtml(p.hole)}</div>
                 ${p.description ? `<p class="instrument-desc">${escapeHtml(p.description)}</p>` : ""}
                 <div>${escapeHtml(p.note)}</div>
             </div>`;
@@ -226,8 +231,12 @@ function buildProposedLayer(data) {
             feature.properties.kind === "equipment"
                 ? L.marker(latlng, {
                     pane: "proposed",
-                    icon: instrumentIcon(feature.properties.glyph, "planned"),
-                    title: `${feature.properties.name} (planned)`
+                    icon: instrumentIcon(
+                        feature.properties.glyph,
+                        feature.properties.status === "installed" ? "current" : "planned",
+                        feature.properties.on_cork ? 0.75 : 1         // devices mounted on a CORK are drawn at 75% size
+                    ),
+                    title: `${feature.properties.name} (${feature.properties.status === "installed" ? "installed" : "planned"})`
                 })
                 : L.marker(latlng, {
                     pane: "proposed",
@@ -249,7 +258,7 @@ function buildProposedLayer(data) {
                 return instrumentSearchItem(
                     marker, layer,
                     p.name,
-                    ["Planned", p.role || (p.hole && `at ${p.hole}`)].filter(Boolean).join(" · "),
+                    [p.status === "installed" ? "Installed" : "Planned", p.role || (p.hole && `at ${p.hole}`)].filter(Boolean).join(" · "),
                     "planned"
                 );
             })

@@ -2,7 +2,7 @@
  "type": "FeatureCollection",
  "name": "solid_carbon_proposed_monitoring",
  "metadata": {
-  "description": "Proposed Solid Carbon monitoring tools. Each hole is a point; planned equipment is placed around its hole following the site-layout slides (bearing and distance from the CORK). Distances from the slides are roughly doubled so the icons stay separate when zoomed in, and tether lines and cable lines are schematic, not surveyed routes.",
+  "description": "Proposed Solid Carbon monitoring tools. Each hole is a point. Planned equipment is placed from the site-layout slides: the distance is the one written on the slide and the direction is the one drawn on it (mini junction box ~15–20 m NE, sonar 20–30 m NW, hydrophone array 3–5 m from Bay A, camera 3–5 m from the pump). Where a slide gives no distance (injection pump, 1026B camera) about 3 m is used. Tether and cable lines are schematic, not surveyed routes. Items mounted on a CORK (on_cork) are drawn at 75% size, about 0.86 m from the hole, spaced so that at the map's closest zoom (22) no two are within the 30 px grouping radius; OSMO-samplers and pressure sensors are already installed, the Ferry Box is planned.",
   "unlocated": [
    {
     "name": "CSEM receivers (3D array)",
@@ -35,8 +35,8 @@
     "status": "proposed",
     "connection": "To be cabled to ONC via 1026B (≈235 m)",
     "instruments": [
-     "OSMO-sampler",
-     "Pressure",
+     "CORK: OSMO-sampler",
+     "CORK: pressure",
      "\"Ferry Box\" with fluorometer, \"carbon\" meter and resistivity meter (CTD)"
     ]
    }
@@ -57,8 +57,8 @@
     "status": "proposed additions",
     "connection": "Already connected to ONC",
     "instruments": [
-     "OSMO-sampler",
-     "Pressure",
+     "CORK: OSMO-sampler",
+     "CORK: pressure",
      "\"Ferry Box\" with fluorometer, \"carbon\" meter and resistivity meter (CTD)"
     ]
    }
@@ -79,8 +79,8 @@
     "status": "proposed",
     "connection": "Autonomous; cable connection possible (≈311 m from U1362A)",
     "instruments": [
-     "OSMO-sampler",
-     "Pressure (autonomous)"
+     "CORK: OSMO-sampler",
+     "CORK: pressure (autonomous)"
     ]
    }
   },
@@ -131,8 +131,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -127.76088622,
-     47.7612918
+     -127.76104658,
+     47.76116531
     ]
    },
    "properties": {
@@ -141,7 +141,7 @@
     "name": "Mini junction box",
     "glyph": "junctionBox",
     "status": "proposed",
-    "note": "Hub for the U1362A instruments; about 15–20 m NE of the CORK, on the 235 m link toward 1026B",
+    "note": "About 15–20 m NE of CORK A; the cable continues 235 m NE to the 1026 IP",
     "description": "A small local hub that gives the planned instruments power and communications and links them to the cable."
    }
   },
@@ -150,8 +150,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -127.76169136,
-     47.76137697
+     -127.76149219,
+     47.76115554
     ]
    },
    "properties": {
@@ -160,7 +160,7 @@
     "name": "Sonar (COVIS)",
     "glyph": "sonar",
     "status": "proposed",
-    "note": "About 20–30 m NW of the CORK, opposite the hydrophones",
+    "note": "20–30 m NW of CORK A, from the wall between Bays B and C, opposite the hydrophones",
     "description": "An imaging sonar that scans the surrounding water and seafloor with sound, to detect fluids rising from the seafloor and changes around the site."
    }
   },
@@ -169,8 +169,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -127.7616009,
-     47.76104667
+     -127.76128199,
+     47.76104429
     ]
    },
    "properties": {
@@ -179,7 +179,7 @@
     "name": "Camera with pan & tilt",
     "glyph": "panTilt",
     "status": "proposed",
-    "note": "Positioned to view the injection pump (3–5 m away on the slide)",
+    "note": "3–5 m from the injection pump in Bay C",
     "description": "A camera on a motorised mount that swivels up, down and sideways, to watch the injection site and the other equipment."
    }
   },
@@ -188,8 +188,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -127.76113601,
-     47.76092849
+     -127.76123243,
+     47.76103083
     ]
    },
    "properties": {
@@ -198,7 +198,7 @@
     "name": "CO2 injection pump",
     "glyph": "pump",
     "status": "proposed",
-    "note": "Injection into Bay C, in view of the camera",
+    "note": "Injection pump for Bay C (\"Lateral\" or top plug), in view of the camera; the slide gives no distance",
     "description": "Pumps CO₂-charged fluid down the borehole into the basalt beneath the seafloor, where the carbon is meant to turn into solid mineral."
    }
   },
@@ -207,8 +207,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -127.76091652,
-     47.76085611
+     -127.76115325,
+     47.76102925
     ]
    },
    "properties": {
@@ -217,7 +217,7 @@
     "name": "Hydrophone array (4, high-frequency)",
     "glyph": "hydrophone",
     "status": "proposed",
-    "note": "Tetrahedral platform, opposite the sonar; installed with an accelerometer",
+    "note": "3–5 m from Bay A, opposite the future sonar",
     "description": "Four high-frequency hydrophones (underwater microphones) that listen around the site and can help locate where sounds come from."
    }
   },
@@ -226,8 +226,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -127.75955887,
-     47.76273475
+     -127.75917695,
+     47.76261347
     ]
    },
    "properties": {
@@ -236,8 +236,168 @@
     "name": "Camera (no pan & tilt)",
     "glyph": "videoCamera",
     "status": "proposed",
-    "note": "Added to the existing 1026B installation",
+    "note": "Against the east side of CORK 1026B; the slide gives no distance",
     "description": "A fixed camera that films the equipment at the borehole."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.76120941,
+     47.76104224
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "on_cork": true,
+    "hole": "U1362A",
+    "name": "Pressure sensor",
+    "glyph": "pressureRecorder",
+    "status": "installed",
+    "note": "Mounted on the CORK wellhead (Pressure Monitoring Bay A)",
+    "description": "Logs the pressure of the fluid in the borehole, which responds to earthquakes, tides and the injected fluid."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.7612,
+     47.76103894
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "on_cork": true,
+    "hole": "U1362A",
+    "name": "OSMO-sampler",
+    "glyph": "osmosampler",
+    "status": "installed",
+    "note": "Mounted on the CORK wellhead",
+    "description": "Collects small samples of the fluid in the borehole over time, to be analysed after it is recovered."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.76119059,
+     47.76104224
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "on_cork": true,
+    "hole": "U1362A",
+    "name": "Ferry Box",
+    "glyph": "ferryBox",
+    "status": "planned",
+    "note": "Mounted on the CORK wellhead (Geochemistry Sampling Bay B)",
+    "description": "A sensor package that measures the chemistry of the borehole fluid, here with a CTD, a carbon meter and a fluorometer."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.75922108,
+     47.76259557
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "on_cork": true,
+    "hole": "1026B",
+    "name": "Pressure sensor",
+    "glyph": "pressureRecorder",
+    "status": "installed",
+    "note": "Mounted on the CORK wellhead",
+    "description": "Logs the pressure of the fluid in the borehole, which responds to earthquakes, tides and the injected fluid."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.75921167,
+     47.76259227
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "on_cork": true,
+    "hole": "1026B",
+    "name": "OSMO-sampler",
+    "glyph": "osmosampler",
+    "status": "installed",
+    "note": "Mounted on the CORK wellhead",
+    "description": "Collects small samples of the fluid in the borehole over time, to be analysed after it is recovered."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.75920225,
+     47.76259557
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "on_cork": true,
+    "hole": "1026B",
+    "name": "Ferry Box",
+    "glyph": "ferryBox",
+    "status": "planned",
+    "note": "Mounted on the CORK wellhead",
+    "description": "A sensor package that measures the chemistry of the borehole fluid, here with a CTD, a carbon meter and a fluorometer."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.76219326,
+     47.758322
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "on_cork": true,
+    "hole": "U1362B",
+    "name": "Pressure sensor (autonomous)",
+    "glyph": "pressureRecorder",
+    "status": "installed",
+    "note": "Mounted on the CORK wellhead; autonomous, not cabled",
+    "description": "Logs the pressure of the fluid in the borehole, which responds to earthquakes, tides and the injected fluid."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -127.76218008,
+     47.758322
+    ]
+   },
+   "properties": {
+    "kind": "equipment",
+    "on_cork": true,
+    "hole": "U1362B",
+    "name": "OSMO-sampler",
+    "glyph": "osmosampler",
+    "status": "installed",
+    "note": "Mounted on the CORK wellhead",
+    "description": "Collects small samples of the fluid in the borehole over time, to be analysed after it is recovered."
    }
   },
   {
@@ -246,8 +406,8 @@
     "type": "LineString",
     "coordinates": [
      [
-      -127.76088622,
-      47.7612918
+      -127.76104658,
+      47.76116531
      ],
      [
       -127.7612,
@@ -266,12 +426,12 @@
     "type": "LineString",
     "coordinates": [
      [
-      -127.76169136,
-      47.76137697
+      -127.76149219,
+      47.76115554
      ],
      [
-      -127.76088622,
-      47.7612918
+      -127.76104658,
+      47.76116531
      ]
     ]
    },
@@ -286,12 +446,12 @@
     "type": "LineString",
     "coordinates": [
      [
-      -127.7616009,
-      47.76104667
+      -127.76128199,
+      47.76104429
      ],
      [
-      -127.76088622,
-      47.7612918
+      -127.76104658,
+      47.76116531
      ]
     ]
    },
@@ -306,12 +466,12 @@
     "type": "LineString",
     "coordinates": [
      [
-      -127.76113601,
-      47.76092849
+      -127.76123243,
+      47.76103083
      ],
      [
-      -127.76088622,
-      47.7612918
+      -127.76104658,
+      47.76116531
      ]
     ]
    },
@@ -326,12 +486,12 @@
     "type": "LineString",
     "coordinates": [
      [
-      -127.76091652,
-      47.76085611
+      -127.76115325,
+      47.76102925
      ],
      [
-      -127.76088622,
-      47.7612918
+      -127.76104658,
+      47.76116531
      ]
     ]
    },
@@ -346,8 +506,8 @@
     "type": "LineString",
     "coordinates": [
      [
-      -127.75955887,
-      47.76273475
+      -127.75917695,
+      47.76261347
      ],
      [
       -127.7592116667,

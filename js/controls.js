@@ -76,6 +76,16 @@ function buildLegendPanel() {
             <li>${glyphSvg(glyph, 26)}<span>${category}<small>${infoForCategory(category)?.description ?? ""}</small></span></li>`)
         .join("");
 
+    // Devices mounted on the CORKs (they are not ONC device categories, so they are listed separately)
+    const mounted = [
+        ["Pressure sensor", "pressureRecorder"],
+        ["OSMO-sampler", "osmosampler"],
+        ["Ferry Box", "ferryBox"]
+    ]
+        .map(([name, glyph]) => `
+            <li>${glyphSvg(glyph, 26)}<span>${name}<small>${descriptionForPlannedInstrument(name)}</small></span></li>`)
+        .join("");
+
     document.getElementById("legend-content").innerHTML = `
         <h3>Boreholes</h3>
         <ul class="legend-list">
@@ -91,6 +101,9 @@ function buildLegendPanel() {
         <p class="legend-note">Current instruments (grouped where they overlap; click a numbered badge to expand):</p>
         <ul class="legend-list legend-instruments">${instruments}</ul>
 
+        <h3>Mounted on CORKs</h3>
+        <ul class="legend-list legend-instruments">${mounted}</ul>
+
         <h3>Planned (Solid Carbon)</h3>
         <ul class="legend-list">
             <li><span class="legend-planned">${glyphSvg("cork", 24)}</span><span>Planned hole or equipment</span></li>
@@ -98,6 +111,14 @@ function buildLegendPanel() {
             <li><span class="legend-line legend-line-possible"></span><span>Possible cable</span></li>
         </ul>
     `;
+
+    // The descriptions make the legend long, so they can be folded away
+    const toggle = document.getElementById("legend-descriptions-toggle");
+    toggle.addEventListener("click", () => {
+        const hidden = document.getElementById("legend-content").classList.toggle("descriptions-hidden");
+        toggle.textContent = hidden ? "Show descriptions" : "Hide descriptions";
+        toggle.setAttribute("aria-expanded", !hidden);
+    });
 }
 
 function initSidebar() {
