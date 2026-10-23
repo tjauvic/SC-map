@@ -11,36 +11,41 @@ scripts read these.
 
 // The two seafloor models. seaY is where the seafloor sits in the scene and vScale how many times taller than
 // life it is drawn. views are the camera presets; minDimSpan is the visible width (m) below which the
-// footprint dimension lines are hidden, because they would cut across the large CORKs in the close-ups.
+// footprint dimension lines and depth ruler are hidden, because they would cut across the large CORKs in the close-ups.
 const OVERVIEW = { orbit: "0deg 75deg auto", target: "auto auto auto", fov: "auto" };
+// The seafloor models' overview is a three-quarter view, from the south-east and well above the seafloor, so the
+// layers show their depth. (The azimuth is measured from +Z, south, towards the east.)
+const THREE_QUARTER = "35deg 65deg";
 const seafloorModels = {
-    "seafloor_v4.glb": {
+    "seafloor_v5_blender.glb": {
         seaY: 0, vScale: 1, minDimSpan: 200,
         badge: "To scale",
         note: "This model is drawn to true scale: heights and depths are not exaggerated.",
         // Orbit = "azimuth polar radius" about the target; azimuth is measured from +Z (south), so -90deg
         // looks at the west face.
         views: {
-            overview:   OVERVIEW,
-            layers:     { orbit: "-62deg 74deg 1500m", target: "-2400m -300m 900m", fov: "30deg" },   // west wall, labels in view
+            overview:   { orbit: `${THREE_QUARTER} auto`, target: "auto auto auto", fov: "auto" },
+            layers:     { orbit: "-62deg 74deg 2300m", target: "-2400m -300m 900m", fov: "30deg" },   // west wall, labels in view
             injection:  { orbit: "63deg 78deg 40m", target: "-1203.3m 3.4m 0m", fov: "12deg" },       // cork at the top of 1362A
             monitoring: { orbit: "77deg 78deg 40m", target: "-1272.5m 3.4m 303.4m", fov: "12deg" },   // cork at the top of 1362B
         },
     },
-    "Exaggerated.glb": {
+    "Exaggerated_v2_blender.glb": {
         seaY: 1498.2, vScale: 5, minDimSpan: 500,
         badge: "5× vertical exaggeration",
         note: "This model is exaggerated: terrain relief, layer thicknesses and Corks are drawn with a 5X " +
               "verictal exaggeration. Horizontal distances remain consistent however, CORKs are not drawn to scale.",
         views: {
-            overview:   OVERVIEW,
-            layers:     { orbit: "-62deg 74deg 6800m", target: "-2400m -10m 900m", fov: "30deg" },
+            // Framed on the sediment and basement layers (the first thing to zoom in on), with the water column
+            // above them cropped; the target is the middle of the footprint, half way down the layers
+            overview:   { orbit: `${THREE_QUARTER} 13300m`, target: "-150m -250m 173m", fov: "30deg" },
+            layers:     { orbit: "-62deg 74deg 10000m", target: "-2400m -10m 900m", fov: "30deg" },
             injection:  { orbit: "63deg 78deg 700m", target: "-1203.3m 1600m 0m", fov: "30deg" },
             monitoring: { orbit: "77deg 78deg 700m", target: "-1272.5m 1600m 303.4m", fov: "30deg" },
         },
     },
 };
-let model = seafloorModels["seafloor_v4.glb"];
+let model = seafloorModels["seafloor_v5_blender.glb"];
 const sceneY = y => model.seaY + model.vScale * y;
 
 // The CORK model and its camera presets. Its wellhead stands on 31.5 m of pipe, so the seafloor is at

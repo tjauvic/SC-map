@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <link rel="stylesheet" href="css/viewer.css?v=20261037">
+    <link rel="stylesheet" href="css/viewer.css?v=20261064">
 </head>
 <body>
 
@@ -32,8 +32,8 @@
     <main>
         <div class="controls">
             <div class="model-select">
-                <button onclick="loadModel('seafloor_v4.glb', this)" class="active"><span class="full">Seafloor (to scale)</span><span class="short">To scale</span></button>
-                <button onclick="loadModel('Exaggerated.glb', this)"><span class="full">Seafloor (5× vertical)</span><span class="short">5× vertical</span></button>
+                <button onclick="loadModel('seafloor_v5_blender.glb', this)" class="active"><span class="full">Seafloor (to scale)</span><span class="short">To scale</span></button>
+                <button onclick="loadModel('Exaggerated_v2_blender.glb', this)"><span class="full">Seafloor (5× vertical)</span><span class="short">5× vertical</span></button>
                 <button onclick="loadModel('cork1362A-draco.glb', this)">CORK 1362A</button>
             </div>
             <!-- Camera presets for the seafloor models (see seafloorModels in the script) -->
@@ -57,7 +57,7 @@
         <div class="viewer-wrap">
             <model-viewer
                 id="viewer"
-                src="seafloor_v4.glb"
+                src="seafloor_v5_blender.glb"
                 camera-controls
                 ar
                 tone-mapping="neutral"
@@ -67,6 +67,14 @@
             </model-viewer>
 
             <div id="scale-badge" hidden></div>
+
+            <!-- Show or hide parts of the seafloor models (see LAYER_GROUPS in layer-toggles.js) -->
+            <div id="layer-toggles" class="layer-toggles">
+                <span class="layer-toggles-title">Show</span>
+                <label><input type="checkbox" data-group="water" checked> Water</label>
+                <label><input type="checkbox" data-group="sediment" checked> Sediment</label>
+                <label><input type="checkbox" data-group="basement" checked> Basement</label>
+            </div>
 
             <!-- Down the left of the viewer with the CORK model: what the pins mean, and under it the panel for the pin picked -->
             <div class="cork-side">
@@ -113,10 +121,11 @@
     </main>
 
 
-    <script src="js/models.js?v=20261036"></script>
-    <script src="js/cork-tools.js?v=20261036"></script>
-    <script src="js/seafloor-overlay.js?v=20261036"></script>
-    <script src="js/cork-pins.js?v=20261036"></script>
-    <script src="js/viewer.js?v=20261036"></script>
+    <script src="js/models.js?v=20261064"></script>
+    <script src="js/cork-tools.js?v=20261064"></script>
+    <script src="js/layer-toggles.js?v=20261064"></script>
+    <script src="js/seafloor-overlay.js?v=20261064"></script>
+    <script src="js/cork-pins.js?v=20261064"></script>
+    <script src="js/viewer.js?v=20261064"></script>
 </body>
 </html>

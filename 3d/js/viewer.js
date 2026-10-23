@@ -4,7 +4,7 @@ THE VIEWER
 The entry point for the 3D viewer page: the model, the camera view buttons, loading a model, the compass and the
 frame loop. Loaded last, so everything it calls is already defined.
 
-Uses: models.js, seafloor-overlay.js, cork-pins.js.
+Uses: models.js, layer-toggles.js, seafloor-overlay.js, cork-pins.js.
 ========================================================= */
 
 const viewer = document.getElementById("viewer");
@@ -52,7 +52,7 @@ function loadModel(src, button) {
     document.querySelectorAll(".model-select button").forEach(el => el.classList.remove("active"));
     if (button) button.classList.add("active");
 
-    // Swap what is drawn over the model: the seafloor models get anchors for the labels and dimension lines,
+    // Swap what is drawn over the model: the seafloor models get anchors for the labels, dimension lines and ruler,
     // the CORK model gets the tool pins and panel
     viewer.querySelectorAll(".DimAnchor, .ToolPin").forEach(el => el.remove());
     anchors = [];
@@ -72,6 +72,7 @@ function loadModel(src, button) {
     if (cork) viewer.setAttribute("max-camera-orbit", "auto auto 400m");
     else viewer.removeAttribute("max-camera-orbit");
 
+    layerToggles.hidden = !seafloor;
     viewSelect.hidden = !seafloor;
     corkViewSelect.hidden = !cork;
     corkKey.hidden = !cork;
@@ -92,6 +93,7 @@ function loadModel(src, button) {
 }
 
 viewer.addEventListener("load", () => {
+    if (seafloorModels[viewer.getAttribute("src")]) applyVisibility();
     setView(pendingView);
     viewer.jumpCameraToGoal();
 });
@@ -109,7 +111,9 @@ function frame() {
     const orbit = viewer.getCameraOrbit();
     const span = visibleSpan(orbit);
 
-    overlay.innerHTML = dimensionsSvg(wrap, span < model.minDimSpan)
+    const closeUp = span < model.minDimSpan;
+    overlay.innerHTML = dimensionsSvg(wrap, closeUp)
+        + (closeUp ? "" : rulerSvg(wrap))
         + boreholeLabelsSvg(wrap)
         + layerLabelsSvg(wrap, orbit, span);
 
@@ -120,4 +124,4 @@ function frame() {
 customElements.whenDefined("model-viewer").then(() => requestAnimationFrame(frame));
 
 // Show the seafloor labels on first load
-loadModel("seafloor_v4.glb", document.querySelector(".model-select button.active"));
+loadModel("seafloor_v5_blender.glb", document.querySelector(".model-select button.active"));

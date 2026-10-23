@@ -1,7 +1,7 @@
 /* =========================================================
 SEAFLOOR OVERLAY
 
-What is drawn over the two seafloor models: the borehole labels, the dimension lines and the column of layer
+What is drawn over the two seafloor models: the borehole labels, the dimension lines, the depth ruler and the column of layer
 labels. They hang off invisible anchors that model-viewer keeps projected onto the screen, and are redrawn as
 SVG every frame by frame() in viewer.js.
 
@@ -14,21 +14,32 @@ Uses: viewer, model and sceneY (models.js).
 // [x, y, z]; -Z is north and Y is up.
 const WEST = -2400, EAST = 2100, NORTH = -1577.300048828125, SOUTH = 1922.699951171875, FLOOR = -700;
 
+// x and z are the centres of the CORKs in the models (the CORK nodes in the .glb files, the same in both), so the
+// labels and the dimension lines between boreholes line up with the middle of each CORK.
 const boreholes = [
-    { id: "1026B", pos: [-1053.2547602494767, 0, -178.7172727747188] },
-    { id: "1362A", pos: [-1202.4134293512127, 0, 1.9995459612104014] },
-    { id: "1362B", pos: [-1274.2148534180235, 0, 305.8217231597523] },
-    { id: "1301B", pos: [-1513.61040564326, 0, 775.4433657001365] },
-    { id: "1027C", pos: [1059.5668762121697, 0, 470.97399151243013] },
+    { id: "1026B", pos: [-1056.387939453125, 0, -180.65219116210938] },
+    { id: "1362A", pos: [-1203.3328857421875, 0, -0.04028356447815895] },
+    { id: "1362B", pos: [-1272.4715576171875, 0, 303.4114990234375] },
+    { id: "1301B", pos: [-1516.9639892578125, 0, 774.3952026367188] },
+    { id: "1027C", pos: [1059.81005859375, 0, 475.0859069824219] },
 ];
 
-// Footprint corners: the bottom of the layers (FLOOR) and the seafloor above the back-right one
+// Footprint corners at the bottom of the layers (FLOOR)
 const corners = {
     A: [WEST, FLOOR, NORTH],
     B: [EAST, FLOOR, NORTH],
     C: [EAST, FLOOR, SOUTH],
-    seafloor: [EAST, 0, NORTH],
 };
+
+// The depth ruler stands on the back-right (north-east) corner of the footprint, from the seafloor (y = 0) down to
+// FLOOR, marked in metres below sea level. SEAFLOOR_MBSL is the depth of y = 0: the boreholes' water depths run
+// 2656-2661 m. A tick is placed at every RULER_STEP m of depth.
+const SEAFLOOR_MBSL = 2658, RULER_STEP = 100;
+const RULER = [EAST, NORTH];
+const rulerTicks = [];                                       // { y: scene metres, mbsl }
+for (let mbsl = Math.ceil(SEAFLOOR_MBSL / RULER_STEP) * RULER_STEP; mbsl < SEAFLOOR_MBSL - FLOOR; mbsl += RULER_STEP) {
+    rulerTicks.push({ y: SEAFLOOR_MBSL - mbsl, mbsl });
+}
 
 // The label column, top to bottom. Each points at its layer's mid-depth (y) on the west wall at z = WALL_Z.
 // Swatch colours are the layers' glTF base colours converted from linear to sRGB (what the viewer displays).
@@ -52,6 +63,9 @@ function buildAnchors() {
     anchors = [
         ...boreholes.map(b => ({ id: `bh-${b.id}`, pos: at(b.pos) })),
         ...Object.entries(corners).map(([k, pos]) => ({ id: `corner-${k}`, pos: at(pos) })),
+        { id: "ruler-top", pos: at([RULER[0], 0, RULER[1]]) },
+        ...rulerTicks.map((t, i) => ({ id: `ruler-${i}`, pos: at([RULER[0], t.y, RULER[1]]) })),
+        { id: "ruler-bottom", pos: at([RULER[0], FLOOR, RULER[1]]) },
         ...layerLabels.map((l, i) => ({ id: `layer-${i}`, pos: at([WEST, l.y, WALL_Z]), normal: [-1, 0, 0] })),
     ];
     anchorPosition = Object.fromEntries(anchors.map(a => [a.id, a.pos]));
@@ -104,7 +118,6 @@ function clipToView(a, b, w, h, pad = 6) {
 const dimensionPairs = [
     ["bh-1026B", "bh-1362A", "cork"],
     ["bh-1362A", "bh-1362B", "cork"],
-    ["corner-B", "corner-seafloor"],
     ["corner-A", "corner-B"],
     ["corner-B", "corner-C"],
 ];
@@ -136,15 +149,51 @@ function dimensionsSvg(wrap, closeUp) {
     return svg;
 }
 
-// Borehole labels, centred on their anchors. Drawn after the dimension lines so they sit in front of them.
+// The depth ruler, drawn like the dimension lines (same line, dots and text) and hidden the same ways: when its
+// anchors are hidden by the model and in the close-up views.
+function rulerSvg(wrap) {
+    const top = anchorPos("ruler-top", wrap), bottom = anchorPos("ruler-bottom", wrap);
+    if (!top || !bottom) return "";
+    const clip = clipToView(top, bottom, wrap.width, wrap.height);
+    if (!clip) return "";
+    const at = t => ({ x: top.x + (bottom.x - top.x) * t, y: top.y + (bottom.y - top.y) * t });
+    const p = at(clip[0]), q = at(clip[1]);
+    const dot = e => (e.x >= 0 && e.x <= wrap.width && e.y >= 0 && e.y <= wrap.height)
+        ? `<circle class="ov-dot" cx="${e.x}" cy="${e.y}" r="3" />` : "";
+    let svg = `<line class="ov-dim-line" x1="${p.x}" y1="${p.y}" x2="${q.x}" y2="${q.y}" />${dot(top)}${dot(bottom)}`;
+
+    // Ticks point away from the middle of the view, at right angles to the ruler
+    const len = Math.hypot(bottom.x - top.x, bottom.y - top.y) || 1;
+    let nx = -(bottom.y - top.y) / len, ny = (bottom.x - top.x) / len;
+    if (nx * (top.x - wrap.width / 2) + ny * (top.y - wrap.height / 2) < 0) { nx = -nx; ny = -ny; }
+    const side = nx < 0 ? "end" : "start";
+    const onScreen = e => e.x > 8 && e.x < wrap.width - 8 && e.y > 8 && e.y < wrap.height - 8;
+    rulerTicks.forEach((t, i) => {
+        const c = anchorPos(`ruler-${i}`, wrap);
+        if (!c || !onScreen(c)) return;
+        svg += `
+            <line class="ov-dim-tick" x1="${c.x}" y1="${c.y}" x2="${c.x + nx * 8}" y2="${c.y + ny * 8}" />
+            <text class="ov-dim-text" x="${c.x + nx * 11}" y="${c.y + ny * 11 + 4}" text-anchor="${side}">${t.mbsl}</text>`;
+    });
+    if (onScreen(top)) {
+        svg += `<text class="ov-dim-text" x="${top.x + nx * 11}" y="${top.y + ny * 11 - 6}" text-anchor="${side}">mbsl</text>`;
+    }
+    return svg;
+}
+
+// Borehole labels, beside their anchors (LABEL_OFFSET px to the right). Drawn after the dimension lines so they sit in front of them.
+const LABEL_OFFSET = 14;                             // px from a CORK to the left edge of its label
+
 function boreholeLabelsSvg(wrap) {
     return boreholes.map(b => {
         const c = anchorPos(`bh-${b.id}`, wrap);
         if (!c) return "";
-        const text = `Borehole ${b.id}`, w = text.length * CHAR_W + 16, h = 20;
+        // The pill sits to the right of the CORK, not on it, so the CORK can still be seen from above. The
+        // dimension lines still end on the CORK itself.
+        const text = `Borehole ${b.id}`, w = text.length * CHAR_W + 16, h = 20, x = c.x + LABEL_OFFSET;
         return `
-            <g class="ov-shadow"><rect class="ov-pill" x="${c.x - w / 2}" y="${c.y - h / 2}" width="${w}" height="${h}" rx="5" /></g>
-            <text class="ov-text" x="${c.x}" y="${c.y + 3.5}" text-anchor="middle">${text}</text>`;
+            <g class="ov-shadow"><rect class="ov-pill" x="${x}" y="${c.y - h / 2}" width="${w}" height="${h}" rx="5" /></g>
+            <text class="ov-text" x="${x + w / 2}" y="${c.y + 3.5}" text-anchor="middle">${text}</text>`;
     }).join("");
 }
 
