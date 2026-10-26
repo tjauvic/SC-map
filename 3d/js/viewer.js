@@ -124,4 +124,4 @@ function frame() {
 customElements.whenDefined("model-viewer").then(() => requestAnimationFrame(frame));
 
 // Show the seafloor labels on first load
-loadModel("seafloor_v5_blender.glb", document.querySelector(".model-select button.active"));
+loadModel("Scale_seafloor_v6.glb", document.querySelector(".model-select button.active"));

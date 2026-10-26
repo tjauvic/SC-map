@@ -17,8 +17,8 @@ const OVERVIEW = { orbit: "0deg 75deg auto", target: "auto auto auto", fov: "aut
 // layers show their depth. (The azimuth is measured from +Z, south, towards the east.)
 const THREE_QUARTER = "35deg 65deg";
 const seafloorModels = {
-    "seafloor_v5_blender.glb": {
-        seaY: 0, vScale: 1, minDimSpan: 200,
+    "Scale_seafloor_v6.glb": {
+        seaY: 0, vScale: 1, minDimSpan: 200, defaultView: "overview",
         badge: "To scale",
         note: "This model is drawn to true scale: heights and depths are not exaggerated.",
         // Orbit = "azimuth polar radius" about the target; azimuth is measured from +Z (south), so -90deg
@@ -30,8 +30,8 @@ const seafloorModels = {
             monitoring: { orbit: "77deg 78deg 40m", target: "-1272.5m 3.4m 303.4m", fov: "12deg" },   // cork at the top of 1362B
         },
     },
-    "Exaggerated_v2_blender.glb": {
-        seaY: 1498.2, vScale: 5, minDimSpan: 500,
+    "Exaggerated_seafloor_v6.glb": {
+        seaY: 1498.2, vScale: 5, minDimSpan: 500, defaultView: "overview",
         badge: "5× vertical exaggeration",
         note: "This model is exaggerated: terrain relief, layer thicknesses and Corks are drawn with a 5X " +
               "verictal exaggeration. Horizontal distances remain consistent however, CORKs are not drawn to scale.",
@@ -45,7 +45,7 @@ const seafloorModels = {
         },
     },
 };
-let model = seafloorModels["seafloor_v5_blender.glb"];
+let model = seafloorModels["Scale_seafloor_v6.glb"];
 const sceneY = y => model.seaY + model.vScale * y;
 
 // The CORK model and its camera presets. Its wellhead stands on 31.5 m of pipe, so the seafloor is at
